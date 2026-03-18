@@ -151,7 +151,7 @@ const AppContent = () => {
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard':
-        return <PlaceholderCard icon={LayoutDashboard} title={t('dashboard')} subtitle="BNPL Funnel Analytics · 100,000 users · Jan–Apr 2025" />;
+        return <DashboardTab />;
       case 'presentation':
         return <PlaceholderCard icon={Presentation} title={t('presentation')} subtitle="7 slides · Tasks 1–4 · Live data from Supabase" />;
       case 'ask':
