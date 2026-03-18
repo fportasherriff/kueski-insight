@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useDashboardData } from '@/hooks/useDashboardData';
 import type { FunnelStep, DashboardKPI, MonthlyRow, SegmentRow } from '@/hooks/useDashboardData';
 import DashboardHeader from './DashboardHeader';
