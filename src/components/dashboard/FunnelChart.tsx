@@ -195,7 +195,11 @@ const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: Acti
           </div>
 
           <div className="mt-4">
-            <InsightCallout text={t('funnelInsight')} variant="amber" />
+            {insightText && (
+              <div className="bg-[#FFF7ED] border-l-4 border-[#F59E0B] p-3 rounded-r-lg text-sm text-foreground">
+                💡 {insightText}
+              </div>
+            )}
           </div>
         </div>
       </div>
