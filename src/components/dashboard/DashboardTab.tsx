@@ -302,6 +302,7 @@ const DashboardTab = () => {
       <FilterBar filters={filters} onChange={setFilters} onExport={handleExport} />
 
       <AudienceTabs active={audience} onChange={setAudience} />
+      <AudiencePanel audience={audience} segments={activeSegments} ageDevice={filteredAgeDevice} />
 
       {errors.kpis && <ErrorBanner message={errors.kpis} />}
       {activeKpis && <KPICards kpis={activeKpis} filtered={filtered} highlights={highlights} />}
