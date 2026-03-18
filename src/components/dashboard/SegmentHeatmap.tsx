@@ -34,7 +34,6 @@ const SegmentHeatmap = ({ ageDevice }: { ageDevice: AgeDeviceRow[] }) => {
       <h2 className="text-lg font-bold text-foreground">{t('heatmapTitle')}</h2>
       <p className="text-xs text-muted-foreground mb-5">{t('heatmapSubtitle')}</p>
 
-      {/* Column headers */}
       <div className="grid grid-cols-[80px_1fr_1fr_1fr] gap-2 mb-2">
         <div />
         {deviceOrder.map(d => (
@@ -42,7 +41,6 @@ const SegmentHeatmap = ({ ageDevice }: { ageDevice: AgeDeviceRow[] }) => {
         ))}
       </div>
 
-      {/* Grid rows */}
       {ageOrder.map(age => (
         <div key={age} className="grid grid-cols-[80px_1fr_1fr_1fr] gap-2 mb-2">
           <div className="flex items-center">
@@ -57,25 +55,33 @@ const SegmentHeatmap = ({ ageDevice }: { ageDevice: AgeDeviceRow[] }) => {
             const isWorst = key === worstKey;
 
             return (
-              <div
-                key={device}
-                className={`relative rounded-[10px] p-4 min-h-[80px] flex flex-col items-center justify-center ${
-                  isWorst ? 'ring-2 ring-white' : ''
-                } ${isBest ? 'ring-2 ring-white' : ''}`}
-                style={{ backgroundColor: colors.bg, color: colors.text }}
-              >
-                {isWorst && (
-                  <span className="absolute top-1 right-1 text-[9px] font-bold bg-white/20 px-1.5 py-0.5 rounded">
-                    ⚠ {t('worst')}
-                  </span>
-                )}
-                {isBest && (
-                  <span className="absolute top-1 right-1 text-[9px] font-bold bg-white/20 px-1.5 py-0.5 rounded">
-                    ★ {t('best')}
-                  </span>
-                )}
-                <span className="text-xl font-bold">{cell.overall_conv}%</span>
-                <span className="text-xs opacity-80 mt-1">n={cell.n?.toLocaleString()}</span>
+              <div key={device} className="relative group">
+                <div
+                  className={`rounded-[10px] p-4 min-h-[80px] flex flex-col items-center justify-center ${
+                    isWorst || isBest ? 'ring-2 ring-white' : ''
+                  }`}
+                  style={{ backgroundColor: colors.bg, color: colors.text }}
+                >
+                  {isWorst && (
+                    <span className="absolute top-1 right-1 text-[9px] font-bold bg-white/20 px-1.5 py-0.5 rounded">
+                      ⚠ {t('worst')}
+                    </span>
+                  )}
+                  {isBest && (
+                    <span className="absolute top-1 right-1 text-[9px] font-bold bg-white/20 px-1.5 py-0.5 rounded">
+                      ★ {t('best')}
+                    </span>
+                  )}
+                  <span className="text-xl font-bold">{cell.overall_conv}%</span>
+                  <span className="text-xs opacity-80 mt-1">n={cell.n?.toLocaleString()}</span>
+                </div>
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-foreground text-background text-xs rounded-lg p-2 whitespace-nowrap z-10 shadow-lg">
+                  <div>Conv: {cell.overall_conv}%</div>
+                  <div>n={Number(cell.n).toLocaleString()}</div>
+                  <div>Reg→Onb: {cell.step_reg_to_onb}%</div>
+                  <div>View→Cart: {cell.step_view_to_cart}%</div>
+                  <div>Cart→Purch: {cell.step_cart_to_purch}%</div>
+                </div>
               </div>
             );
           })}
