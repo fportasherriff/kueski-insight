@@ -5,6 +5,7 @@ import InsightCallout from './InsightCallout';
 import type { SegmentRow } from '@/hooks/useDashboardData';
 import type { AudienceHighlight } from './AudienceTabs';
 import type { Audience } from './AudienceTabs';
+import type { ActiveFilters } from './FilterBar';
 
 const dimensionTabs = [
   { key: 'age', dimension: 'age_group' },
