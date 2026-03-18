@@ -78,8 +78,13 @@ const DarkTooltip = ({ active, payload, label }: any) => {
   );
 };
 
-const SegmentBreakdown = ({ segments, highlights, audience }: { segments: SegmentRow[]; highlights?: AudienceHighlight[]; audience?: Audience }) => {
-  const { t } = useLanguage();
+const SegmentBreakdown = ({ segments, highlights, audience, filters }: {
+  segments: SegmentRow[];
+  highlights?: AudienceHighlight[];
+  audience?: Audience;
+  filters?: ActiveFilters;
+}) => {
+  const { language, t } = useLanguage();
   const [activeTab, setActiveTab] = useState('age');
 
   // Auto-switch tab based on audience
