@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export interface ActiveFilters {
@@ -21,7 +21,6 @@ export const isFiltered = (f: ActiveFilters) =>
 interface FilterBarProps {
   filters: ActiveFilters;
   onChange: (f: ActiveFilters) => void;
-  onExport: () => void;
 }
 
 const FILTER_OPTIONS = {
@@ -52,17 +51,30 @@ const FILTER_OPTIONS = {
   ],
 };
 
-const FilterBar = ({ filters, onChange, onExport }: FilterBarProps) => {
+const MONTH_OPTIONS = [
+  { label: 'Jan–Apr 2025', labelEs: 'Ene–Abr 2025', value: 'all' },
+  { label: 'January 2025', labelEs: 'Enero 2025', value: '2025-01' },
+  { label: 'February 2025', labelEs: 'Febrero 2025', value: '2025-02' },
+  { label: 'March 2025', labelEs: 'Marzo 2025', value: '2025-03' },
+  { label: 'April 2025', labelEs: 'Abril 2025', value: '2025-04' },
+];
+
+const FilterBar = ({ filters, onChange }: FilterBarProps) => {
   const { language, t } = useLanguage();
+  const [selectedMonth, setSelectedMonth] = useState('all');
 
   const set = (key: keyof ActiveFilters, val: string) =>
     onChange({ ...filters, [key]: val });
+
+  const selectClass =
+    'bg-card border border-border rounded-lg px-3 py-2 text-sm min-w-[140px] cursor-pointer font-semibold hover:bg-[#EFF6FF] focus:outline-none focus:ring-2 focus:ring-primary/30';
 
   const renderSelect = (key: keyof typeof FILTER_OPTIONS, filterKey: keyof ActiveFilters) => (
     <select
       value={filters[filterKey]}
       onChange={e => set(filterKey, e.target.value)}
-      className="bg-card border border-border rounded-lg px-3 py-2 text-sm text-foreground min-w-[140px] cursor-pointer"
+      className={selectClass}
+      style={{ color: filters[filterKey] !== 'all' ? '#00164C' : '#384550' }}
       aria-label={key}
     >
       {FILTER_OPTIONS[key].map(o => (
@@ -80,9 +92,19 @@ const FilterBar = ({ filters, onChange, onExport }: FilterBarProps) => {
       {renderSelect('location', 'location')}
       {renderSelect('gender', 'gender')}
 
-      <span className="px-3 py-2 bg-[#F5F6FB] text-[#384550] rounded-lg text-sm border border-gray-200 font-medium">
-        Jan–Apr 2025
-      </span>
+      <select
+        value={selectedMonth}
+        onChange={e => setSelectedMonth(e.target.value)}
+        className="bg-[#F5F6FB] border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium cursor-pointer hover:bg-[#EFF6FF] focus:outline-none focus:ring-2 focus:ring-primary/30"
+        style={{ color: selectedMonth !== 'all' ? '#00164C' : '#384550' }}
+        aria-label="month"
+      >
+        {MONTH_OPTIONS.map(o => (
+          <option key={o.value} value={o.value}>
+            {language === 'ES' ? o.labelEs : o.label}
+          </option>
+        ))}
+      </select>
 
       <div className="ml-auto flex items-center gap-2">
         {isFiltered(filters) && (
@@ -90,12 +112,6 @@ const FilterBar = ({ filters, onChange, onExport }: FilterBarProps) => {
             {t('filteredLabel')}
           </span>
         )}
-        <button
-          onClick={onExport}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg border border-primary text-primary text-sm font-medium hover:bg-primary/5 transition-colors"
-        >
-          {t('exportCsv')}
-        </button>
       </div>
     </div>
   );

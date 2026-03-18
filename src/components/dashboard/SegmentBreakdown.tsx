@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, LabelList } from 'recharts';
 import { useLanguage } from '@/contexts/LanguageContext';
 import type { SegmentRow } from '@/hooks/useDashboardData';
@@ -93,8 +93,8 @@ const SegmentBreakdown = ({ segments, filters }: {
 
   return (
     <div className="bg-card rounded-2xl shadow-sm p-6 animate-fade-in relative flex flex-col h-full" style={{ animationDelay: '400ms', animationFillMode: 'backwards' }}>
-      <h2 className="text-lg font-bold" style={{ color: '#141C22' }}>{t('segmentBreakdown')}</h2>
-      <p className="text-xs text-muted-foreground mt-0.5 mb-4">{t('segmentSubtitle')}</p>
+      <h2 className="text-lg font-bold" style={{ color: '#00164C' }}>{t('segmentBreakdown')}</h2>
+      <p className="text-xs mt-0.5 mb-4" style={{ color: '#384550' }}>{t('segmentSubtitle')}</p>
 
       <div className="flex gap-1 p-1 bg-secondary rounded-full mb-4">
         {dimensionTabs.map(tab => (
@@ -103,9 +103,10 @@ const SegmentBreakdown = ({ segments, filters }: {
             onClick={() => setActiveTab(tab.key)}
             className={`flex-1 py-1.5 px-3 text-xs font-semibold rounded-full transition-all ${
               activeTab === tab.key
-                ? 'bg-card text-foreground shadow-sm'
-                : 'text-muted-foreground hover:text-foreground'
+                ? 'bg-card shadow-sm'
+                : 'hover:text-[#00164C]'
             }`}
+            style={{ color: activeTab === tab.key ? '#00164C' : '#66727D' }}
           >
             {t(tab.key)}
           </button>
@@ -114,20 +115,20 @@ const SegmentBreakdown = ({ segments, filters }: {
 
       <div className="flex-1 min-h-0 h-[200px]">
         {isDimFiltered ? (
-          <div className="flex items-center justify-center h-full text-sm text-muted-foreground">
+          <div className="flex items-center justify-center h-full text-sm" style={{ color: '#66727D' }}>
             {language === 'ES' ? 'Filtrado a:' : 'Filtered to:'}
             <span className="font-semibold ml-1 text-primary">
               {dimFilterMap[activeTab].toUpperCase()}
             </span>
-            <span className="ml-2 text-xs text-muted-foreground">
+            <span className="ml-2 text-xs" style={{ color: '#66727D' }}>
               {language === 'ES' ? '— cambia de pestaña para ver desglose' : '— switch tab to see breakdown'}
             </span>
           </div>
         ) : (
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data} layout="vertical" margin={{ left: 0, right: 40, top: 0, bottom: 0 }}>
-              <XAxis type="number" domain={[0, Math.ceil(maxConv / 5) * 5 + 5]} tickFormatter={v => `${v}%`} tick={{ fontSize: 11 }} />
-              <YAxis type="category" dataKey="segment" width={100} tick={{ fontSize: 11 }} />
+              <XAxis type="number" domain={[0, Math.ceil(maxConv / 5) * 5 + 5]} tickFormatter={v => `${v}%`} tick={{ fontSize: 11, fill: '#384550' }} />
+              <YAxis type="category" dataKey="segment" width={100} tick={{ fontSize: 11, fill: '#384550' }} />
               <Tooltip cursor={{ fill: 'rgba(0,117,255,0.08)' }} content={<DarkTooltip />} />
               <Bar dataKey="overall_conv" radius={[0, 4, 4, 0]} barSize={24}>
                 {data.map((entry, idx) => {
@@ -136,7 +137,7 @@ const SegmentBreakdown = ({ segments, filters }: {
                   if (entry.overall_conv === minConv) fill = '#EF4444';
                   return <Cell key={idx} fill={fill} />;
                 })}
-                <LabelList dataKey="overall_conv" position="right" formatter={(v: number) => `${v}%`} style={{ fontSize: 11, fontWeight: 600 }} />
+                <LabelList dataKey="overall_conv" position="right" formatter={(v: number) => `${v}%`} style={{ fontSize: 11, fontWeight: 600, fill: '#384550' }} />
               </Bar>
             </BarChart>
           </ResponsiveContainer>
@@ -144,7 +145,7 @@ const SegmentBreakdown = ({ segments, filters }: {
       </div>
 
       {insightText && (
-        <div className="bg-[#FFF7ED] border-l-4 border-[#F59E0B] p-3 rounded-r-lg text-sm text-foreground mt-3">
+        <div className="bg-[#FFF7ED] border-l-4 border-[#F59E0B] p-3 rounded-r-lg text-sm mt-3" style={{ color: '#384550' }}>
           {insightText}
         </div>
       )}

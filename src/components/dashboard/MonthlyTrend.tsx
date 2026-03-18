@@ -46,15 +46,15 @@ const MonthlyTrend = ({ monthly }: { monthly: MonthlyRow[] }) => {
 
   return (
     <div className="bg-card rounded-2xl shadow-sm p-6 animate-fade-in flex flex-col h-full" style={{ animationDelay: '400ms', animationFillMode: 'backwards' }}>
-      <h2 className="text-lg font-bold mb-4" style={{ color: '#141C22' }}>{t('monthlyTrends')}</h2>
+      <h2 className="text-lg font-bold mb-4" style={{ color: '#00164C' }}>{t('monthlyTrends')}</h2>
 
       <div className="flex-1 min-h-[280px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={monthly} margin={{ left: 0, right: 8, top: 8, bottom: 0 }}>
-            <XAxis dataKey="cohort_label" tick={{ fontSize: 11 }} />
-            <YAxis domain={[0, 100]} tickFormatter={v => `${v}%`} tick={{ fontSize: 11 }} />
+            <XAxis dataKey="cohort_label" tick={{ fontSize: 11, fill: '#384550' }} />
+            <YAxis domain={[0, 100]} tickFormatter={v => `${v}%`} tick={{ fontSize: 11, fill: '#384550' }} />
             <Tooltip content={<DarkTooltip />} />
-            <Legend wrapperStyle={{ fontSize: 12 }} />
+            <Legend wrapperStyle={{ fontSize: 12, color: '#384550' }} />
             <Line type="monotone" dataKey="overall_conv" name={t('overall')} stroke="#0075FF" strokeWidth={2.5} dot={{ r: 4, fill: '#0075FF' }} />
             <Line type="monotone" dataKey="step_reg_to_onb" name={t('onboarding')} stroke="#7D6CFF" strokeWidth={2} dot={{ r: 4, fill: '#7D6CFF' }} />
             <Line type="monotone" dataKey="step_cart_to_purch" name={t('cartToPurchase')} stroke="#008246" strokeWidth={2} dot={{ r: 4, fill: '#008246' }} />

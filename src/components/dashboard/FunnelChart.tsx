@@ -87,8 +87,8 @@ const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: Acti
       className="bg-card rounded-2xl shadow-sm p-6 mb-6 animate-fade-in"
       style={{ animationDelay: '400ms', animationFillMode: 'backwards' }}
     >
-      <h2 className="text-lg font-bold" style={{ color: '#141C22' }}>{t('conversionFunnel')}</h2>
-      <p className="text-xs text-muted-foreground mb-5">{t('funnelSubtitle')}</p>
+      <h2 className="text-lg font-bold" style={{ color: '#00164C' }}>{t('conversionFunnel')}</h2>
+      <p className="text-xs mb-5" style={{ color: '#384550' }}>{t('funnelSubtitle')}</p>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
         {/* Funnel SVG — 3/5 width */}
@@ -186,10 +186,10 @@ const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: Acti
         {/* Side panel — Device Distribution */}
         <div className="lg:col-span-2 bg-secondary/30 rounded-xl p-5 flex flex-col justify-between">
           <div>
-            <h3 className="text-sm font-semibold text-foreground">
+            <h3 className="text-sm font-semibold" style={{ color: '#00164C' }}>
               {isEs ? 'Distribución por Dispositivo' : 'Device Distribution'}
             </h3>
-            <p className="text-xs text-muted-foreground mb-3">
+            <p className="text-xs mb-3" style={{ color: '#66727D' }}>
               {isEs ? 'Distribución del parque vs tasa de conversión' : 'Share of user base vs conversion rate'}
             </p>
 
@@ -216,9 +216,9 @@ const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: Acti
                           className="inline-block rounded-full"
                           style={{ width: 10, height: 10, backgroundColor: dotColors[d.device_label] }}
                         />
-                        <span className="text-sm font-semibold text-foreground">{d.device_label}</span>
+                        <span className="text-sm font-semibold" style={{ color: '#00164C' }}>{d.device_label}</span>
                       </div>
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-xs" style={{ color: '#66727D' }}>
                         {Number(d.pct_of_parque).toFixed(1)}% {isEs ? 'de usuarios' : 'of users'}
                       </span>
                       <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${badgeStyles[d.device_label]}`}>
@@ -240,7 +240,7 @@ const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: Acti
                     />
                   ))}
                 </div>
-                <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                <div className="flex justify-between text-xs mt-1" style={{ color: '#66727D' }}>
                   {orderedDevices.map((d: any) => (
                     <span key={d.device_label}>{d.device_label} {Number(d.pct_of_parque).toFixed(0)}%</span>
                   ))}
@@ -250,7 +250,7 @@ const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: Acti
                 {orderedDevices
                   .filter((d: any) => d.device_label !== 'iOS' && Number(d.purchases_gap_vs_ios) > 0)
                   .map((d: any) => (
-                    <p key={d.device_label} className="text-xs text-muted-foreground italic mt-2">
+                    <p key={d.device_label} className="text-xs italic mt-2" style={{ color: '#66727D' }}>
                       {d.device_label}: +{Number(d.purchases_gap_vs_ios).toLocaleString()}{' '}
                       {isEs ? 'compras potenciales vs tasa iOS' : 'purchases potential vs iOS rate'}
                     </p>
