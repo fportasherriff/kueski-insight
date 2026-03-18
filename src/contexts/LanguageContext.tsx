@@ -275,6 +275,7 @@ export const translations: Translations = {
   pres_s5_effort: { EN: "Effort", ES: "Esfuerzo" },
   pres_s5_current_target: { EN: "Current → Target", ES: "Actual → Meta" },
   pres_s5_greenlight: { EN: "Green-light decision", ES: "Decisión de luz verde" },
+  pres_s5_why_quarter: { EN: "Why this quarter", ES: "Por qué este trimestre" },
 
   // Slide 6
   pres_s6_title: { EN: "Experiment Design — A/B Test", ES: "Diseño de Experimento — Test A/B" },
