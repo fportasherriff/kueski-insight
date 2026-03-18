@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import InsightCallout from './InsightCallout';
 import type { FunnelStep } from '@/hooks/useDashboardData';
+import type { ActiveFilters } from './FilterBar';
 
 const stepBadge = (rate: number): { emoji: string; label: string } => {
   if (rate >= 70) return { emoji: '✅', label: '' };
