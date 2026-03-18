@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { LayoutDashboard, Presentation, Bot, Map, LucideIcon } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import DashboardTab from '@/components/dashboard/DashboardTab';
+import PresentationTab from '@/components/presentation/PresentationTab';
 
 const NavItem = ({
   icon: Icon,
