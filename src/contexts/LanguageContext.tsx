@@ -318,32 +318,52 @@ export const translations: Translations = {
   pres_s7_product: { EN: "Product Manager", ES: "Product Manager" },
   pres_s7_engineering: { EN: "Engineering", ES: "Ingeniería" },
   pres_s7_growth: { EN: "Growth", ES: "Crecimiento" },
-  pres_s7_exec_insight: {
-    EN: "10.4% overall conversion. Biggest drop: onboarding (36.8%). Android = 50% of users, half the iOS rate. +4,690 purchases at stake.",
-    ES: "10.4% conversión total. Mayor caída: onboarding (36.8%). Android = 50% de usuarios, la mitad de la tasa de iOS. +4,690 compras en juego.",
-  },
   pres_s7_exec_metric: { EN: "Best vs Worst gap: 37.7×", ES: "Brecha Mejor vs Peor: 37.7×" },
-  pres_s7_product_insight: {
-    EN: ">50 onboards at 39.5% — 45pp below under-25s. Progressive onboarding = Q2 green-light initiative.",
-    ES: ">50 completa onboarding al 39.5% — 45pp por debajo de los menores de 25. Onboarding progresivo = iniciativa luz verde Q2.",
+  pres_s7_exec_action: {
+    EN: "Focus on onboarding drop — 36.8% of users lost. +4,690 purchases at stake.",
+    ES: "Foco en caída de onboarding — 36.8% de usuarios perdidos. +4,690 compras en juego.",
   },
   pres_s7_product_metric: { EN: "Target: 39.5% → 55% Reg→Onb", ES: "Meta: 39.5% → 55% Reg→Onb" },
-  pres_s7_eng_insight: {
-    EN: "Web converts at 2.6% — 7× below iOS at EVERY funnel step. This is structural performance debt, not a single friction point.",
-    ES: "Web convierte al 2.6% — 7× por debajo de iOS en CADA paso del funnel. Es deuda estructural de rendimiento, no un punto de fricción.",
+  pres_s7_product_action: {
+    EN: "Ship progressive onboarding for >50 in Q2 with 1 squad.",
+    ES: "Lanzar onboarding progresivo para >50 en Q2 con 1 squad.",
   },
   pres_s7_eng_metric: { EN: "iOS: 18.2% · Android: 8.8% · Web: 2.6%", ES: "iOS: 18.2% · Android: 8.8% · Web: 2.6%" },
-  pres_s7_growth_insight: {
-    EN: "Non-binary converts at 17% (1.75× average). Other regions stall only at checkout (31.2% vs 50.6%). Two addressable segments.",
-    ES: "No binario convierte al 17% (1.75× promedio). Otras regiones se estancan solo en checkout (31.2% vs 50.6%). Dos segmentos abordables.",
+  pres_s7_eng_action: {
+    EN: "Web has structural debt at every step — not a single fix.",
+    ES: "Web tiene deuda estructural en cada paso — no es un arreglo único.",
   },
   pres_s7_growth_metric: {
     EN: "Other regions Cart→Purch: 31.2% vs 50.6%",
     ES: "Otras regiones Carrito→Compra: 31.2% vs 50.6%",
   },
-  pres_s7_footer: {
-    EN: "Interactive dashboard available in the Dashboard tab — filters by age, device, location, gender.",
-    ES: "Dashboard interactivo disponible en la pestaña Tablero — filtra por edad, dispositivo, ubicación, género.",
+  pres_s7_growth_action: {
+    EN: "Non-binary converts at 1.75× avg. Other regions stall only at checkout.",
+    ES: "No binario convierte a 1.75× promedio. Otras regiones se estancan solo en checkout.",
+  },
+  pres_s7_enables_title: {
+    EN: "What this dashboard enables",
+    ES: "Lo que este dashboard habilita",
+  },
+  pres_s7_cap1: {
+    EN: "Interactive filters by age, device, location, gender",
+    ES: "Filtros interactivos por edad, dispositivo, ubicación, género",
+  },
+  pres_s7_cap2: {
+    EN: "All charts update in real time with filter combinations",
+    ES: "Todos los gráficos se actualizan en tiempo real con combinaciones de filtros",
+  },
+  pres_s7_cap3: {
+    EN: "Segment insights recalculate dynamically",
+    ES: "Los insights de segmento se recalculan dinámicamente",
+  },
+  pres_s7_cap4: {
+    EN: "Full dataset: 100,000 users · Jan–Apr 2025",
+    ES: "Dataset completo: 100,000 usuarios · Ene–Abr 2025",
+  },
+  pres_s7_footer_v2: {
+    EN: "This dashboard is live — navigate to the Dashboard tab to explore the data.",
+    ES: "Este dashboard está activo — navega a la pestaña Tablero para explorar los datos.",
   },
   pres_s7_insight30: { EN: "Insight in <30s", ES: "Insight en <30s" },
   pres_s7_key_metric: { EN: "Key metric", ES: "Métrica clave" },
