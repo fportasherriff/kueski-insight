@@ -5,6 +5,7 @@ import InsightCallout from './InsightCallout';
 import type { SegmentRow } from '@/hooks/useDashboardData';
 import type { AudienceHighlight } from './AudienceTabs';
 import type { Audience } from './AudienceTabs';
+import type { ActiveFilters } from './FilterBar';
 
 const dimensionTabs = [
   { key: 'age', dimension: 'age_group' },
@@ -34,11 +35,26 @@ const audienceSegmentMap: Record<Audience, string> = {
   growth: 'non-binary',
 };
 
-const audienceBadges: Record<Audience, string> = {
-  exec: '⚠ 0.6% — Critical',
-  product: '🎯 Top priority: >50 onboarding cliff',
-  engineering: '🔧 Web = 7× below iOS — structural',
-  growth: '📈 Non-binary = 1.75× avg conversion',
+const getSegmentInsight = (
+  segments: SegmentRow[],
+  activeDimension: string,
+  lang: string
+) => {
+  const dimKey = dimensionTabs.find(d => d.key === activeDimension)?.dimension;
+  if (!dimKey) return '';
+  const rows = segments.filter(r => r.dimension === dimKey);
+  if (!rows.length) return '';
+
+  const best = rows.reduce((a, b) => Number(a.overall_conv) > Number(b.overall_conv) ? a : b);
+  const worst = rows.reduce((a, b) => Number(a.overall_conv) < Number(b.overall_conv) ? a : b);
+  const worstConv = Number(worst.overall_conv);
+  const ratio = worstConv > 0 ? (Number(best.overall_conv) / worstConv).toFixed(1) : '∞';
+  const bestConv = Number(best.overall_conv).toFixed(1);
+
+  if (lang === 'es') {
+    return `${best.segment} convierte al ${bestConv}% — ${ratio}× más que ${worst.segment} (${worstConv.toFixed(1)}%).`;
+  }
+  return `${best.segment} converts at ${bestConv}% — ${ratio}× above ${worst.segment} at ${worstConv.toFixed(1)}%.`;
 };
 
 const DarkTooltip = ({ active, payload, label }: any) => {
@@ -78,8 +94,13 @@ const DarkTooltip = ({ active, payload, label }: any) => {
   );
 };
 
-const SegmentBreakdown = ({ segments, highlights, audience }: { segments: SegmentRow[]; highlights?: AudienceHighlight[]; audience?: Audience }) => {
-  const { t } = useLanguage();
+const SegmentBreakdown = ({ segments, highlights, audience, filters }: {
+  segments: SegmentRow[];
+  highlights?: AudienceHighlight[];
+  audience?: Audience;
+  filters?: ActiveFilters;
+}) => {
+  const { language, t } = useLanguage();
   const [activeTab, setActiveTab] = useState('age');
 
   // Auto-switch tab based on audience
@@ -98,15 +119,11 @@ const SegmentBreakdown = ({ segments, highlights, audience }: { segments: Segmen
   const minConv = Math.min(...data.map(d => d.overall_conv), 0);
 
   const highlightSegment = audience ? audienceSegmentMap[audience] : null;
-  const showBadge = audience && audienceDimensionMap[audience] === activeTab;
+
+  const insightText = getSegmentInsight(segments, activeTab, language === 'ES' ? 'es' : 'en');
 
   return (
     <div className="bg-card rounded-2xl shadow-sm p-6 animate-fade-in relative flex flex-col h-full" style={{ animationDelay: '400ms', animationFillMode: 'backwards' }}>
-      {showBadge && (
-        <span className="absolute top-4 right-4 text-xs font-semibold bg-primary/10 text-primary px-2.5 py-1 rounded-full z-10">
-          {audienceBadges[audience!]}
-        </span>
-      )}
       <h2 className="text-lg font-bold text-foreground">{t('segmentBreakdown')}</h2>
       <p className="text-xs text-muted-foreground mt-0.5 mb-4">{t('segmentSubtitle')}</p>
 
@@ -158,7 +175,11 @@ const SegmentBreakdown = ({ segments, highlights, audience }: { segments: Segmen
         </ResponsiveContainer>
       </div>
 
-      <InsightCallout text={t(insightKeys[activeTab])} variant="amber" />
+      {insightText && (
+        <div className="bg-[#FFF7ED] border-l-4 border-[#F59E0B] p-3 rounded-r-lg text-sm text-foreground mt-3">
+          {insightText}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import InsightCallout from './InsightCallout';
 import type { FunnelStep } from '@/hooks/useDashboardData';
+import type { ActiveFilters } from './FilterBar';
 
 const stepBadge = (rate: number): { emoji: string; label: string } => {
   if (rate >= 70) return { emoji: '✅', label: '' };
@@ -9,10 +9,48 @@ const stepBadge = (rate: number): { emoji: string; label: string } => {
   return { emoji: '🔴', label: 'Biggest drop' };
 };
 
-const FunnelChart = ({ funnel }: { funnel: FunnelStep[] }) => {
-  const { t } = useLanguage();
+const getFunnelInsight = (steps: FunnelStep[], filters: ActiveFilters | undefined, lang: string) => {
+  if (!steps?.length || steps.length < 5) return '';
+  const drops = [
+    { step: steps[1].name, drop: steps[0].users - steps[1].users, pct: 100 - steps[1].rate },
+    { step: steps[2].name, drop: steps[1].users - steps[2].users, pct: 100 - steps[2].rate },
+    { step: steps[3].name, drop: steps[2].users - steps[3].users, pct: 100 - steps[3].rate },
+    { step: steps[4].name, drop: steps[3].users - steps[4].users, pct: 100 - steps[4].rate },
+  ];
+  const biggestDrop = drops.reduce((a, b) => a.drop > b.drop ? a : b);
+  const overallConv = steps[4].rate.toFixed(1);
+  const totalUsers = steps[0].users.toLocaleString();
+  const dropUsers = biggestDrop.drop.toLocaleString();
+  const dropPct = biggestDrop.pct.toFixed(1);
+
+  const filterParts: string[] = [];
+  if (filters) {
+    if (filters.age !== 'all') filterParts.push(
+      filters.age === '<25' ? (lang === 'es' ? 'menores de 25' : 'under-25s') :
+      filters.age === '>50' ? (lang === 'es' ? 'mayores de 50' : 'over-50s') : '26-50'
+    );
+    if (filters.device !== 'all') filterParts.push(filters.device.toUpperCase());
+    if (filters.location !== 'all') filterParts.push(filters.location);
+    if (filters.gender !== 'all') filterParts.push(
+      filters.gender === 'non-binary' ? (lang === 'es' ? 'no binario' : 'non-binary') :
+      lang === 'es' ? (filters.gender === 'female' ? 'mujeres' : 'hombres') :
+      (filters.gender === 'female' ? 'female' : 'male')
+    );
+  }
+  const context = filterParts.length > 0 ? ` (${filterParts.join(', ')})` : '';
+
+  if (lang === 'es') {
+    return `De ${totalUsers} usuarios${context}, la mayor caída ocurre en ${biggestDrop.step} — ${dropUsers} usuarios (${dropPct}%) no continúan. Conversión total: ${overallConv}%.`;
+  }
+  return `Of ${totalUsers} users${context}, the biggest drop is at ${biggestDrop.step} — ${dropUsers} users (${dropPct}%) don't continue. Overall conversion: ${overallConv}%.`;
+};
+
+const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: ActiveFilters }) => {
+  const { language, t } = useLanguage();
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  const insightText = getFunnelInsight(funnel, filters, language === 'ES' ? 'es' : 'en');
 
   if (!funnel.length) return null;
 
@@ -159,7 +197,11 @@ const FunnelChart = ({ funnel }: { funnel: FunnelStep[] }) => {
           </div>
 
           <div className="mt-4">
-            <InsightCallout text={t('funnelInsight')} variant="amber" />
+            {insightText && (
+              <div className="bg-[#FFF7ED] border-l-4 border-[#F59E0B] p-3 rounded-r-lg text-sm text-foreground">
+                💡 {insightText}
+              </div>
+            )}
           </div>
         </div>
       </div>

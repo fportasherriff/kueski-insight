@@ -35,11 +35,6 @@ const SegmentHeatmap = ({ ageDevice, highlights }: { ageDevice: AgeDeviceRow[]; 
 
   return (
     <div className="bg-card rounded-2xl shadow-sm p-6 animate-fade-in relative" style={{ animationDelay: '600ms', animationFillMode: 'backwards' }}>
-      {heatHighlight?.badge && (
-        <span className="absolute top-4 right-4 text-xs font-semibold bg-destructive/10 text-destructive px-2.5 py-1 rounded-full z-10">
-          {heatHighlight.badge}
-        </span>
-      )}
       <h2 className="text-lg font-bold text-foreground">{t('heatmapTitle')}</h2>
       <p className="text-xs text-muted-foreground mb-5">{t('heatmapSubtitle')}</p>
 
