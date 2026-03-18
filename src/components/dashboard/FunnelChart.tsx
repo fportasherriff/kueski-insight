@@ -186,7 +186,7 @@ const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: Acti
         {/* Side panel — Device Distribution */}
         <div className="lg:col-span-2 bg-secondary/30 rounded-xl p-5 flex flex-col justify-between">
           <div>
-            <h3 className="text-sm font-semibold text-foreground">
+            <h3 className="text-sm font-semibold" style={{ color: '#00164C' }}>
               {isEs ? 'Distribución por Dispositivo' : 'Device Distribution'}
             </h3>
             <p className="text-xs text-muted-foreground mb-3">
