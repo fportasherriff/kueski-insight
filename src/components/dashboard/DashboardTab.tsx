@@ -3,7 +3,6 @@ import { useDashboardData } from '@/hooks/useDashboardData';
 import type { FunnelStep, DashboardKPI, MonthlyRow, SegmentRow } from '@/hooks/useDashboardData';
 import DashboardHeader from './DashboardHeader';
 import FilterBar, { ActiveFilters, defaultFilters, isFiltered } from './FilterBar';
-import AudienceTabs, { Audience, getAudienceHighlights } from './AudienceTabs';
 import AudiencePanel from './AudiencePanel';
 import KPICards from './KPICards';
 import FunnelChart from './FunnelChart';
@@ -42,16 +41,13 @@ const computeKPIsFromSteps = (steps: FunnelStep[]): Partial<DashboardKPI> | null
 const DashboardTab = () => {
   const { kpis, funnel, segments, monthly, ageDevice, loading, errors } = useDashboardData();
   const [filters, setFilters] = useState<ActiveFilters>(defaultFilters);
-  const [audience, setAudience] = useState<Audience>('exec');
   const [filteredFunnel, setFilteredFunnel] = useState<FunnelStep[] | null>(null);
   const [filteredMonthly, setFilteredMonthly] = useState<MonthlyRow[] | null>(null);
   const [filteredSegments, setFilteredSegments] = useState<SegmentRow[] | null>(null);
   const [filterLoading, setFilterLoading] = useState(false);
 
   const filtered = isFiltered(filters);
-  const highlights = useMemo(() => getAudienceHighlights(audience), [audience]);
 
-  // Fetch filtered funnel from vw_funnel_filterable
   useEffect(() => {
     if (!filtered) {
       setFilteredFunnel(null);
@@ -100,7 +96,6 @@ const DashboardTab = () => {
     fetchFiltered();
   }, [filters, filtered]);
 
-  // Fetch filtered monthly trends
   useEffect(() => {
     if (!filtered) {
       setFilteredMonthly(null);
@@ -167,7 +162,6 @@ const DashboardTab = () => {
     fetchMonthlyFiltered();
   }, [filters, filtered]);
 
-  // Fetch filtered segment breakdown
   useEffect(() => {
     if (!filtered) {
       setFilteredSegments(null);
@@ -249,7 +243,6 @@ const DashboardTab = () => {
     fetchSegments();
   }, [filters, filtered]);
 
-  // Filter heatmap
   const filteredAgeDevice = useMemo(() => {
     if (!filtered) return ageDevice;
     return ageDevice.filter(row => {
@@ -283,7 +276,6 @@ const DashboardTab = () => {
   const activeSegments = filteredSegments || segments;
   const activeFunnel = filteredFunnel || funnel;
 
-  // Compute KPIs from filtered funnel when filters active
   const computedKpis = filtered && filteredFunnel ? computeKPIsFromSteps(filteredFunnel) : null;
   const activeKpis = computedKpis && kpis
     ? {
@@ -301,10 +293,8 @@ const DashboardTab = () => {
       <DashboardHeader segments={segments} filtered={filtered} />
       <FilterBar filters={filters} onChange={setFilters} onExport={handleExport} />
 
-      <AudienceTabs active={audience} onChange={setAudience} />
-
       {errors.kpis && <ErrorBanner message={errors.kpis} />}
-      {activeKpis && <KPICards kpis={activeKpis} filtered={filtered} highlights={highlights} />}
+      {activeKpis && <KPICards kpis={activeKpis} filtered={filtered} />}
 
       {errors.funnel && <ErrorBanner message={errors.funnel} />}
       {filterLoading ? (
@@ -315,12 +305,12 @@ const DashboardTab = () => {
         activeFunnel.length > 0 && <FunnelChart funnel={activeFunnel} filters={filters} />
       )}
 
-      <AudiencePanel audience={audience} segments={activeSegments} ageDevice={filteredAgeDevice} />
+      <AudiencePanel audience="exec" segments={activeSegments} ageDevice={filteredAgeDevice} />
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-stretch">
         <div className="lg:col-span-3 flex flex-col">
           {errors.segments && <ErrorBanner message={errors.segments} />}
-          {(activeSegments).length > 0 && <SegmentBreakdown segments={activeSegments} highlights={highlights} audience={audience} filters={filters} />}
+          {(activeSegments).length > 0 && <SegmentBreakdown segments={activeSegments} filters={filters} />}
         </div>
         <div className="lg:col-span-2 flex flex-col">
           {errors.monthly && <ErrorBanner message={errors.monthly} />}
@@ -329,7 +319,7 @@ const DashboardTab = () => {
       </div>
 
       {errors.ageDevice && <ErrorBanner message={errors.ageDevice} />}
-      {filteredAgeDevice.length > 0 && <SegmentHeatmap ageDevice={filteredAgeDevice} highlights={highlights} />}
+      {filteredAgeDevice.length > 0 && <SegmentHeatmap ageDevice={filteredAgeDevice} />}
     </div>
   );
 };

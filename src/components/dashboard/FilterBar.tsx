@@ -80,7 +80,7 @@ const FilterBar = ({ filters, onChange, onExport }: FilterBarProps) => {
       {renderSelect('location', 'location')}
       {renderSelect('gender', 'gender')}
 
-      <span className="bg-muted text-muted-foreground rounded-lg px-3 py-2 text-sm select-none">
+      <span className="px-3 py-2 bg-[#F5F6FB] text-[#384550] rounded-lg text-sm border border-gray-200 font-medium">
         Jan–Apr 2025
       </span>
 
