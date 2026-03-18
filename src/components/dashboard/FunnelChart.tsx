@@ -59,11 +59,61 @@ const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: Acti
   const lang = isEs ? 'es' : 'en';
 
   useEffect(() => {
-    supabase
-      .from('vw_device_distribution')
-      .select('device_label, total_users, pct_of_parque, conv_rate, purchases_gap_vs_ios')
-      .then(({ data }) => { if (data) setDeviceData(data); });
-  }, []);
+    const fetchDeviceData = async () => {
+      const hasFilter = filters && (filters.age !== 'all' || filters.device !== 'all' || filters.location !== 'all' || filters.gender !== 'all');
+
+      if (!hasFilter) {
+        // No filters: use the pre-computed view
+        const { data } = await supabase
+          .from('vw_device_distribution')
+          .select('device_label, total_users, pct_of_parque, conv_rate, purchases_gap_vs_ios');
+        if (data) setDeviceData(data);
+        return;
+      }
+
+      // With filters: compute from filterable view
+      let query = supabase
+        .from('vw_segment_breakdown_filterable')
+        .select('age_group, device, location, gender, n, purchased');
+
+      if (filters.age !== 'all') query = query.eq('age_group', filters.age);
+      if (filters.device !== 'all') query = query.eq('device', filters.device);
+      if (filters.location !== 'all') query = query.eq('location', filters.location);
+      if (filters.gender !== 'all') query = query.eq('gender', filters.gender);
+
+      const { data, error } = await query;
+      if (error || !data?.length) { setDeviceData([]); return; }
+
+      // Aggregate by device
+      const byDevice: Record<string, { users: number; purchased: number }> = {};
+      data.forEach(row => {
+        const dev = row.device === 'ios' ? 'iOS' : row.device === 'android' ? 'Android' : 'Web';
+        if (!byDevice[dev]) byDevice[dev] = { users: 0, purchased: 0 };
+        byDevice[dev].users += Number(row.n);
+        byDevice[dev].purchased += Number(row.purchased);
+      });
+
+      const totalUsers = Object.values(byDevice).reduce((s, d) => s + d.users, 0);
+      const iosConv = byDevice['iOS'] ? (byDevice['iOS'].purchased / byDevice['iOS'].users * 100) : 0;
+
+      const result = Object.entries(byDevice).map(([label, d]) => {
+        const convRate = d.users > 0 ? d.purchased / d.users * 100 : 0;
+        const expectedPurchases = d.users * iosConv / 100;
+        const gap = Math.round(expectedPurchases - d.purchased);
+        return {
+          device_label: label,
+          total_users: d.users,
+          pct_of_parque: totalUsers > 0 ? Math.round(d.users / totalUsers * 1000) / 10 : 0,
+          conv_rate: Math.round(convRate * 10) / 10,
+          purchases_gap_vs_ios: Math.max(0, gap),
+        };
+      });
+
+      setDeviceData(result);
+    };
+
+    fetchDeviceData();
+  }, [filters]);
 
   const insightText = getFunnelInsight(funnel, filters, lang);
 
