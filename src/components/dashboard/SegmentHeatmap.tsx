@@ -12,7 +12,8 @@ const getCellColor = (conv: number) => {
 };
 
 const ageOrder = ['<25', '26-50', '>50'];
-const deviceOrder = ['iOS', 'Android', 'Web'];
+const deviceOrder = ['ios', 'android', 'web'];
+const deviceLabels: Record<string, string> = { ios: 'iOS', android: 'Android', web: 'Web' };
 
 const SegmentHeatmap = ({ ageDevice }: { ageDevice: AgeDeviceRow[] }) => {
   const { t } = useLanguage();
@@ -37,7 +38,7 @@ const SegmentHeatmap = ({ ageDevice }: { ageDevice: AgeDeviceRow[] }) => {
       <div className="grid grid-cols-[80px_1fr_1fr_1fr] gap-2 mb-2">
         <div />
         {deviceOrder.map(d => (
-          <p key={d} className="text-xs font-semibold text-muted-foreground text-center">{d}</p>
+          <p key={d} className="text-xs font-semibold text-muted-foreground text-center">{deviceLabels[d]}</p>
         ))}
       </div>
 
@@ -74,7 +75,7 @@ const SegmentHeatmap = ({ ageDevice }: { ageDevice: AgeDeviceRow[] }) => {
                   </span>
                 )}
                 <span className="text-xl font-bold">{cell.overall_conv}%</span>
-                <span className="text-xs opacity-80 mt-1">n={cell.total_users?.toLocaleString()}</span>
+                <span className="text-xs opacity-80 mt-1">n={cell.n?.toLocaleString()}</span>
               </div>
             );
           })}

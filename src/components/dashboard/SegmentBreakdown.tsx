@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, LabelList } from 'recharts';
 import { useLanguage } from '@/contexts/LanguageContext';
 import InsightCallout from './InsightCallout';
+import CustomTooltip from './CustomTooltip';
 import type { SegmentRow } from '@/hooks/useDashboardData';
 
 const dimensionTabs = [
@@ -25,7 +26,8 @@ const SegmentBreakdown = ({ segments }: { segments: SegmentRow[] }) => {
   const currentDim = dimensionTabs.find(d => d.key === activeTab)!;
   const data = segments
     .filter(s => s.dimension === currentDim.dimension)
-    .sort((a, b) => b.overall_conv - a.overall_conv);
+    .sort((a, b) => b.overall_conv - a.overall_conv)
+    .map(s => ({ ...s, label: `${s.segment} (n=${s.n.toLocaleString()})` }));
 
   const maxConv = Math.max(...data.map(d => d.overall_conv), 0);
   const minConv = Math.min(...data.map(d => d.overall_conv), 0);
@@ -56,15 +58,11 @@ const SegmentBreakdown = ({ segments }: { segments: SegmentRow[] }) => {
             <XAxis type="number" domain={[0, Math.ceil(maxConv / 5) * 5 + 5]} tickFormatter={v => `${v}%`} tick={{ fontSize: 11 }} />
             <YAxis
               type="category"
-              dataKey="segment"
-              width={100}
+              dataKey="label"
+              width={140}
               tick={{ fontSize: 11 }}
-              tickFormatter={(v: string) => v}
             />
-            <Tooltip
-              formatter={(value: number) => [`${value}%`, 'Conversion']}
-              contentStyle={{ borderRadius: 8, fontSize: 12, border: '1px solid hsl(var(--border))' }}
-            />
+            <Tooltip content={<CustomTooltip />} />
             <Bar dataKey="overall_conv" radius={[0, 4, 4, 0]} barSize={24}>
               {data.map((entry, idx) => {
                 let fill = 'hsl(var(--primary))';
