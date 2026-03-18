@@ -51,43 +51,25 @@ const Slide1 = ({ t }: { t: (k: string) => string }) => (
 /* ─── Slide 2 ─── */
 const Slide2 = ({ data, t }: { data: PresentationData; t: (k: string) => string }) => {
   const f = data.funnel;
-  const steps = [
-    { name: t('registered'), users: f?.registered, rate: null, drop: null },
-    { name: t('onboarded'), users: f?.onboarded, rate: f?.step_reg_to_onb, drop: (f?.registered ?? 0) - (f?.onboarded ?? 0) },
-    { name: t('viewedProduct'), users: f?.viewed_product, rate: f?.step_onb_to_view, drop: (f?.onboarded ?? 0) - (f?.viewed_product ?? 0) },
-    { name: t('addedToCart'), users: f?.added_to_cart, rate: f?.step_view_to_cart, drop: (f?.viewed_product ?? 0) - (f?.added_to_cart ?? 0) },
-    { name: t('purchased'), users: f?.purchased, rate: f?.step_cart_to_purch, drop: (f?.added_to_cart ?? 0) - (f?.purchased ?? 0) },
-  ];
-
   const worst2 = data.ageDevice.slice(0, 2);
   const kpis = data.kpis;
   const totalBase = f?.registered ?? 100000;
+
+  const funnelBars = [
+    { name: t('registered'), pct: 100 },
+    { name: t('onboarded'), pct: f?.pct_registered_to_onboarded ?? 63.2 },
+    { name: t('viewedProduct'), pct: f?.pct_registered_to_viewed ?? 49.2 },
+    { name: t('addedToCart'), pct: f?.pct_registered_to_cart ?? 22.0 },
+    { name: t('purchased'), pct: f?.pct_registered_to_purchased ?? 10.4 },
+  ];
 
   return (
     <div className="max-w-3xl mx-auto px-8 py-10 space-y-6">
       <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>{t('pres_s2_title')}</h2>
       <p className="text-sm" style={{ color: '#384550' }}>{t('pres_s2_subtitle')}</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
-        {/* Left – Global Drop-offs */}
-        <div>
-          <p className="text-xs font-bold uppercase tracking-wide mb-3" style={{ color: '#00164C' }}>{t('pres_s2_global')}</p>
-          <div className="space-y-2">
-            {steps.map((s, i) => (
-              <div key={i}>
-                <div className="flex justify-between text-sm" style={{ color: '#384550' }}>
-                  <span className="font-medium">{s.name}</span>
-                  <span>{(s.users ?? 0).toLocaleString()}{s.rate != null ? ` · ${s.rate}%` : ''}</span>
-                </div>
-                {s.drop != null && s.drop > 0 && (
-                  <p className="text-xs" style={{ color: '#EF4444' }}>▼ {s.drop.toLocaleString()} {t('pres_s2_dropped')}</p>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Middle – 2 Worst */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        {/* Left – 2 Worst Combinations */}
         <div>
           <p className="text-xs font-bold uppercase tracking-wide mb-3" style={{ color: '#00164C' }}>{t('pres_s2_damaging')}</p>
           <div className="space-y-4">
@@ -113,18 +95,38 @@ const Slide2 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
           </div>
         </div>
 
-        {/* Right – Best vs Worst */}
-        <div className="text-center">
-          <p className="text-xs font-bold uppercase tracking-wide mb-3" style={{ color: '#00164C' }}>{t('pres_s2_gap')}</p>
-          <p className="text-5xl font-extrabold" style={{ color: '#0075FF' }}>{kpis?.best_to_worst_ratio ?? '37.7'}×</p>
-          <p className="text-xs text-muted-foreground mt-2">{t('pres_s2_gap_label')}</p>
-          <div className="flex flex-col gap-2 mt-4">
-            <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full bg-green-50" style={{ color: '#008246' }}>
-              {t('pres_s2_best_label')}: {kpis?.best_segment_conv ?? '22.6'}% (iOS 26-50)
-            </span>
-            <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full bg-red-50" style={{ color: '#EF4444' }}>
-              {t('pres_s2_worst_label')}: {kpis?.worst_segment_conv ?? '0.6'}% (Web &gt;50)
-            </span>
+        {/* Right – Gap + Funnel bars */}
+        <div>
+          <div className="text-center mb-6">
+            <p className="text-xs font-bold uppercase tracking-wide mb-3" style={{ color: '#00164C' }}>{t('pres_s2_gap')}</p>
+            <p className="text-5xl font-extrabold" style={{ color: '#0075FF' }}>{kpis?.best_to_worst_ratio ?? '37.7'}×</p>
+            <p className="text-xs text-muted-foreground mt-2">{t('pres_s2_gap_label')}</p>
+            <div className="flex flex-col gap-2 mt-3">
+              <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full bg-green-50" style={{ color: '#008246' }}>
+                {t('pres_s2_best_label')}: {kpis?.best_segment_conv ?? '22.6'}% (iOS 26-50)
+              </span>
+              <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full bg-red-50" style={{ color: '#EF4444' }}>
+                {t('pres_s2_worst_label')}: {kpis?.worst_segment_conv ?? '0.6'}% (Web &gt;50)
+              </span>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            {funnelBars.map((bar, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <span className="text-xs font-medium w-24 text-right" style={{ color: '#384550' }}>{bar.name}</span>
+                <div className="flex-1 h-5 bg-gray-100 rounded-full overflow-hidden">
+                  <div
+                    className="h-full rounded-full transition-all"
+                    style={{
+                      width: `${bar.pct}%`,
+                      backgroundColor: `hsl(212, 100%, ${30 + i * 10}%)`,
+                    }}
+                  />
+                </div>
+                <span className="text-xs font-semibold w-12" style={{ color: '#00164C' }}>{bar.pct}%</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
