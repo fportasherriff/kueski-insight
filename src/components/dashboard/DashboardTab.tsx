@@ -279,6 +279,7 @@ const DashboardTab = () => {
 
   if (loading) return <DashboardSkeleton />;
 
+  const activeSegments = filteredSegments || segments;
   const activeFunnel = filteredFunnel || funnel;
 
   // Compute KPIs from filtered funnel when filters active
