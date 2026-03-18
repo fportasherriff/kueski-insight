@@ -175,8 +175,8 @@ export const translations: Translations = {
 
   pres_s3_k1_name: { EN: "Onboarding Completion Rate by Age", ES: "Tasa de Onboarding Completado por Edad" },
   pres_s3_k1_why: {
-    EN: "Predicts 30-day purchase likelihood. The 45pp gap between >50 and <25 is the single largest conversion lever in the funnel.",
-    ES: "Predice la probabilidad de compra a 30 días. La brecha de 45pp entre >50 y <25 es la mayor palanca de conversión del funnel.",
+    EN: "The onboarding step is the entry gate to the entire funnel. Users who don't complete it never reach any product. The 45pp gap between >50 (39.5%) and <25 (84.9%) is the single largest conversion lever we can pull.",
+    ES: "El paso de onboarding es la puerta de entrada a todo el funnel. Los usuarios que no lo completan nunca llegan a ningún producto. La brecha de 45pp entre >50 (39.5%) y <25 (84.9%) es la mayor palanca de conversión que podemos accionar.",
   },
   pres_s3_k1_watch: { EN: "Target: bring >50 from 39.5% → 55%", ES: "Meta: llevar >50 de 39.5% → 55%" },
   pres_s3_k1_clarify: {
@@ -224,42 +224,42 @@ export const translations: Translations = {
   pres_s4_validate: { EN: "What would validate this", ES: "Qué validaría esto" },
 
   pres_s4_h1_title: {
-    EN: "Onboarding complexity filters out >50 before they see product value",
-    ES: "La complejidad del onboarding filtra a los >50 antes de que vean el valor del producto",
+    EN: "Onboarding form is too complex for users 50+ with less digital experience",
+    ES: "El formulario de onboarding es demasiado complejo para usuarios 50+ con menos experiencia digital",
   },
   pres_s4_h1_evidence: {
-    EN: ">50 Reg→Onb 39.5% vs <25 84.9% — 45pp gap, largest in funnel",
-    ES: ">50 Reg→Onb 39.5% vs <25 84.9% — brecha de 45pp, la más grande del funnel",
+    EN: ">50 completes onboarding at 39.5% vs 84.9% for <25 — 45pp gap, the largest single drop in the entire funnel. 29,685 users affected.",
+    ES: ">50 completa onboarding al 39.5% vs 84.9% para <25 — brecha de 45pp, la mayor caída individual en todo el funnel. 29,685 usuarios afectados.",
   },
   pres_s4_h1_validate: {
-    EN: "Session recordings at onboarding screens by age, form field error rates by age",
-    ES: "Grabaciones de sesión en pantallas de onboarding por edad, tasas de error en campos por edad",
+    EN: "Session recordings segmented by age showing which form field triggers abandonment. Field error rates by age group.",
+    ES: "Grabaciones de sesión segmentadas por edad mostrando qué campo del formulario desencadena el abandono. Tasas de error por campo por grupo de edad.",
   },
 
   pres_s4_h2_title: {
-    EN: "Web platform has structural performance debt and lacks mobile-native trust signals",
-    ES: "La plataforma web tiene deuda estructural de rendimiento y carece de señales de confianza mobile-native",
+    EN: "Web platform lacks mobile trust signals and has structural performance debt",
+    ES: "La plataforma web carece de señales de confianza mobile y tiene deuda estructural de rendimiento",
   },
   pres_s4_h2_evidence: {
-    EN: "Web 2.6% overall vs iOS 18.2% (7×) — gap is consistent at ALL 4 steps",
-    ES: "Web 2.6% total vs iOS 18.2% (7×) — la brecha es consistente en los 4 pasos",
+    EN: "Web converts at 2.6% vs iOS 18.2% (7×). The gap appears at ALL 4 funnel steps — not isolated to one. This rules out a single UX fix.",
+    ES: "Web convierte al 2.6% vs iOS 18.2% (7×). La brecha aparece en los 4 pasos del funnel — no aislada a uno. Esto descarta un arreglo UX único.",
   },
   pres_s4_h2_validate: {
-    EN: "Page load times web vs app, checkout error rates by device, abandon surveys",
-    ES: "Tiempos de carga web vs app, tasas de error en checkout por dispositivo, encuestas de abandono",
+    EN: "Page load times web vs app. Checkout error rates by device. Post-abandon surveys asking why users left.",
+    ES: "Tiempos de carga web vs app. Tasas de error en checkout por dispositivo. Encuestas post-abandono preguntando por qué los usuarios se fueron.",
   },
 
   pres_s4_h3_title: {
-    EN: "Other regions face trust and logistics uncertainty at final checkout",
-    ES: "Otras regiones enfrentan incertidumbre de confianza y logística en el checkout final",
+    EN: "Users in non-major-city regions face uncertainty at checkout about delivery and payment options",
+    ES: "Usuarios en regiones no principales enfrentan incertidumbre en el checkout sobre entrega y opciones de pago",
   },
   pres_s4_h3_evidence: {
-    EN: "Other regions Reg→Onb 63.2% (equal to cities) but Cart→Purch 31.2% vs 50.6%",
-    ES: "Otras regiones Reg→Onb 63.2% (igual a ciudades) pero Carrito→Compra 31.2% vs 50.6%",
+    EN: "Other regions onboard at 63.2% — equal to major cities (62.7%). But Cart→Purchase drops to 31.2% vs 50.6% in cities. The product works. Only checkout fails.",
+    ES: "Otras regiones completan onboarding al 63.2% — igual a ciudades principales (62.7%). Pero Carrito→Compra cae a 31.2% vs 50.6% en ciudades. El producto funciona. Solo falla el checkout.",
   },
   pres_s4_h3_validate: {
-    EN: "Support tickets by region, post-abandon survey, delivery time by region",
-    ES: "Tickets de soporte por región, encuesta post-abandono, tiempo de entrega por región",
+    EN: "Post-abandon survey for Other regions. Support ticket analysis by region. Available payment methods by location.",
+    ES: "Encuesta post-abandono para otras regiones. Análisis de tickets de soporte por región. Métodos de pago disponibles por ubicación.",
   },
 
   // Slide 5

@@ -51,43 +51,25 @@ const Slide1 = ({ t }: { t: (k: string) => string }) => (
 /* ─── Slide 2 ─── */
 const Slide2 = ({ data, t }: { data: PresentationData; t: (k: string) => string }) => {
   const f = data.funnel;
-  const steps = [
-    { name: t('registered'), users: f?.registered, rate: null, drop: null },
-    { name: t('onboarded'), users: f?.onboarded, rate: f?.step_reg_to_onb, drop: (f?.registered ?? 0) - (f?.onboarded ?? 0) },
-    { name: t('viewedProduct'), users: f?.viewed_product, rate: f?.step_onb_to_view, drop: (f?.onboarded ?? 0) - (f?.viewed_product ?? 0) },
-    { name: t('addedToCart'), users: f?.added_to_cart, rate: f?.step_view_to_cart, drop: (f?.viewed_product ?? 0) - (f?.added_to_cart ?? 0) },
-    { name: t('purchased'), users: f?.purchased, rate: f?.step_cart_to_purch, drop: (f?.added_to_cart ?? 0) - (f?.purchased ?? 0) },
-  ];
-
   const worst2 = data.ageDevice.slice(0, 2);
   const kpis = data.kpis;
   const totalBase = f?.registered ?? 100000;
+
+  const funnelBars = [
+    { name: t('registered'), pct: 100 },
+    { name: t('onboarded'), pct: f?.pct_registered_to_onboarded ?? 63.2 },
+    { name: t('viewedProduct'), pct: f?.pct_registered_to_viewed ?? 49.2 },
+    { name: t('addedToCart'), pct: f?.pct_registered_to_cart ?? 22.0 },
+    { name: t('purchased'), pct: f?.pct_registered_to_purchased ?? 10.4 },
+  ];
 
   return (
     <div className="max-w-3xl mx-auto px-8 py-10 space-y-6">
       <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>{t('pres_s2_title')}</h2>
       <p className="text-sm" style={{ color: '#384550' }}>{t('pres_s2_subtitle')}</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
-        {/* Left – Global Drop-offs */}
-        <div>
-          <p className="text-xs font-bold uppercase tracking-wide mb-3" style={{ color: '#00164C' }}>{t('pres_s2_global')}</p>
-          <div className="space-y-2">
-            {steps.map((s, i) => (
-              <div key={i}>
-                <div className="flex justify-between text-sm" style={{ color: '#384550' }}>
-                  <span className="font-medium">{s.name}</span>
-                  <span>{(s.users ?? 0).toLocaleString()}{s.rate != null ? ` · ${s.rate}%` : ''}</span>
-                </div>
-                {s.drop != null && s.drop > 0 && (
-                  <p className="text-xs" style={{ color: '#EF4444' }}>▼ {s.drop.toLocaleString()} {t('pres_s2_dropped')}</p>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Middle – 2 Worst */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        {/* Left – 2 Worst Combinations */}
         <div>
           <p className="text-xs font-bold uppercase tracking-wide mb-3" style={{ color: '#00164C' }}>{t('pres_s2_damaging')}</p>
           <div className="space-y-4">
@@ -113,18 +95,38 @@ const Slide2 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
           </div>
         </div>
 
-        {/* Right – Best vs Worst */}
-        <div className="text-center">
-          <p className="text-xs font-bold uppercase tracking-wide mb-3" style={{ color: '#00164C' }}>{t('pres_s2_gap')}</p>
-          <p className="text-5xl font-extrabold" style={{ color: '#0075FF' }}>{kpis?.best_to_worst_ratio ?? '37.7'}×</p>
-          <p className="text-xs text-muted-foreground mt-2">{t('pres_s2_gap_label')}</p>
-          <div className="flex flex-col gap-2 mt-4">
-            <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full bg-green-50" style={{ color: '#008246' }}>
-              {t('pres_s2_best_label')}: {kpis?.best_segment_conv ?? '22.6'}% (iOS 26-50)
-            </span>
-            <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full bg-red-50" style={{ color: '#EF4444' }}>
-              {t('pres_s2_worst_label')}: {kpis?.worst_segment_conv ?? '0.6'}% (Web &gt;50)
-            </span>
+        {/* Right – Gap + Funnel bars */}
+        <div>
+          <div className="text-center mb-6">
+            <p className="text-xs font-bold uppercase tracking-wide mb-3" style={{ color: '#00164C' }}>{t('pres_s2_gap')}</p>
+            <p className="text-5xl font-extrabold" style={{ color: '#0075FF' }}>{kpis?.best_to_worst_ratio ?? '37.7'}×</p>
+            <p className="text-xs text-muted-foreground mt-2">{t('pres_s2_gap_label')}</p>
+            <div className="flex flex-col gap-2 mt-3">
+              <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full bg-green-50" style={{ color: '#008246' }}>
+                {t('pres_s2_best_label')}: {kpis?.best_segment_conv ?? '22.6'}% (iOS 26-50)
+              </span>
+              <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full bg-red-50" style={{ color: '#EF4444' }}>
+                {t('pres_s2_worst_label')}: {kpis?.worst_segment_conv ?? '0.6'}% (Web &gt;50)
+              </span>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            {funnelBars.map((bar, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <span className="text-xs font-medium w-24 text-right" style={{ color: '#384550' }}>{bar.name}</span>
+                <div className="flex-1 h-5 bg-gray-100 rounded-full overflow-hidden">
+                  <div
+                    className="h-full rounded-full transition-all"
+                    style={{
+                      width: `${bar.pct}%`,
+                      backgroundColor: `hsl(212, 100%, ${30 + i * 10}%)`,
+                    }}
+                  />
+                </div>
+                <span className="text-xs font-semibold w-12" style={{ color: '#00164C' }}>{bar.pct}%</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -137,7 +139,6 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
   const findSeg = (dim: string, val: string) => data.segments.find((s: any) => s.dimension === dim && s.segment_value === val);
   const age50 = findSeg('age_group', '>50');
   const age25 = findSeg('age_group', '<25');
-  const other = findSeg('location', 'Other');
 
   // All 3 devices for KPI #2
   const deviceSegs = data.segments.filter((s: any) => s.dimension === 'device');
@@ -151,21 +152,12 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
     { name: 'Web', parque: '19.9%', seg: webSeg },
   ];
 
-  // KPI #3 step-by-step table
-  const cdmx = findSeg('location', 'CDMX');
-  const gdl = findSeg('location', 'GDL');
-  const mty = findSeg('location', 'MTY');
-
-  const avgStep = (field: string) => {
-    const vals = [cdmx, gdl, mty].filter(Boolean).map((s: any) => s[field] ?? 0);
-    return vals.length > 0 ? (vals.reduce((a: number, b: number) => a + b, 0) / vals.length).toFixed(1) : '—';
-  };
-
+  // KPI #3 hardcoded verified values
   const kpi3Steps = [
-    { step: 'Reg→Onb', citiesAvg: avgStep('step_reg_to_onb'), otherVal: other?.step_reg_to_onb },
-    { step: 'Onb→View', citiesAvg: avgStep('step_onb_to_view'), otherVal: other?.step_onb_to_view },
-    { step: 'View→Cart', citiesAvg: avgStep('step_view_to_cart'), otherVal: other?.step_view_to_cart },
-    { step: 'Cart→Purch', citiesAvg: avgStep('step_cart_to_purch'), otherVal: other?.step_cart_to_purch },
+    { step: 'Reg→Onb', citiesAvg: '~63%', otherVal: '63.2%', gap: '≈0', isOk: true },
+    { step: 'Onb→View', citiesAvg: '~78%', otherVal: '72.8%', gap: '-5pp', isOk: false },
+    { step: 'View→Cart', citiesAvg: '~46%', otherVal: '46.7%', gap: '≈0', isOk: true },
+    { step: 'Cart→Purch', citiesAvg: '50.6%', otherVal: '31.2%', gap: '-19pp', isOk: false },
   ];
 
   return (
@@ -187,7 +179,7 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
           <p className="text-xs text-muted-foreground italic mt-2">{t('pres_s3_k1_parque')}</p>
         </div>
 
-        {/* KPI #2 — All 3 devices */}
+        {/* KPI #2 — All 3 devices with step rates */}
         <div className="bg-[#F5F6FB] rounded-xl p-5 border-t-4" style={{ borderColor: '#008246' }}>
           <span className="text-xs font-bold px-2 py-0.5 rounded-full text-white" style={{ backgroundColor: '#008246' }}>KPI #2</span>
           <p className="font-bold text-sm mt-3" style={{ color: '#00164C' }}>{t('pres_s3_k2_name')}</p>
@@ -198,6 +190,7 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
                 <th className="py-1 font-semibold">{t('device')}</th>
                 <th className="py-1 font-semibold">% {t('pres_s3_k2_users')}</th>
                 <th className="py-1 font-semibold">{t('pres_s3_k2_conv')}</th>
+                <th className="py-1 font-semibold">Step rates</th>
               </tr>
             </thead>
             <tbody>
@@ -206,6 +199,14 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
                   <td className="py-1 font-medium">{d.name}</td>
                   <td className="py-1">{d.parque}</td>
                   <td className="py-1 font-semibold" style={{ color: d.name === 'Web' ? '#EF4444' : '#008246' }}>{d.seg?.overall_conv ?? '—'}%</td>
+                  <td className="py-0.5">
+                    <div className="text-[10px] leading-tight" style={{ color: '#6B7280' }}>
+                      <div>R→O: {d.seg?.step_reg_to_onb ?? '—'}%</div>
+                      <div>O→V: {d.seg?.step_onb_to_view ?? '—'}%</div>
+                      <div>V→C: {d.seg?.step_view_to_cart ?? '—'}%</div>
+                      <div>C→P: {d.seg?.step_cart_to_purch ?? '—'}%</div>
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -215,7 +216,7 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
           <p className="text-xs text-muted-foreground italic mt-2">{t('pres_s3_k2_insight')}</p>
         </div>
 
-        {/* KPI #3 — Step-by-step table */}
+        {/* KPI #3 — Hardcoded step-by-step table */}
         <div className="bg-[#F5F6FB] rounded-xl p-5 border-t-4" style={{ borderColor: '#EF4444' }}>
           <span className="text-xs font-bold px-2 py-0.5 rounded-full text-white" style={{ backgroundColor: '#EF4444' }}>KPI #3</span>
           <p className="font-bold text-sm mt-3" style={{ color: '#00164C' }}>{t('pres_s3_k3_name')}</p>
@@ -230,23 +231,16 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
               </tr>
             </thead>
             <tbody>
-              {kpi3Steps.map((row, i) => {
-                const cityVal = parseFloat(String(row.citiesAvg));
-                const otherVal = row.otherVal ?? 0;
-                const gap = (otherVal - cityVal).toFixed(0);
-                const gapNum = parseInt(gap);
-                const isOk = Math.abs(gapNum) <= 2;
-                return (
-                  <tr key={i} className={i % 2 === 1 ? 'bg-white/50' : ''} style={{ color: '#384550' }}>
-                    <td className="py-1 font-medium">{row.step}</td>
-                    <td className="py-1">~{row.citiesAvg}%</td>
-                    <td className="py-1">{otherVal}%</td>
-                    <td className="py-1 font-semibold" style={{ color: isOk ? '#008246' : '#EF4444' }}>
-                      {gapNum > 0 ? '+' : ''}{gap}pp {isOk ? '✅' : '🔴'}
-                    </td>
-                  </tr>
-                );
-              })}
+              {kpi3Steps.map((row, i) => (
+                <tr key={i} className={i % 2 === 1 ? 'bg-white/50' : ''} style={{ color: '#384550' }}>
+                  <td className="py-1 font-medium">{row.step}</td>
+                  <td className="py-1">{row.citiesAvg}</td>
+                  <td className="py-1">{row.otherVal}</td>
+                  <td className="py-1 font-semibold" style={{ color: row.isOk ? '#008246' : '#EF4444' }}>
+                    {row.gap} {row.isOk ? '✅' : '🔴'}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
 
@@ -297,48 +291,47 @@ const Slide5 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
   const priorityColors = ['#EF4444', '#F59E0B', '#008246'];
   const rows = data.roadmap.slice(0, 3);
 
-  // Hardcoded EN/ES translations for DB fields that are in Spanish
   const initiativeTranslations: Record<number, { desc: { EN: string; ES: string }; rationale: { EN: string; ES: string }; whyQuarter: { EN: string; ES: string } }> = {
     0: {
       desc: {
-        EN: 'Redesign onboarding into short steps with contextual help and plain language for users over 50',
-        ES: 'Rediseñar el onboarding en pasos cortos con ayuda contextual y lenguaje claro para usuarios mayores de 50',
+        EN: 'Redesign onboarding as short progressive steps with plain language and contextual help — targeted at users 50+',
+        ES: 'Rediseñar el onboarding como pasos cortos progresivos con lenguaje claro y ayuda contextual — dirigido a usuarios 50+',
       },
       rationale: {
-        EN: 'GREENLIGHT — Highest confidence + 30% of user base + deployable Q2 with 1 squad. Largest single conversion lever in the funnel.',
-        ES: 'LUZ VERDE — Mayor confianza + 30% de la base de usuarios + desplegable en Q2 con 1 squad. La mayor palanca de conversión del funnel.',
+        EN: 'Highest confidence · 30% of user base · deployable Q2 with 1 squad · largest conversion lever in funnel',
+        ES: 'Mayor confianza · 30% de la base · desplegable Q2 con 1 squad · mayor palanca de conversión del funnel',
       },
       whyQuarter: {
-        EN: 'Highest confidence, lowest effort — ship with 1 squad in Q2.',
-        ES: 'Mayor confianza, menor esfuerzo — entregar con 1 squad en Q2.',
+        EN: 'Q2 — Low engineering effort, clear hypothesis, fast to test',
+        ES: 'Q2 — Bajo esfuerzo de ingeniería, hipótesis clara, rápido de testear',
       },
     },
     1: {
       desc: {
-        EN: 'Simplify checkout flow on Android: reduce steps, improve payment UI, optimize performance',
-        ES: 'Simplificar el flujo de checkout en Android: reducir pasos, mejorar UI de pago, optimizar rendimiento',
+        EN: 'Simplify Android checkout: fewer steps, better payment UI, performance optimization',
+        ES: 'Simplificar checkout en Android: menos pasos, mejor UI de pago, optimización de rendimiento',
       },
       rationale: {
-        EN: 'Highest reach (50% of users) + high technical confidence. Requires more engineering effort → Q3.',
-        ES: 'Mayor alcance (50% de usuarios) + alta confianza técnica. Requiere más esfuerzo de ingeniería → Q3.',
+        EN: '50% of user base · +4,690 purchases potential · high technical confidence',
+        ES: '50% de la base · +4,690 compras potenciales · alta confianza técnica',
       },
       whyQuarter: {
-        EN: 'Largest user base but needs more eng effort — plan for Q3.',
-        ES: 'Mayor base de usuarios pero necesita más esfuerzo de ing — planificar para Q3.',
+        EN: 'Q3 — Higher engineering effort, needs dedicated squad',
+        ES: 'Q3 — Mayor esfuerzo de ingeniería, necesita squad dedicado',
       },
     },
     2: {
       desc: {
-        EN: 'Add trust signals at checkout for non-tier-1 regions: clear delivery times, guarantees, local payment methods',
-        ES: 'Agregar señales de confianza en checkout para regiones no tier-1: tiempos de entrega claros, garantías, métodos de pago locales',
+        EN: 'Add trust signals at checkout for non-major-city regions: clear delivery times, guarantees, local payment methods',
+        ES: 'Agregar señales de confianza en checkout para regiones no principales: tiempos de entrega claros, garantías, métodos de pago locales',
       },
       rationale: {
-        EN: 'Quick win with low effort, but lower confidence — requires qualitative research before shipping. Q3-Q4.',
-        ES: 'Ganancia rápida con poco esfuerzo, pero menor confianza — requiere investigación cualitativa antes de lanzar. Q3-Q4.',
+        EN: '25% of user base · isolated to checkout only · needs qualitative research first',
+        ES: '25% de la base · aislado al checkout · necesita investigación cualitativa primero',
       },
       whyQuarter: {
-        EN: 'Low effort but needs qualitative validation first — Q3-Q4.',
-        ES: 'Bajo esfuerzo pero necesita validación cualitativa primero — Q3-Q4.',
+        EN: 'Q3-Q4 — Requires post-abandon research before shipping',
+        ES: 'Q3-Q4 — Requiere investigación post-abandono antes de lanzar',
       },
     },
   };
@@ -356,6 +349,7 @@ const Slide5 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
           const trans = initiativeTranslations[i];
           const desc = trans?.desc[lang] ?? r.description ?? '';
           const whyQ = trans?.whyQuarter[lang] ?? '';
+          const rationaleShort = trans?.rationale[lang] ?? '';
           return (
             <div key={i} className="rounded-xl p-5 border-l-4 bg-white border border-gray-100" style={{ borderLeftColor: clr }}>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
@@ -376,11 +370,12 @@ const Slide5 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
                 <div className="text-center">
                   <p className="text-2xl font-extrabold" style={{ color: clr }}>{r.rice_score}</p>
                   <p className="text-xs text-muted-foreground">{t('pres_s5_rice')}</p>
-                  {whyQ && <p className="text-xs italic text-muted-foreground mt-1">{t('pres_s5_why_quarter')}: {whyQ}</p>}
+                  <p className="text-xs italic text-muted-foreground mt-1">{rationaleShort}</p>
                 </div>
                 <div className="text-xs" style={{ color: '#384550' }}>
                   <p className="font-semibold">{r.current_rate}% → {r.target_rate}%</p>
                   <span className="inline-block bg-gray-100 rounded-full px-2 py-0.5 mt-1 text-xs">{r.critical_step}</span>
+                  {whyQ && <p className="text-xs italic text-muted-foreground mt-2">{t('pres_s5_why_quarter')}: {whyQ}</p>}
                 </div>
               </div>
             </div>
@@ -402,19 +397,33 @@ const Slide6 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
   const exp: Record<string, string> = {};
   data.experiment.forEach((r: any) => { exp[r.key] = r.value; });
 
+  const lang = t('pres_prev') === 'Anterior' ? 'ES' : 'EN';
+
+  const s6Trans: Record<string, { EN: string; ES: string }> = {
+    cohort: { EN: 'New users aged 50+ at the Registration step', ES: 'Nuevos usuarios de 50+ en el paso de Registro' },
+    control: { EN: 'Current onboarding flow (single multi-field form)', ES: 'Flujo de onboarding actual (formulario único multi-campo)' },
+    treatment: { EN: 'Progressive onboarding: 3 short screens, one action per step, contextual tooltip, progress indicator', ES: 'Onboarding progresivo: 3 pantallas cortas, una acción por paso, tooltip contextual, indicador de progreso' },
+    explainer: {
+      EN: 'We split users 50+ randomly into two groups. Group A sees the current onboarding. Group B sees a simplified 3-step version. After 2 weeks we check if Group B completes onboarding at a significantly higher rate.',
+      ES: 'Dividimos a los usuarios de 50+ aleatoriamente en dos grupos. El Grupo A ve el onboarding actual. El Grupo B ve una versión simplificada de 3 pasos. Después de 2 semanas verificamos si el Grupo B completa el onboarding a una tasa significativamente mayor.',
+    },
+  };
+
   const specRows = [
     [t('pres_s6_type'), exp['type'] || 'A/B Test (2 arms)'],
-    [t('pres_s6_cohort'), exp['target_cohort'] || 'Users >50 at Registration step'],
+    [t('pres_s6_cohort'), s6Trans.cohort[lang]],
     [t('pres_s6_sample'), exp['sample_size'] || '15,000 per arm (~2 weeks)'],
     [t('pres_s6_duration'), exp['min_duration'] || '2 weeks minimum'],
-    [t('pres_s6_control'), exp['control_arm'] || 'Current onboarding flow'],
-    [t('pres_s6_treatment'), exp['treatment_arm'] || 'Progressive 3-step onboarding'],
+    [t('pres_s6_control'), s6Trans.control[lang]],
+    [t('pres_s6_treatment'), s6Trans.treatment[lang]],
   ];
 
   return (
     <div className="max-w-3xl mx-auto px-8 py-10 space-y-6">
       <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>{t('pres_s6_title')}</h2>
       <p className="text-sm" style={{ color: '#384550' }}>{t('pres_s6_subtitle')}</p>
+
+      <p className="text-sm text-muted-foreground italic">{s6Trans.explainer[lang]}</p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
         <div className="bg-[#F5F6FB] rounded-xl p-6">
