@@ -249,7 +249,7 @@ const DashboardTab = () => {
         </div>
         <div className="lg:col-span-2">
           {errors.monthly && <ErrorBanner message={errors.monthly} />}
-          {monthly.length > 0 && <MonthlyTrend monthly={monthly} />}
+          {(filteredMonthly || monthly).length > 0 && <MonthlyTrend monthly={filteredMonthly || monthly} />}
         </div>
       </div>
 
