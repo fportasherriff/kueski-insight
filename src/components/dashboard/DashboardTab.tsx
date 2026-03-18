@@ -302,7 +302,6 @@ const DashboardTab = () => {
       <FilterBar filters={filters} onChange={setFilters} onExport={handleExport} />
 
       <AudienceTabs active={audience} onChange={setAudience} />
-      <AudiencePanel audience={audience} segments={activeSegments} ageDevice={filteredAgeDevice} />
 
       {errors.kpis && <ErrorBanner message={errors.kpis} />}
       {activeKpis && <KPICards kpis={activeKpis} filtered={filtered} highlights={highlights} />}
@@ -315,6 +314,8 @@ const DashboardTab = () => {
       ) : (
         activeFunnel.length > 0 && <FunnelChart funnel={activeFunnel} filters={filters} />
       )}
+
+      <AudiencePanel audience={audience} segments={activeSegments} ageDevice={filteredAgeDevice} />
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-stretch">
         <div className="lg:col-span-3 flex flex-col">
