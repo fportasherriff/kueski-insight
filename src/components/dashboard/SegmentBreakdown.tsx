@@ -111,6 +111,11 @@ const SegmentBreakdown = ({ segments, highlights, audience, filters }: {
   }, [audience]);
 
   const currentDim = dimensionTabs.find(d => d.key === activeTab)!;
+
+  // Check if current tab's dimension is filtered (would show only 1 bar = pointless)
+  const dimFilterMap: Record<string, string> = { age: filters?.age ?? 'all', device: filters?.device ?? 'all', location: filters?.location ?? 'all', gender: filters?.gender ?? 'all' };
+  const isDimFiltered = dimFilterMap[activeTab] !== 'all';
+
   const data = segments
     .filter(s => s.dimension === currentDim.dimension)
     .sort((a, b) => b.overall_conv - a.overall_conv);
@@ -120,7 +125,7 @@ const SegmentBreakdown = ({ segments, highlights, audience, filters }: {
 
   const highlightSegment = audience ? audienceSegmentMap[audience] : null;
 
-  const insightText = getSegmentInsight(segments, activeTab, language === 'ES' ? 'es' : 'en');
+  const insightText = !isDimFiltered ? getSegmentInsight(segments, activeTab, language === 'ES' ? 'es' : 'en') : '';
 
   return (
     <div className="bg-card rounded-2xl shadow-sm p-6 animate-fade-in relative flex flex-col h-full" style={{ animationDelay: '400ms', animationFillMode: 'backwards' }}>
