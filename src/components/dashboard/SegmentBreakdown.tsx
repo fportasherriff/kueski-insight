@@ -101,7 +101,7 @@ const SegmentBreakdown = ({ segments, highlights, audience }: { segments: Segmen
   const showBadge = audience && audienceDimensionMap[audience] === activeTab;
 
   return (
-    <div className="bg-card rounded-2xl shadow-sm p-6 animate-fade-in relative" style={{ animationDelay: '400ms', animationFillMode: 'backwards' }}>
+    <div className="bg-card rounded-2xl shadow-sm p-6 animate-fade-in relative flex flex-col h-full" style={{ animationDelay: '400ms', animationFillMode: 'backwards' }}>
       {showBadge && (
         <span className="absolute top-4 right-4 text-xs font-semibold bg-primary/10 text-primary px-2.5 py-1 rounded-full z-10">
           {audienceBadges[audience!]}
@@ -126,7 +126,7 @@ const SegmentBreakdown = ({ segments, highlights, audience }: { segments: Segmen
         ))}
       </div>
 
-      <div className="h-[200px]">
+      <div className="flex-1 min-h-0 h-[200px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} layout="vertical" margin={{ left: 0, right: 40, top: 0, bottom: 0 }}>
             <XAxis type="number" domain={[0, Math.ceil(maxConv / 5) * 5 + 5]} tickFormatter={v => `${v}%`} tick={{ fontSize: 11 }} />
