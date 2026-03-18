@@ -112,6 +112,141 @@ export const translations: Translations = {
   // Error
   errorLoadData: { EN: 'Unable to load data. Please refresh the page.', ES: 'No se pudieron cargar los datos. Por favor, recarga la página.' },
 
+  // Presentation
+  pres_prev: { EN: 'Previous', ES: 'Anterior' },
+  pres_next: { EN: 'Next', ES: 'Siguiente' },
+  pres_slideOf: { EN: 'Slide', ES: 'Diapositiva' },
+  pres_of: { EN: 'of', ES: 'de' },
+  pres_loading: { EN: 'Loading presentation…', ES: 'Cargando presentación…' },
+
+  // Slide 1
+  pres_s1_title: { EN: 'BNPL Funnel Analysis', ES: 'Análisis del Funnel BNPL' },
+  pres_s1_subtitle: { EN: 'Product Analytics Lead — Case Interview', ES: 'Líder de Analítica de Producto — Caso de Entrevista' },
+  pres_s1_dataset: { EN: 'Dataset: 100,000 anonymized BNPL users · Mexico · Jan–Apr 2025', ES: 'Dataset: 100,000 usuarios BNPL anonimizados · México · Ene–Abr 2025' },
+  pres_s1_presented: { EN: 'Presented by: Francisco Portas Herriff', ES: 'Presentado por: Francisco Portas Herriff' },
+  pres_s1_problem_title: { EN: 'The Problem', ES: 'El Problema' },
+  pres_s1_problem_text: {
+    EN: 'The checkout funnel shows uneven performance across segments — age, device, location, and gender. The goal: identify where conversion breaks down, understand why, and deliver an executable action plan for next quarter.',
+    ES: 'El funnel de checkout muestra un rendimiento desigual entre segmentos — edad, dispositivo, ubicación y género. El objetivo: identificar dónde falla la conversión, entender por qué, y entregar un plan de acción ejecutable para el próximo trimestre.'
+  },
+  pres_s1_steps: { EN: '5 funnel steps', ES: '5 pasos del funnel' },
+  pres_s1_dims: { EN: '4 dimensions analyzed', ES: '4 dimensiones analizadas' },
+  pres_s1_initiatives: { EN: '3 actionable initiatives', ES: '3 iniciativas accionables' },
+  pres_s1_experiment: { EN: '1 experiment designed', ES: '1 experimento diseñado' },
+
+  // Slide 2
+  pres_s2_title: { EN: 'Where Does the Funnel Break?', ES: '¿Dónde se Rompe el Funnel?' },
+  pres_s2_subtitle: { EN: 'Task 1 — Segmented Funnel Diagnosis', ES: 'Tarea 1 — Diagnóstico Segmentado del Funnel' },
+  pres_s2_global: { EN: 'Global Drop-offs', ES: 'Caídas Globales' },
+  pres_s2_damaging: { EN: '2 Most Damaging Combinations', ES: '2 Combinaciones más Dañinas' },
+  pres_s2_gap: { EN: 'Best vs Worst Gap', ES: 'Brecha Mejor vs Peor' },
+  pres_s2_overall_conv: { EN: 'overall conversion', ES: 'conversión total' },
+  pres_s2_below_best: { EN: 'pp below best segment', ES: 'pp por debajo del mejor segmento' },
+  pres_s2_gap_label: { EN: 'gap between best and worst segment', ES: 'brecha entre mejor y peor segmento' },
+  pres_s2_best_label: { EN: 'Best', ES: 'Mejor' },
+  pres_s2_worst_label: { EN: 'Worst', ES: 'Peor' },
+  pres_s2_dropped: { EN: 'users dropped', ES: 'usuarios perdidos' },
+
+  // Slide 3
+  pres_s3_title: { EN: '3 Leading Indicators', ES: '3 Indicadores Líderes' },
+  pres_s3_subtitle: { EN: 'Task 1 — Metrics that best predict funnel health', ES: 'Tarea 1 — Métricas que mejor predicen la salud del funnel' },
+  pres_s3_why: { EN: 'Why it matters', ES: 'Por qué importa' },
+  pres_s3_watch: { EN: 'What to watch', ES: 'Qué monitorear' },
+
+  pres_s3_k1_name: { EN: 'Onboarding Completion Rate by Age', ES: 'Tasa de Onboarding Completado por Edad' },
+  pres_s3_k1_why: { EN: 'Predicts 30-day purchase likelihood. The 45pp gap between >50 and <25 is the single largest conversion lever in the funnel.', ES: 'Predice la probabilidad de compra a 30 días. La brecha de 45pp entre >50 y <25 es la mayor palanca de conversión del funnel.' },
+  pres_s3_k1_watch: { EN: 'Target: bring >50 from 39.5% → 55%', ES: 'Meta: llevar >50 de 39.5% → 55%' },
+
+  pres_s3_k2_name: { EN: 'iOS vs Web Session Ratio', ES: 'Ratio de Sesiones iOS vs Web' },
+  pres_s3_k2_why: { EN: 'Structural predictor of overall conversion. A 7× gap consistent across all 4 funnel steps signals platform-level debt, not UX friction.', ES: 'Predictor estructural de la conversión total. Una brecha de 7× consistente en los 4 pasos del funnel señala deuda a nivel de plataforma, no fricción UX.' },
+  pres_s3_k2_watch: { EN: 'Monitor monthly. Any shift signals infra improvement or regression.', ES: 'Monitorear mensualmente. Cualquier cambio señala mejora o regresión de infraestructura.' },
+
+  pres_s3_k3_name: { EN: 'Cart → Purchase Rate: Other Regions', ES: 'Tasa Carrito → Compra: Otras Regiones' },
+  pres_s3_k3_why: { EN: 'Other regions onboard at the same rate as major cities but stall exclusively at checkout — 31.2% vs 50.6%. This is a trust/logistics problem, not a discovery problem.', ES: 'Otras regiones completan onboarding al mismo ritmo que las ciudades principales pero se estancan exclusivamente en checkout — 31.2% vs 50.6%. Es un problema de confianza/logística, no de descubrimiento.' },
+  pres_s3_k3_watch: { EN: 'Target: close to 42% Cart→Purch by EOQ3', ES: 'Meta: acercarse al 42% Carrito→Compra para fin del Q3' },
+
+  // Slide 4
+  pres_s4_title: { EN: '3 Evidence-Based Hypotheses', ES: '3 Hipótesis Basadas en Evidencia' },
+  pres_s4_subtitle: { EN: 'Task 2 — Why do these segments underperform?', ES: 'Tarea 2 — ¿Por qué estos segmentos tienen bajo rendimiento?' },
+  pres_s4_evidence: { EN: 'Evidence', ES: 'Evidencia' },
+  pres_s4_validate: { EN: 'What would validate this', ES: 'Qué validaría esto' },
+
+  pres_s4_h1_title: { EN: 'Onboarding complexity filters out >50 before they see product value', ES: 'La complejidad del onboarding filtra a los >50 antes de que vean el valor del producto' },
+  pres_s4_h1_evidence: { EN: '>50 Reg→Onb 39.5% vs <25 84.9% — 45pp gap, largest in funnel', ES: '>50 Reg→Onb 39.5% vs <25 84.9% — brecha de 45pp, la más grande del funnel' },
+  pres_s4_h1_validate: { EN: 'Session recordings at onboarding screens by age, form field error rates by age', ES: 'Grabaciones de sesión en pantallas de onboarding por edad, tasas de error en campos por edad' },
+
+  pres_s4_h2_title: { EN: 'Web platform has structural performance debt and lacks mobile-native trust signals', ES: 'La plataforma web tiene deuda estructural de rendimiento y carece de señales de confianza mobile-native' },
+  pres_s4_h2_evidence: { EN: 'Web 2.6% overall vs iOS 18.2% (7×) — gap is consistent at ALL 4 steps', ES: 'Web 2.6% total vs iOS 18.2% (7×) — la brecha es consistente en los 4 pasos' },
+  pres_s4_h2_validate: { EN: 'Page load times web vs app, checkout error rates by device, abandon surveys', ES: 'Tiempos de carga web vs app, tasas de error en checkout por dispositivo, encuestas de abandono' },
+
+  pres_s4_h3_title: { EN: 'Other regions face trust and logistics uncertainty at final checkout', ES: 'Otras regiones enfrentan incertidumbre de confianza y logística en el checkout final' },
+  pres_s4_h3_evidence: { EN: 'Other regions Reg→Onb 63.2% (equal to cities) but Cart→Purch 31.2% vs 50.6%', ES: 'Otras regiones Reg→Onb 63.2% (igual a ciudades) pero Carrito→Compra 31.2% vs 50.6%' },
+  pres_s4_h3_validate: { EN: 'Support tickets by region, post-abandon survey, delivery time by region', ES: 'Tickets de soporte por región, encuesta post-abandono, tiempo de entrega por región' },
+
+  // Slide 5
+  pres_s5_title: { EN: 'Action Roadmap — RICE Prioritization', ES: 'Hoja de Ruta — Priorización RICE' },
+  pres_s5_subtitle: { EN: 'Task 3 — 3 initiatives for next quarter', ES: 'Tarea 3 — 3 iniciativas para el próximo trimestre' },
+  pres_s5_rice: { EN: 'RICE Score', ES: 'Puntaje RICE' },
+  pres_s5_reach: { EN: 'Reach', ES: 'Alcance' },
+  pres_s5_impact: { EN: 'Impact', ES: 'Impacto' },
+  pres_s5_conf: { EN: 'Conf', ES: 'Conf' },
+  pres_s5_effort: { EN: 'Effort', ES: 'Esfuerzo' },
+  pres_s5_current_target: { EN: 'Current → Target', ES: 'Actual → Meta' },
+  pres_s5_greenlight: { EN: 'Green-light decision', ES: 'Decisión de luz verde' },
+
+  // Slide 6
+  pres_s6_title: { EN: 'Experiment Design — A/B Test', ES: 'Diseño de Experimento — Test A/B' },
+  pres_s6_subtitle: { EN: 'Task 4 — Testing H1: Progressive Onboarding for >50', ES: 'Tarea 4 — Probando H1: Onboarding Progresivo para >50' },
+  pres_s6_spec: { EN: 'Spec', ES: 'Especificación' },
+  pres_s6_success: { EN: 'Success Criteria', ES: 'Criterios de Éxito' },
+  pres_s6_type: { EN: 'Type', ES: 'Tipo' },
+  pres_s6_cohort: { EN: 'Target cohort', ES: 'Cohorte objetivo' },
+  pres_s6_sample: { EN: 'Sample size', ES: 'Tamaño de muestra' },
+  pres_s6_duration: { EN: 'Duration', ES: 'Duración' },
+  pres_s6_control: { EN: 'Control', ES: 'Control' },
+  pres_s6_treatment: { EN: 'Treatment', ES: 'Tratamiento' },
+  pres_s6_primary: { EN: 'Primary KPI', ES: 'KPI Primario' },
+  pres_s6_guardrail: { EN: 'Guardrail', ES: 'Guardarraíl' },
+  pres_s6_secondary: { EN: 'Secondary', ES: 'Secundario' },
+  pres_s6_iteration: { EN: 'Iteration Plan', ES: 'Plan de Iteración' },
+  pres_s6_if_10: { EN: 'If +10pp → Ship to production', ES: 'Si +10pp → Lanzar a producción' },
+  pres_s6_if_5_10: { EN: 'If 5–10pp → Extend 1 week, deeper analysis', ES: 'Si 5–10pp → Extender 1 semana, análisis más profundo' },
+  pres_s6_if_lt5: { EN: 'If <5pp → Pivot to copy-only experiment', ES: 'Si <5pp → Pivotear a experimento solo de copy' },
+
+  // Slide 7
+  pres_s7_title: { EN: 'Live Dashboard — Built for Every Audience', ES: 'Dashboard en Vivo — Diseñado para Cada Audiencia' },
+  pres_s7_subtitle: { EN: 'Task 5 — What each stakeholder sees in <30 seconds', ES: 'Tarea 5 — Lo que cada stakeholder ve en <30 segundos' },
+  pres_s7_exec: { EN: 'Executive', ES: 'Ejecutivo' },
+  pres_s7_product: { EN: 'Product Manager', ES: 'Product Manager' },
+  pres_s7_engineering: { EN: 'Engineering', ES: 'Ingeniería' },
+  pres_s7_growth: { EN: 'Growth', ES: 'Crecimiento' },
+  pres_s7_exec_insight: {
+    EN: '10.4% overall conversion. Biggest drop: onboarding (36.8%). Android = 50% of users, half the iOS rate. +4,690 purchases at stake.',
+    ES: '10.4% conversión total. Mayor caída: onboarding (36.8%). Android = 50% de usuarios, la mitad de la tasa de iOS. +4,690 compras en juego.'
+  },
+  pres_s7_exec_metric: { EN: 'Best vs Worst gap: 37.7×', ES: 'Brecha Mejor vs Peor: 37.7×' },
+  pres_s7_product_insight: {
+    EN: '>50 onboards at 39.5% — 45pp below under-25s. Progressive onboarding = Q2 green-light initiative.',
+    ES: '>50 completa onboarding al 39.5% — 45pp por debajo de los menores de 25. Onboarding progresivo = iniciativa luz verde Q2.'
+  },
+  pres_s7_product_metric: { EN: 'Target: 39.5% → 55% Reg→Onb', ES: 'Meta: 39.5% → 55% Reg→Onb' },
+  pres_s7_eng_insight: {
+    EN: 'Web converts at 2.6% — 7× below iOS at EVERY funnel step. This is structural performance debt, not a single friction point.',
+    ES: 'Web convierte al 2.6% — 7× por debajo de iOS en CADA paso del funnel. Es deuda estructural de rendimiento, no un punto de fricción.'
+  },
+  pres_s7_eng_metric: { EN: 'iOS: 18.2% · Android: 8.8% · Web: 2.6%', ES: 'iOS: 18.2% · Android: 8.8% · Web: 2.6%' },
+  pres_s7_growth_insight: {
+    EN: 'Non-binary converts at 17% (1.75× average). Other regions stall only at checkout (31.2% vs 50.6%). Two addressable segments.',
+    ES: 'No binario convierte al 17% (1.75× promedio). Otras regiones se estancan solo en checkout (31.2% vs 50.6%). Dos segmentos abordables.'
+  },
+  pres_s7_growth_metric: { EN: 'Other regions Cart→Purch: 31.2% vs 50.6%', ES: 'Otras regiones Carrito→Compra: 31.2% vs 50.6%' },
+  pres_s7_footer: {
+    EN: 'Interactive dashboard available in the Dashboard tab — filters by age, device, location, gender.',
+    ES: 'Dashboard interactivo disponible en la pestaña Tablero — filtra por edad, dispositivo, ubicación, género.'
+  },
+  pres_s7_insight30: { EN: 'Insight in <30s', ES: 'Insight en <30s' },
+  pres_s7_key_metric: { EN: 'Key metric', ES: 'Métrica clave' },
+
   // Filters
   period: { EN: 'Period', ES: 'Período' },
   datasetCovers: { EN: 'Dataset covers Jan–Apr 2025', ES: 'El dataset cubre Ene–Abr 2025' },

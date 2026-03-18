@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { LayoutDashboard, Presentation, Bot, Map, LucideIcon } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import DashboardTab from '@/components/dashboard/DashboardTab';
+import PresentationTab from '@/components/presentation/PresentationTab';
 
 const NavItem = ({
   icon: Icon,
@@ -153,7 +154,7 @@ const AppContent = () => {
       case 'dashboard':
         return <DashboardTab />;
       case 'presentation':
-        return <PlaceholderCard icon={Presentation} title={t('presentation')} subtitle="7 slides · Tasks 1–4 · Live data from Supabase" />;
+        return <PresentationTab />;
       case 'ask':
         return <PlaceholderCard icon={Bot} title={t('askData')} subtitle="AI-powered analytics · Claude API · Supabase Edge Function" />;
       case 'roadmap':
