@@ -129,7 +129,7 @@ const SegmentBreakdown = ({ segments, filters }: {
             <BarChart data={data} layout="vertical" margin={{ left: 0, right: 40, top: 0, bottom: 0 }}>
               <XAxis type="number" domain={[0, Math.ceil(maxConv / 5) * 5 + 5]} tickFormatter={v => `${v}%`} tick={{ fontSize: 11, fill: '#384550' }} />
               <YAxis type="category" dataKey="segment" width={100} tick={{ fontSize: 11, fill: '#384550' }} />
-              <Tooltip cursor={{ fill: 'rgba(0,117,255,0.08)' }} content={<DarkTooltip />} />
+              <Tooltip cursor={{ fill: 'rgba(0,22,76,0.06)' }} content={<DarkTooltip />} />
               <Bar dataKey="overall_conv" radius={[0, 4, 4, 0]} barSize={24}>
                 {data.map((entry, idx) => {
                   let fill = '#0075FF';
@@ -145,7 +145,7 @@ const SegmentBreakdown = ({ segments, filters }: {
       </div>
 
       {insightText && (
-        <div className="bg-[#FFF7ED] border-l-4 border-[#F59E0B] p-3 rounded-r-lg text-sm mt-3" style={{ color: '#384550' }}>
+        <div className="bg-[#F5F6FB] border-l-4 border-[#0075FF] p-3 rounded-r-lg text-sm mt-3" style={{ color: '#384550' }}>
           {insightText}
         </div>
       )}

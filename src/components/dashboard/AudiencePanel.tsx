@@ -65,14 +65,14 @@ const ExecPanel = ({ ageDevice }: { ageDevice: AgeDeviceRow[] }) => {
           <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
           <XAxis dataKey="step" tick={{ fontSize: 11, fill: '#384550' }} />
           <YAxis tickFormatter={v => `${v}%`} tick={{ fontSize: 11, fill: '#384550' }} />
-          <Tooltip content={<DarkTooltip />} />
+          <Tooltip cursor={{ fill: 'rgba(0,22,76,0.06)' }} content={<DarkTooltip />} />
           <Legend wrapperStyle={{ fontSize: 11, color: '#384550' }} />
           <Bar dataKey="iOS" fill="#008246" radius={[3, 3, 0, 0]} barSize={18} />
           <Bar dataKey="Android" fill="#0075FF" radius={[3, 3, 0, 0]} barSize={18} />
           <Bar dataKey="Web" fill="#EF4444" radius={[3, 3, 0, 0]} barSize={18} />
         </BarChart>
       </ResponsiveContainer>
-      <InsightCallout text={insight} variant="red" />
+      <InsightCallout text={insight} />
     </div>
   );
 };
@@ -93,7 +93,7 @@ const ProductPanel = ({ segments }: { segments: SegmentRow[] }) => {
 
   const getBarColor = (val: number) => {
     if (val > 70) return '#008246';
-    if (val >= 50) return '#F59E0B';
+    if (val >= 50) return '#0075FF';
     return '#EF4444';
   };
 
@@ -111,7 +111,7 @@ const ProductPanel = ({ segments }: { segments: SegmentRow[] }) => {
         <BarChart data={data} layout="vertical" margin={{ left: 0, right: 40, top: 0, bottom: 0 }}>
           <XAxis type="number" domain={[0, 100]} tickFormatter={v => `${v}%`} tick={{ fontSize: 11, fill: '#384550' }} />
           <YAxis type="category" dataKey="segment" width={60} tick={{ fontSize: 11, fill: '#384550' }} />
-          <Tooltip content={<DarkTooltip />} />
+          <Tooltip cursor={{ fill: 'rgba(0,22,76,0.06)' }} content={<DarkTooltip />} />
           <Bar dataKey="onboarding" name="Onboarding Rate" radius={[0, 4, 4, 0]} barSize={22}>
             {data.map((entry, idx) => (
               <Cell key={idx} fill={getBarColor(entry.onboarding)} />
@@ -120,7 +120,7 @@ const ProductPanel = ({ segments }: { segments: SegmentRow[] }) => {
           </Bar>
         </BarChart>
       </ResponsiveContainer>
-      <InsightCallout text={insight} variant="amber" />
+      <InsightCallout text={insight} />
     </div>
   );
 };
@@ -155,14 +155,14 @@ const EngineeringPanel = ({ ageDevice }: { ageDevice: AgeDeviceRow[] }) => {
           <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
           <XAxis dataKey="step" tick={{ fontSize: 11, fill: '#384550' }} />
           <YAxis tickFormatter={v => `${v}%`} tick={{ fontSize: 11, fill: '#384550' }} />
-          <Tooltip content={<DarkTooltip />} />
+          <Tooltip cursor={{ fill: 'rgba(0,22,76,0.06)' }} content={<DarkTooltip />} />
           <Legend wrapperStyle={{ fontSize: 11, color: '#384550' }} />
           <Bar dataKey="iOS" fill="#008246" radius={[3, 3, 0, 0]} barSize={18} />
           <Bar dataKey="Android" fill="#0075FF" radius={[3, 3, 0, 0]} barSize={18} />
           <Bar dataKey="Web" fill="#EF4444" radius={[3, 3, 0, 0]} barSize={18} />
         </BarChart>
       </ResponsiveContainer>
-      <InsightCallout text={insight} variant="red" />
+      <InsightCallout text={insight} />
     </div>
   );
 };
@@ -204,7 +204,7 @@ const GrowthPanel = ({ segments }: { segments: SegmentRow[] }) => {
           <BarChart data={genderData} layout="vertical" margin={{ left: 0, right: 35, top: 0, bottom: 0 }}>
             <XAxis type="number" tickFormatter={v => `${v}%`} tick={{ fontSize: 10, fill: '#384550' }} />
             <YAxis type="category" dataKey="segment" width={75} tick={{ fontSize: 10, fill: '#384550' }} />
-            <Tooltip content={<DarkTooltip />} />
+            <Tooltip cursor={{ fill: 'rgba(0,22,76,0.06)' }} content={<DarkTooltip />} />
             <Bar dataKey="overall_conv" name="Conv %" radius={[0, 4, 4, 0]} barSize={18}>
               {genderData.map((e, i) => (
                 <Cell key={i} fill={genderColors[e.segment] ?? '#0075FF'} />
@@ -213,7 +213,7 @@ const GrowthPanel = ({ segments }: { segments: SegmentRow[] }) => {
             </Bar>
           </BarChart>
         </ResponsiveContainer>
-        <InsightCallout text={genderInsight} variant="blue" />
+        <InsightCallout text={genderInsight} />
       </div>
       <div>
         <p className="text-xs font-semibold mb-2" style={{ color: '#66727D' }}>
@@ -223,7 +223,7 @@ const GrowthPanel = ({ segments }: { segments: SegmentRow[] }) => {
           <BarChart data={locationData} layout="vertical" margin={{ left: 0, right: 35, top: 0, bottom: 0 }}>
             <XAxis type="number" tickFormatter={v => `${v}%`} tick={{ fontSize: 10, fill: '#384550' }} />
             <YAxis type="category" dataKey="segment" width={55} tick={{ fontSize: 10, fill: '#384550' }} />
-            <Tooltip content={<DarkTooltip />} />
+            <Tooltip cursor={{ fill: 'rgba(0,22,76,0.06)' }} content={<DarkTooltip />} />
             <Bar dataKey="overall_conv" name="Conv %" radius={[0, 4, 4, 0]} barSize={18}>
               {locationData.map((e, i) => (
                 <Cell key={i} fill={locationColors[e.segment] ?? '#0075FF'} />
@@ -232,7 +232,7 @@ const GrowthPanel = ({ segments }: { segments: SegmentRow[] }) => {
             </Bar>
           </BarChart>
         </ResponsiveContainer>
-        <InsightCallout text={locationInsight} variant="amber" />
+        <InsightCallout text={locationInsight} />
       </div>
     </div>
   );

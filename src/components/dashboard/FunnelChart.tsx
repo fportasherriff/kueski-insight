@@ -42,10 +42,10 @@ const getFunnelInsight = (steps: FunnelStep[], filters: ActiveFilters | undefine
 
 const DEVICE_ORDER = ['Android', 'iOS', 'Web'] as const;
 
-const dotColors: Record<string, string> = { iOS: '#008246', Android: '#F59E0B', Web: '#EF4444' };
+const dotColors: Record<string, string> = { iOS: '#008246', Android: '#0075FF', Web: '#EF4444' };
 const badgeStyles: Record<string, string> = {
   iOS: 'bg-[#F0FDF4] text-[#008246]',
-  Android: 'bg-[#FFF7ED] text-[#F59E0B]',
+  Android: 'bg-[#EFF6FF] text-[#0075FF]',
   Web: 'bg-[#FEF2F2] text-[#EF4444]',
 };
 
@@ -261,7 +261,7 @@ const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: Acti
 
           <div className="mt-4">
             {insightText && (
-              <div className="bg-[#FFF7ED] border-l-4 border-[#F59E0B] p-3 rounded-r-lg text-sm text-foreground">
+              <div className="bg-[#F5F6FB] border-l-4 border-[#0075FF] p-3 rounded-r-lg text-sm" style={{ color: '#384550' }}>
                 💡 {insightText}
               </div>
             )}
