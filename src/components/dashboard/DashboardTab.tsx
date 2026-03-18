@@ -43,6 +43,7 @@ const DashboardTab = () => {
   const [filters, setFilters] = useState<ActiveFilters>(defaultFilters);
   const [audience, setAudience] = useState<Audience>('exec');
   const [filteredFunnel, setFilteredFunnel] = useState<FunnelStep[] | null>(null);
+  const [filteredMonthly, setFilteredMonthly] = useState<MonthlyRow[] | null>(null);
   const [filterLoading, setFilterLoading] = useState(false);
 
   const filtered = isFiltered(filters);
