@@ -10,7 +10,7 @@ const DashboardHeader = ({ segments, filtered }: { segments: SegmentRow[]; filte
       <div className="flex items-center gap-3">
         <div>
           <h1 className="text-[32px] font-extrabold" style={{ color: '#00164C' }}>{t('dashboard')}</h1>
-          <p className="text-sm text-muted-foreground mt-1">{t('dashboardSubtitle')}</p>
+          <p className="text-sm mt-1" style={{ color: '#66727D' }}>{t('dashboardSubtitle')}</p>
         </div>
         {filtered && (
           <span className="text-xs font-semibold bg-primary/10 text-primary px-2.5 py-1 rounded-full">

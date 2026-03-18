@@ -32,20 +32,20 @@ const SegmentHeatmap = ({ ageDevice }: { ageDevice: AgeDeviceRow[] }) => {
 
   return (
     <div className="bg-card rounded-2xl shadow-sm p-6 animate-fade-in relative" style={{ animationDelay: '600ms', animationFillMode: 'backwards' }}>
-      <h2 className="text-lg font-bold" style={{ color: '#141C22' }}>{t('heatmapTitle')}</h2>
-      <p className="text-xs text-muted-foreground mb-5">{t('heatmapSubtitle')}</p>
+      <h2 className="text-lg font-bold" style={{ color: '#00164C' }}>{t('heatmapTitle')}</h2>
+      <p className="text-xs mb-5" style={{ color: '#384550' }}>{t('heatmapSubtitle')}</p>
 
       <div className="grid grid-cols-[80px_1fr_1fr_1fr] gap-2 mb-2">
         <div />
         {deviceOrder.map(d => (
-          <p key={d} className="text-xs font-semibold text-muted-foreground text-center">{deviceLabels[d]}</p>
+          <p key={d} className="text-xs font-semibold text-center" style={{ color: '#66727D' }}>{deviceLabels[d]}</p>
         ))}
       </div>
 
       {ageOrder.map(age => (
         <div key={age} className="grid grid-cols-[80px_1fr_1fr_1fr] gap-2 mb-2">
           <div className="flex items-center">
-            <span className="text-xs font-semibold text-muted-foreground">{ageLabels[age]}</span>
+            <span className="text-xs font-semibold" style={{ color: '#66727D' }}>{ageLabels[age]}</span>
           </div>
           {deviceOrder.map(device => {
             const cell = grid[age]?.[device];

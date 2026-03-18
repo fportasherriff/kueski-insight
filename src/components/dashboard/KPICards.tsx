@@ -23,9 +23,9 @@ const KPICard = ({ icon: Icon, value, label, subtext, delay }: KPICardProps) => 
       <Icon size={20} style={{ color: '#0075FF' }} />
     </div>
     <div>
-      <p className="text-3xl font-extrabold" style={{ color: '#0075FF' }}>{value}</p>
-      <p className="text-sm font-medium mt-0.5" style={{ color: '#384550' }}>{label}</p>
-      <p className="text-xs text-muted-foreground mt-1">{subtext}</p>
+      <p className="text-3xl font-extrabold" style={{ color: '#00164C' }}>{value}</p>
+      <p className="text-sm font-semibold mt-0.5" style={{ color: '#00164C' }}>{label}</p>
+      <p className="text-xs mt-1" style={{ color: '#384550' }}>{subtext}</p>
     </div>
   </div>
 );

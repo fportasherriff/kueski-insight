@@ -250,7 +250,7 @@ const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: Acti
                 {orderedDevices
                   .filter((d: any) => d.device_label !== 'iOS' && Number(d.purchases_gap_vs_ios) > 0)
                   .map((d: any) => (
-                    <p key={d.device_label} className="text-xs text-muted-foreground italic mt-2">
+                    <p key={d.device_label} className="text-xs italic mt-2" style={{ color: '#66727D' }}>
                       {d.device_label}: +{Number(d.purchases_gap_vs_ios).toLocaleString()}{' '}
                       {isEs ? 'compras potenciales vs tasa iOS' : 'purchases potential vs iOS rate'}
                     </p>

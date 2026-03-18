@@ -291,7 +291,7 @@ const DashboardTab = () => {
   return (
     <div className="space-y-6">
       <DashboardHeader segments={segments} filtered={filtered} />
-      <FilterBar filters={filters} onChange={setFilters} onExport={handleExport} />
+      <FilterBar filters={filters} onChange={setFilters} />
 
       {errors.kpis && <ErrorBanner message={errors.kpis} />}
       {activeKpis && <KPICards kpis={activeKpis} filtered={filtered} />}
