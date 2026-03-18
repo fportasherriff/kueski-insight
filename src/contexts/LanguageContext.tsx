@@ -179,26 +179,40 @@ export const translations: Translations = {
     ES: "Predice la probabilidad de compra a 30 días. La brecha de 45pp entre >50 y <25 es la mayor palanca de conversión del funnel.",
   },
   pres_s3_k1_watch: { EN: "Target: bring >50 from 39.5% → 55%", ES: "Meta: llevar >50 de 39.5% → 55%" },
+  pres_s3_k1_clarify: {
+    EN: "(Of every 100 users over 50 who registered, only 39 completed onboarding. For under-25s, that same number is 84.)",
+    ES: "(De cada 100 usuarios mayores de 50 que se registraron, solo 39 completaron onboarding. Para menores de 25, ese número es 84.)",
+  },
+  pres_s3_k1_parque: {
+    EN: ">50 = 29.7% of the user base (29,685 users). If this rate reaches 55%, ~4,600 additional users enter the funnel.",
+    ES: ">50 = 29.7% de la base de usuarios (29,685 usuarios). Si esta tasa llega al 55%, ~4,600 usuarios adicionales entran al funnel.",
+  },
 
-  pres_s3_k2_name: { EN: "iOS vs Web Session Ratio", ES: "Ratio de Sesiones iOS vs Web" },
+  pres_s3_k2_name: { EN: "Device Performance Ratio — All Platforms", ES: "Ratio de Rendimiento por Dispositivo — Todas las Plataformas" },
   pres_s3_k2_why: {
     EN: "Structural predictor of overall conversion. A 7× gap consistent across all 4 funnel steps signals platform-level debt, not UX friction.",
     ES: "Predictor estructural de la conversión total. Una brecha de 7× consistente en los 4 pasos del funnel señala deuda a nivel de plataforma, no fricción UX.",
   },
-  pres_s3_k2_watch: {
-    EN: "Monitor monthly. Any shift signals infra improvement or regression.",
-    ES: "Monitorear mensualmente. Cualquier cambio señala mejora o regresión de infraestructura.",
+  pres_s3_k2_users: { EN: "users", ES: "usuarios" },
+  pres_s3_k2_conv: { EN: "Conv %", ES: "Conv %" },
+  pres_s3_k2_insight: {
+    EN: "Android holds 50% of users — twice the iOS base — but converts at half the rate across every single funnel step. This makes Android the highest-impact opportunity.",
+    ES: "Android tiene el 50% de los usuarios — el doble de iOS — pero convierte a la mitad de la tasa en cada paso del funnel. Esto hace de Android la oportunidad de mayor impacto.",
   },
 
   pres_s3_k3_name: { EN: "Cart → Purchase Rate: Other Regions", ES: "Tasa Carrito → Compra: Otras Regiones" },
-  pres_s3_k3_why: {
-    EN: "Other regions onboard at the same rate as major cities but stall exclusively at checkout — 31.2% vs 50.6%. This is a trust/logistics problem, not a discovery problem.",
-    ES: "Otras regiones completan onboarding al mismo ritmo que las ciudades principales pero se estancan exclusivamente en checkout — 31.2% vs 50.6%. Es un problema de confianza/logística, no de descubrimiento.",
+  pres_s3_k3_why_v2: {
+    EN: "The problem is isolated to a single step — Cart→Purchase. Every prior step is on par with major cities. This is a surgical intervention opportunity.",
+    ES: "El problema está aislado en un solo paso — Carrito→Compra. Todos los pasos previos están a la par de las ciudades principales. Es una oportunidad de intervención quirúrgica.",
   },
   pres_s3_k3_watch: {
     EN: "Target: close to 42% Cart→Purch by EOQ3",
     ES: "Meta: acercarse al 42% Carrito→Compra para fin del Q3",
   },
+  pres_s3_k3_step: { EN: "Step", ES: "Paso" },
+  pres_s3_k3_cities: { EN: "Cities avg", ES: "Prom. ciudades" },
+  pres_s3_k3_other: { EN: "Other", ES: "Otras" },
+  pres_s3_k3_gap: { EN: "Gap", ES: "Brecha" },
 
   // Slide 4
   pres_s4_title: { EN: "3 Evidence-Based Hypotheses", ES: "3 Hipótesis Basadas en Evidencia" },
