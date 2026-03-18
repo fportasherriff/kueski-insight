@@ -397,19 +397,33 @@ const Slide6 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
   const exp: Record<string, string> = {};
   data.experiment.forEach((r: any) => { exp[r.key] = r.value; });
 
+  const lang = t('pres_prev') === 'Anterior' ? 'ES' : 'EN';
+
+  const s6Trans: Record<string, { EN: string; ES: string }> = {
+    cohort: { EN: 'New users aged 50+ at the Registration step', ES: 'Nuevos usuarios de 50+ en el paso de Registro' },
+    control: { EN: 'Current onboarding flow (single multi-field form)', ES: 'Flujo de onboarding actual (formulario único multi-campo)' },
+    treatment: { EN: 'Progressive onboarding: 3 short screens, one action per step, contextual tooltip, progress indicator', ES: 'Onboarding progresivo: 3 pantallas cortas, una acción por paso, tooltip contextual, indicador de progreso' },
+    explainer: {
+      EN: 'We split users 50+ randomly into two groups. Group A sees the current onboarding. Group B sees a simplified 3-step version. After 2 weeks we check if Group B completes onboarding at a significantly higher rate.',
+      ES: 'Dividimos a los usuarios de 50+ aleatoriamente en dos grupos. El Grupo A ve el onboarding actual. El Grupo B ve una versión simplificada de 3 pasos. Después de 2 semanas verificamos si el Grupo B completa el onboarding a una tasa significativamente mayor.',
+    },
+  };
+
   const specRows = [
     [t('pres_s6_type'), exp['type'] || 'A/B Test (2 arms)'],
-    [t('pres_s6_cohort'), exp['target_cohort'] || 'Users >50 at Registration step'],
+    [t('pres_s6_cohort'), s6Trans.cohort[lang]],
     [t('pres_s6_sample'), exp['sample_size'] || '15,000 per arm (~2 weeks)'],
     [t('pres_s6_duration'), exp['min_duration'] || '2 weeks minimum'],
-    [t('pres_s6_control'), exp['control_arm'] || 'Current onboarding flow'],
-    [t('pres_s6_treatment'), exp['treatment_arm'] || 'Progressive 3-step onboarding'],
+    [t('pres_s6_control'), s6Trans.control[lang]],
+    [t('pres_s6_treatment'), s6Trans.treatment[lang]],
   ];
 
   return (
     <div className="max-w-3xl mx-auto px-8 py-10 space-y-6">
       <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>{t('pres_s6_title')}</h2>
       <p className="text-sm" style={{ color: '#384550' }}>{t('pres_s6_subtitle')}</p>
+
+      <p className="text-sm text-muted-foreground italic">{s6Trans.explainer[lang]}</p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
         <div className="bg-[#F5F6FB] rounded-xl p-6">
