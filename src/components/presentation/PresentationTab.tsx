@@ -61,6 +61,7 @@ const Slide2 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
 
   const worst2 = data.ageDevice.slice(0, 2);
   const kpis = data.kpis;
+  const totalBase = f?.registered ?? 100000;
 
   return (
     <div className="max-w-3xl mx-auto px-8 py-10 space-y-6">
@@ -90,18 +91,25 @@ const Slide2 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
         <div>
           <p className="text-xs font-bold uppercase tracking-wide mb-3" style={{ color: '#00164C' }}>{t('pres_s2_damaging')}</p>
           <div className="space-y-4">
-            {worst2.map((row: any, i: number) => (
-              <div key={i} className="bg-[#F5F6FB] rounded-xl p-4 text-center">
-                <span className="inline-block bg-white text-xs font-bold px-2 py-1 rounded-full mb-2" style={{ color: '#00164C' }}>
-                  {row.age_group} × {(row.device ?? '').toUpperCase()}
-                </span>
-                <p className="text-4xl font-extrabold" style={{ color: '#EF4444' }}>{row.overall_conv}%</p>
-                <p className="text-xs text-muted-foreground">{t('pres_s2_overall_conv')}</p>
-                {row.delta_vs_best != null && (
-                  <p className="text-xs mt-1" style={{ color: '#384550' }}>{Math.abs(row.delta_vs_best)}pp {t('pres_s2_below_best')}</p>
-                )}
-              </div>
-            ))}
+            {worst2.map((row: any, i: number) => {
+              const n = row.n ?? row.total_users ?? 0;
+              const pctBase = totalBase > 0 ? ((n / totalBase) * 100).toFixed(1) : '0.0';
+              return (
+                <div key={i} className="bg-[#F5F6FB] rounded-xl p-4 text-center">
+                  <span className="inline-block bg-white text-xs font-bold px-2 py-1 rounded-full mb-2" style={{ color: '#00164C' }}>
+                    {row.age_group} × {(row.device ?? '').toUpperCase()}
+                  </span>
+                  <p className="text-4xl font-extrabold" style={{ color: '#EF4444' }}>{row.overall_conv}%</p>
+                  <p className="text-xs text-muted-foreground">{t('pres_s2_overall_conv')}</p>
+                  {row.delta_vs_best != null && (
+                    <p className="text-xs mt-1" style={{ color: '#384550' }}>{Math.abs(row.delta_vs_best)}pp {t('pres_s2_below_best')}</p>
+                  )}
+                  <p className="text-xs text-muted-foreground italic mt-2">
+                    n = {n.toLocaleString()} {t('pres_s2_users')} · {pctBase}% {t('pres_s2_of_base')}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -129,26 +137,35 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
   const findSeg = (dim: string, val: string) => data.segments.find((s: any) => s.dimension === dim && s.segment_value === val);
   const age50 = findSeg('age_group', '>50');
   const age25 = findSeg('age_group', '<25');
-  const ios = findSeg('device', 'ios');
-  const web = findSeg('device', 'web');
   const other = findSeg('location', 'Other');
 
-  const cards = [
-    {
-      border: '#0075FF', badge: 'KPI #1', name: t('pres_s3_k1_name'),
-      metric: `>50: ${age50?.step_reg_to_onb ?? '39.5'}% vs <25: ${age25?.step_reg_to_onb ?? '84.9'}%`,
-      why: t('pres_s3_k1_why'), watch: t('pres_s3_k1_watch'),
-    },
-    {
-      border: '#008246', badge: 'KPI #2', name: t('pres_s3_k2_name'),
-      metric: `iOS: ${ios?.overall_conv ?? '18.2'}% vs Web: ${web?.overall_conv ?? '2.6'}%`,
-      why: t('pres_s3_k2_why'), watch: t('pres_s3_k2_watch'),
-    },
-    {
-      border: '#EF4444', badge: 'KPI #3', name: t('pres_s3_k3_name'),
-      metric: `Other: ${other?.step_cart_to_purch ?? '31.2'}% vs Cities avg: ~50.6%`,
-      why: t('pres_s3_k3_why'), watch: t('pres_s3_k3_watch'),
-    },
+  // All 3 devices for KPI #2
+  const deviceSegs = data.segments.filter((s: any) => s.dimension === 'device');
+  const iosSeg = deviceSegs.find((s: any) => s.segment_value === 'ios');
+  const androidSeg = deviceSegs.find((s: any) => s.segment_value === 'android');
+  const webSeg = deviceSegs.find((s: any) => s.segment_value === 'web');
+
+  const deviceRows = [
+    { name: 'iOS', parque: '30.2%', seg: iosSeg },
+    { name: 'Android', parque: '49.9%', seg: androidSeg },
+    { name: 'Web', parque: '19.9%', seg: webSeg },
+  ];
+
+  // KPI #3 step-by-step table
+  const cdmx = findSeg('location', 'CDMX');
+  const gdl = findSeg('location', 'GDL');
+  const mty = findSeg('location', 'MTY');
+
+  const avgStep = (field: string) => {
+    const vals = [cdmx, gdl, mty].filter(Boolean).map((s: any) => s[field] ?? 0);
+    return vals.length > 0 ? (vals.reduce((a: number, b: number) => a + b, 0) / vals.length).toFixed(1) : '—';
+  };
+
+  const kpi3Steps = [
+    { step: 'Reg→Onb', citiesAvg: avgStep('step_reg_to_onb'), otherVal: other?.step_reg_to_onb },
+    { step: 'Onb→View', citiesAvg: avgStep('step_onb_to_view'), otherVal: other?.step_onb_to_view },
+    { step: 'View→Cart', citiesAvg: avgStep('step_view_to_cart'), otherVal: other?.step_view_to_cart },
+    { step: 'Cart→Purch', citiesAvg: avgStep('step_cart_to_purch'), otherVal: other?.step_cart_to_purch },
   ];
 
   return (
@@ -156,15 +173,86 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
       <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>{t('pres_s3_title')}</h2>
       <p className="text-sm" style={{ color: '#384550' }}>{t('pres_s3_subtitle')}</p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-        {cards.map((c, i) => (
-          <div key={i} className="bg-[#F5F6FB] rounded-xl p-5 border-t-4" style={{ borderColor: c.border }}>
-            <span className="text-xs font-bold px-2 py-0.5 rounded-full text-white" style={{ backgroundColor: c.border }}>{c.badge}</span>
-            <p className="font-bold text-sm mt-3" style={{ color: '#00164C' }}>{c.name}</p>
-            <p className="text-sm font-semibold mt-2" style={{ color: c.border }}>{c.metric}</p>
-            <p className="text-xs mt-3" style={{ color: '#384550' }}><span className="font-semibold">{t('pres_s3_why')}:</span> {c.why}</p>
-            <p className="text-xs mt-2" style={{ color: '#384550' }}><span className="font-semibold">{t('pres_s3_watch')}:</span> {c.watch}</p>
-          </div>
-        ))}
+
+        {/* KPI #1 */}
+        <div className="bg-[#F5F6FB] rounded-xl p-5 border-t-4" style={{ borderColor: '#0075FF' }}>
+          <span className="text-xs font-bold px-2 py-0.5 rounded-full text-white" style={{ backgroundColor: '#0075FF' }}>KPI #1</span>
+          <p className="font-bold text-sm mt-3" style={{ color: '#00164C' }}>{t('pres_s3_k1_name')}</p>
+          <p className="text-sm font-semibold mt-2" style={{ color: '#0075FF' }}>
+            &gt;50: {age50?.step_reg_to_onb ?? '39.5'}% vs &lt;25: {age25?.step_reg_to_onb ?? '84.9'}%
+          </p>
+          <p className="text-xs text-muted-foreground italic mt-1">{t('pres_s3_k1_clarify')}</p>
+          <p className="text-xs mt-3" style={{ color: '#384550' }}><span className="font-semibold">{t('pres_s3_why')}:</span> {t('pres_s3_k1_why')}</p>
+          <p className="text-xs mt-2" style={{ color: '#384550' }}><span className="font-semibold">{t('pres_s3_watch')}:</span> {t('pres_s3_k1_watch')}</p>
+          <p className="text-xs text-muted-foreground italic mt-2">{t('pres_s3_k1_parque')}</p>
+        </div>
+
+        {/* KPI #2 — All 3 devices */}
+        <div className="bg-[#F5F6FB] rounded-xl p-5 border-t-4" style={{ borderColor: '#008246' }}>
+          <span className="text-xs font-bold px-2 py-0.5 rounded-full text-white" style={{ backgroundColor: '#008246' }}>KPI #2</span>
+          <p className="font-bold text-sm mt-3" style={{ color: '#00164C' }}>{t('pres_s3_k2_name')}</p>
+
+          <table className="w-full text-xs mt-2 border-collapse">
+            <thead>
+              <tr className="text-left" style={{ color: '#00164C' }}>
+                <th className="py-1 font-semibold">{t('device')}</th>
+                <th className="py-1 font-semibold">% {t('pres_s3_k2_users')}</th>
+                <th className="py-1 font-semibold">{t('pres_s3_k2_conv')}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {deviceRows.map((d, i) => (
+                <tr key={i} className={i % 2 === 1 ? 'bg-white/50' : ''} style={{ color: '#384550' }}>
+                  <td className="py-1 font-medium">{d.name}</td>
+                  <td className="py-1">{d.parque}</td>
+                  <td className="py-1 font-semibold" style={{ color: d.name === 'Web' ? '#EF4444' : '#008246' }}>{d.seg?.overall_conv ?? '—'}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <p className="text-xs mt-3" style={{ color: '#384550' }}><span className="font-semibold">{t('pres_s3_why')}:</span> {t('pres_s3_k2_why')}</p>
+          <p className="text-xs text-muted-foreground italic mt-2">{t('pres_s3_k2_insight')}</p>
+        </div>
+
+        {/* KPI #3 — Step-by-step table */}
+        <div className="bg-[#F5F6FB] rounded-xl p-5 border-t-4" style={{ borderColor: '#EF4444' }}>
+          <span className="text-xs font-bold px-2 py-0.5 rounded-full text-white" style={{ backgroundColor: '#EF4444' }}>KPI #3</span>
+          <p className="font-bold text-sm mt-3" style={{ color: '#00164C' }}>{t('pres_s3_k3_name')}</p>
+
+          <table className="w-full text-xs mt-2 border-collapse">
+            <thead>
+              <tr className="text-left" style={{ color: '#00164C' }}>
+                <th className="py-1 font-semibold">{t('pres_s3_k3_step')}</th>
+                <th className="py-1 font-semibold">{t('pres_s3_k3_cities')}</th>
+                <th className="py-1 font-semibold">{t('pres_s3_k3_other')}</th>
+                <th className="py-1 font-semibold">{t('pres_s3_k3_gap')}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {kpi3Steps.map((row, i) => {
+                const cityVal = parseFloat(String(row.citiesAvg));
+                const otherVal = row.otherVal ?? 0;
+                const gap = (otherVal - cityVal).toFixed(0);
+                const gapNum = parseInt(gap);
+                const isOk = Math.abs(gapNum) <= 2;
+                return (
+                  <tr key={i} className={i % 2 === 1 ? 'bg-white/50' : ''} style={{ color: '#384550' }}>
+                    <td className="py-1 font-medium">{row.step}</td>
+                    <td className="py-1">~{row.citiesAvg}%</td>
+                    <td className="py-1">{otherVal}%</td>
+                    <td className="py-1 font-semibold" style={{ color: isOk ? '#008246' : '#EF4444' }}>
+                      {gapNum > 0 ? '+' : ''}{gap}pp {isOk ? '✅' : '🔴'}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+
+          <p className="text-xs mt-3" style={{ color: '#384550' }}><span className="font-semibold">{t('pres_s3_why')}:</span> {t('pres_s3_k3_why_v2')}</p>
+          <p className="text-xs mt-2" style={{ color: '#384550' }}><span className="font-semibold">{t('pres_s3_watch')}:</span> {t('pres_s3_k3_watch')}</p>
+        </div>
       </div>
     </div>
   );
@@ -204,10 +292,58 @@ const Slide4 = ({ t }: { t: (k: string) => string }) => {
   );
 };
 
-/* ─── Slide 5 ─── */
+/* ─── Slide 5 — English-translated RICE roadmap ─── */
 const Slide5 = ({ data, t }: { data: PresentationData; t: (k: string) => string }) => {
   const priorityColors = ['#EF4444', '#F59E0B', '#008246'];
   const rows = data.roadmap.slice(0, 3);
+
+  // Hardcoded EN/ES translations for DB fields that are in Spanish
+  const initiativeTranslations: Record<number, { desc: { EN: string; ES: string }; rationale: { EN: string; ES: string }; whyQuarter: { EN: string; ES: string } }> = {
+    0: {
+      desc: {
+        EN: 'Redesign onboarding into short steps with contextual help and plain language for users over 50',
+        ES: 'Rediseñar el onboarding en pasos cortos con ayuda contextual y lenguaje claro para usuarios mayores de 50',
+      },
+      rationale: {
+        EN: 'GREENLIGHT — Highest confidence + 30% of user base + deployable Q2 with 1 squad. Largest single conversion lever in the funnel.',
+        ES: 'LUZ VERDE — Mayor confianza + 30% de la base de usuarios + desplegable en Q2 con 1 squad. La mayor palanca de conversión del funnel.',
+      },
+      whyQuarter: {
+        EN: 'Highest confidence, lowest effort — ship with 1 squad in Q2.',
+        ES: 'Mayor confianza, menor esfuerzo — entregar con 1 squad en Q2.',
+      },
+    },
+    1: {
+      desc: {
+        EN: 'Simplify checkout flow on Android: reduce steps, improve payment UI, optimize performance',
+        ES: 'Simplificar el flujo de checkout en Android: reducir pasos, mejorar UI de pago, optimizar rendimiento',
+      },
+      rationale: {
+        EN: 'Highest reach (50% of users) + high technical confidence. Requires more engineering effort → Q3.',
+        ES: 'Mayor alcance (50% de usuarios) + alta confianza técnica. Requiere más esfuerzo de ingeniería → Q3.',
+      },
+      whyQuarter: {
+        EN: 'Largest user base but needs more eng effort — plan for Q3.',
+        ES: 'Mayor base de usuarios pero necesita más esfuerzo de ing — planificar para Q3.',
+      },
+    },
+    2: {
+      desc: {
+        EN: 'Add trust signals at checkout for non-tier-1 regions: clear delivery times, guarantees, local payment methods',
+        ES: 'Agregar señales de confianza en checkout para regiones no tier-1: tiempos de entrega claros, garantías, métodos de pago locales',
+      },
+      rationale: {
+        EN: 'Quick win with low effort, but lower confidence — requires qualitative research before shipping. Q3-Q4.',
+        ES: 'Ganancia rápida con poco esfuerzo, pero menor confianza — requiere investigación cualitativa antes de lanzar. Q3-Q4.',
+      },
+      whyQuarter: {
+        EN: 'Low effort but needs qualitative validation first — Q3-Q4.',
+        ES: 'Bajo esfuerzo pero necesita validación cualitativa primero — Q3-Q4.',
+      },
+    },
+  };
+
+  const lang = t('pres_prev') === 'Anterior' ? 'ES' : 'EN';
 
   return (
     <div className="max-w-3xl mx-auto px-8 py-10 space-y-6">
@@ -217,6 +353,9 @@ const Slide5 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
       <div className="space-y-3 mt-4">
         {rows.map((r: any, i: number) => {
           const clr = priorityColors[i] ?? '#384550';
+          const trans = initiativeTranslations[i];
+          const desc = trans?.desc[lang] ?? r.description ?? '';
+          const whyQ = trans?.whyQuarter[lang] ?? '';
           return (
             <div key={i} className="rounded-xl p-5 border-l-4 bg-white border border-gray-100" style={{ borderLeftColor: clr }}>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
@@ -225,6 +364,7 @@ const Slide5 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
                     #{r.priority_rank}
                   </span>
                   <p className="font-bold text-sm mt-1" style={{ color: '#00164C' }}>{r.initiative_name}</p>
+                  <p className="text-xs text-muted-foreground mt-1">{desc}</p>
                   <span className="text-xs bg-gray-100 rounded-full px-2 py-0.5 mt-1 inline-block">{r.target_quarter}</span>
                 </div>
                 <div className="grid grid-cols-2 gap-1 text-xs" style={{ color: '#384550' }}>
@@ -236,11 +376,11 @@ const Slide5 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
                 <div className="text-center">
                   <p className="text-2xl font-extrabold" style={{ color: clr }}>{r.rice_score}</p>
                   <p className="text-xs text-muted-foreground">{t('pres_s5_rice')}</p>
+                  {whyQ && <p className="text-xs italic text-muted-foreground mt-1">{t('pres_s5_why_quarter')}: {whyQ}</p>}
                 </div>
                 <div className="text-xs" style={{ color: '#384550' }}>
                   <p className="font-semibold">{r.current_rate}% → {r.target_rate}%</p>
                   <span className="inline-block bg-gray-100 rounded-full px-2 py-0.5 mt-1 text-xs">{r.critical_step}</span>
-                  <p className="italic mt-1">{(r.rationale ?? '').slice(0, 60)}…</p>
                 </div>
               </div>
             </div>
@@ -248,9 +388,9 @@ const Slide5 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
         })}
       </div>
 
-      {rows[0]?.rationale && (
+      {rows[0] && (
         <div className="bg-[#F0FDF4] border border-[#008246] rounded-xl p-4 mt-4 text-sm" style={{ color: '#384550' }}>
-          ✅ <span className="font-semibold">{t('pres_s5_greenlight')}:</span> {rows[0].rationale}
+          ✅ <span className="font-semibold">{t('pres_s5_greenlight')}:</span> {initiativeTranslations[0]?.rationale[lang] ?? rows[0].rationale}
         </div>
       )}
     </div>
@@ -320,13 +460,20 @@ const Slide6 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
   );
 };
 
-/* ─── Slide 7 ─── */
+/* ─── Slide 7 — Compact audiences + dashboard capabilities ─── */
 const Slide7 = ({ t }: { t: (k: string) => string }) => {
   const audiences = [
-    { icon: '👔', title: t('pres_s7_exec'), insight: t('pres_s7_exec_insight'), metric: t('pres_s7_exec_metric'), border: '#00164C' },
-    { icon: '🎯', title: t('pres_s7_product'), insight: t('pres_s7_product_insight'), metric: t('pres_s7_product_metric'), border: '#0075FF' },
-    { icon: '🔧', title: t('pres_s7_engineering'), insight: t('pres_s7_eng_insight'), metric: t('pres_s7_eng_metric'), border: '#EF4444' },
-    { icon: '📈', title: t('pres_s7_growth'), insight: t('pres_s7_growth_insight'), metric: t('pres_s7_growth_metric'), border: '#008246' },
+    { icon: '👔', title: t('pres_s7_exec'), metric: t('pres_s7_exec_metric'), action: t('pres_s7_exec_action'), border: '#00164C' },
+    { icon: '🎯', title: t('pres_s7_product'), metric: t('pres_s7_product_metric'), action: t('pres_s7_product_action'), border: '#0075FF' },
+    { icon: '🔧', title: t('pres_s7_engineering'), metric: t('pres_s7_eng_metric'), action: t('pres_s7_eng_action'), border: '#EF4444' },
+    { icon: '📈', title: t('pres_s7_growth'), metric: t('pres_s7_growth_metric'), action: t('pres_s7_growth_action'), border: '#008246' },
+  ];
+
+  const capabilities = [
+    t('pres_s7_cap1'),
+    t('pres_s7_cap2'),
+    t('pres_s7_cap3'),
+    t('pres_s7_cap4'),
   ];
 
   return (
@@ -334,21 +481,36 @@ const Slide7 = ({ t }: { t: (k: string) => string }) => {
       <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>{t('pres_s7_title')}</h2>
       <p className="text-sm" style={{ color: '#384550' }}>{t('pres_s7_subtitle')}</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-        {audiences.map((a, i) => (
-          <div key={i} className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm border-t-4" style={{ borderTopColor: a.border }}>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-xl">{a.icon}</span>
-              <span className="font-bold text-sm" style={{ color: '#00164C' }}>{a.title}</span>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        {/* Left — compact audience cards */}
+        <div className="space-y-3">
+          {audiences.map((a, i) => (
+            <div key={i} className="bg-white border border-gray-100 rounded-xl p-3 shadow-sm border-l-4" style={{ borderLeftColor: a.border }}>
+              <div className="flex items-center gap-2">
+                <span className="text-lg">{a.icon}</span>
+                <span className="font-bold text-sm" style={{ color: '#00164C' }}>{a.title}</span>
+              </div>
+              <p className="text-xs font-semibold mt-1" style={{ color: a.border }}>{a.metric}</p>
+              <p className="text-xs mt-1" style={{ color: '#384550' }}>{a.action}</p>
             </div>
-            <p className="text-xs mb-1 font-semibold" style={{ color: '#384550' }}>{t('pres_s7_insight30')}:</p>
-            <p className="text-xs" style={{ color: '#384550' }}>{a.insight}</p>
-            <p className="text-xs mt-2 font-semibold" style={{ color: a.border }}>{t('pres_s7_key_metric')}: {a.metric}</p>
+          ))}
+        </div>
+
+        {/* Right — dashboard capabilities */}
+        <div className="bg-[#F5F6FB] rounded-xl p-6">
+          <p className="text-xs font-bold uppercase tracking-wide mb-4" style={{ color: '#00164C' }}>{t('pres_s7_enables_title')}</p>
+          <div className="space-y-3">
+            {capabilities.map((cap, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm" style={{ color: '#384550' }}>
+                <span style={{ color: '#0075FF' }}>●</span>
+                <span>{cap}</span>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
 
-      <p className="text-sm text-muted-foreground italic text-center mt-4">{t('pres_s7_footer')}</p>
+      <p className="text-sm text-muted-foreground italic text-center mt-4">{t('pres_s7_footer_v2')}</p>
     </div>
   );
 };
@@ -410,7 +572,6 @@ const PresentationTab = () => {
 
   return (
     <div className="bg-white rounded-2xl shadow-sm min-h-[520px] flex flex-col">
-      {/* Slide content with fade */}
       <div className="flex-1 overflow-auto">
         <div
           key={fadeKey}
@@ -421,9 +582,7 @@ const PresentationTab = () => {
         </div>
       </div>
 
-      {/* Navigation */}
       <div className="border-t border-gray-100 px-8 py-4 flex flex-col items-center gap-3">
-        {/* Dots */}
         <div className="flex gap-2">
           {Array.from({ length: TOTAL_SLIDES }).map((_, i) => (
             <button
@@ -434,7 +593,6 @@ const PresentationTab = () => {
           ))}
         </div>
 
-        {/* Prev / Counter / Next */}
         <div className="flex items-center gap-4">
           <button
             onClick={() => goTo(Math.max(0, slide - 1))}

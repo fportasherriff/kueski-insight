@@ -161,6 +161,8 @@ export const translations: Translations = {
   pres_s2_best_label: { EN: "Best", ES: "Mejor" },
   pres_s2_worst_label: { EN: "Worst", ES: "Peor" },
   pres_s2_dropped: { EN: "users dropped", ES: "usuarios perdidos" },
+  pres_s2_users: { EN: "users", ES: "usuarios" },
+  pres_s2_of_base: { EN: "of total base", ES: "de la base total" },
 
   // Slide 3
   pres_s3_title: { EN: "3 Leading Indicators", ES: "3 Indicadores Líderes" },
