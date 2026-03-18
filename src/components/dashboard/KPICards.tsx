@@ -45,7 +45,7 @@ const KPICards = ({ kpis }: { kpis: DashboardKPI }) => {
       icon: TrendingUp,
       value: `${kpis.overall_conv_rate}%`,
       label: t('overallConversion'),
-      subtext: t('kpiOverallSub'),
+      subtext: `${kpis.total_purchases.toLocaleString()} ${t('kpiOverallSub')}`,
       color: signalColor(kpis.conv_signal),
     },
     {
@@ -66,13 +66,13 @@ const KPICards = ({ kpis }: { kpis: DashboardKPI }) => {
       icon: BarChart3,
       value: `${kpis.best_to_worst_ratio}×`,
       label: t('bestWorstSegment'),
-      subtext: t('kpiSegmentSub'),
+      subtext: `${kpis.best_segment_conv}% vs ${kpis.worst_segment_conv}%`,
       color: '#7D6CFF',
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
       {cards.map((card, i) => (
         <KPICard key={i} {...card} delay={i * 100} />
       ))}

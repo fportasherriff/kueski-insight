@@ -2,6 +2,7 @@ import React from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { useLanguage } from '@/contexts/LanguageContext';
 import InsightCallout from './InsightCallout';
+import CustomTooltip from './CustomTooltip';
 import type { MonthlyRow } from '@/hooks/useDashboardData';
 
 const MonthlyTrend = ({ monthly }: { monthly: MonthlyRow[] }) => {
@@ -16,10 +17,7 @@ const MonthlyTrend = ({ monthly }: { monthly: MonthlyRow[] }) => {
           <LineChart data={monthly} margin={{ left: 0, right: 8, top: 8, bottom: 0 }}>
             <XAxis dataKey="cohort_label" tick={{ fontSize: 11 }} />
             <YAxis domain={[0, 100]} tickFormatter={v => `${v}%`} tick={{ fontSize: 11 }} />
-            <Tooltip
-              contentStyle={{ borderRadius: 8, fontSize: 12, boxShadow: '0 4px 12px rgba(0,0,0,0.1)', border: '1px solid hsl(var(--border))' }}
-              formatter={(value: number, name: string) => [`${value}%`, name]}
-            />
+            <Tooltip content={<CustomTooltip />} />
             <Legend wrapperStyle={{ fontSize: 12 }} />
             <Line type="monotone" dataKey="overall_conv" name={t('overall')} stroke="#0075FF" strokeWidth={2.5} dot={{ r: 4, fill: '#0075FF' }} />
             <Line type="monotone" dataKey="step_reg_to_onb" name={t('onboarding')} stroke="#7D6CFF" strokeWidth={2} dot={{ r: 4, fill: '#7D6CFF' }} />
