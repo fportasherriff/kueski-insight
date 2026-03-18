@@ -189,7 +189,7 @@ const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: Acti
             <h3 className="text-sm font-semibold" style={{ color: '#00164C' }}>
               {isEs ? 'Distribución por Dispositivo' : 'Device Distribution'}
             </h3>
-            <p className="text-xs text-muted-foreground mb-3">
+            <p className="text-xs mb-3" style={{ color: '#66727D' }}>
               {isEs ? 'Distribución del parque vs tasa de conversión' : 'Share of user base vs conversion rate'}
             </p>
 
