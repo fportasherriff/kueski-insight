@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useDashboardData } from '@/hooks/useDashboardData';
-import type { FunnelStep, DashboardKPI, MonthlyRow } from '@/hooks/useDashboardData';
+import type { FunnelStep, DashboardKPI, MonthlyRow, SegmentRow } from '@/hooks/useDashboardData';
 import DashboardHeader from './DashboardHeader';
 import FilterBar, { ActiveFilters, defaultFilters, isFiltered } from './FilterBar';
 import AudienceTabs, { Audience, getAudienceHighlights } from './AudienceTabs';
