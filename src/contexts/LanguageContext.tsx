@@ -106,6 +106,34 @@ export const translations: Translations = {
 
   // Error
   errorLoadData: { EN: 'Unable to load data. Please refresh the page.', ES: 'No se pudieron cargar los datos. Por favor, recarga la página.' },
+
+  // Filters
+  period: { EN: 'Period', ES: 'Período' },
+  datasetCovers: { EN: 'Dataset covers Jan–Apr 2025', ES: 'El dataset cubre Ene–Abr 2025' },
+  filteredView: { EN: 'Filtered view', ES: 'Vista filtrada' },
+  filteredLabel: { EN: 'filtered', ES: 'filtrado' },
+
+  // Audience tabs
+  audience_exec: { EN: 'Exec', ES: 'Ejecutivo' },
+  audience_product: { EN: 'Product', ES: 'Producto' },
+  audience_engineering: { EN: 'Engineering', ES: 'Ingeniería' },
+  audience_growth: { EN: 'Growth', ES: 'Crecimiento' },
+  audience_exec_insight: {
+    EN: '⚡ Core issue: 36.8% of users never complete onboarding. Fixing >50 onboarding alone could unlock ~$2M in annual GMV.',
+    ES: '⚡ Problema central: el 36.8% de los usuarios nunca completa onboarding. Arreglar onboarding de >50 podría desbloquear ~$2M en GMV anual.'
+  },
+  audience_product_insight: {
+    EN: '🎯 Top priority: Progressive onboarding for >50 (29,685 users, 85% confidence). Target: 39.5% → 55% Reg→Onb. Ship in Q2 with 1 squad.',
+    ES: '🎯 Prioridad: Onboarding progresivo para >50 (29,685 usuarios, 85% confianza). Meta: 39.5% → 55% Reg→Onb. Entregar en Q2 con 1 squad.'
+  },
+  audience_engineering_insight: {
+    EN: '🔧 Web platform converts at 2.6% vs iOS 18.2% — a 7× gap across ALL steps. Not a single friction point — structural performance debt.',
+    ES: '🔧 Web convierte al 2.6% vs iOS 18.2% — una brecha de 7× en TODOS los pasos. No es un punto de fricción — es deuda estructural de rendimiento.'
+  },
+  audience_growth_insight: {
+    EN: '📈 Non-binary users convert at 17% (1.75× avg). Other regions stall at checkout only (31.2% vs 50.6%). Two addressable segments, different interventions.',
+    ES: '📈 Usuarios no binarios convierten al 17% (1.75× promedio). Otras regiones se estancan solo en checkout (31.2% vs 50.6%). Dos segmentos abordables, diferentes intervenciones.'
+  },
 };
 
 interface LanguageContextType {
