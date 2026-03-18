@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useDashboardData } from '@/hooks/useDashboardData';
-import type { FunnelStep, DashboardKPI } from '@/hooks/useDashboardData';
+import type { FunnelStep, DashboardKPI, MonthlyRow } from '@/hooks/useDashboardData';
 import DashboardHeader from './DashboardHeader';
 import FilterBar, { ActiveFilters, defaultFilters, isFiltered } from './FilterBar';
 import AudienceTabs, { Audience, getAudienceHighlights } from './AudienceTabs';
@@ -43,6 +43,7 @@ const DashboardTab = () => {
   const [filters, setFilters] = useState<ActiveFilters>(defaultFilters);
   const [audience, setAudience] = useState<Audience>('exec');
   const [filteredFunnel, setFilteredFunnel] = useState<FunnelStep[] | null>(null);
+  const [filteredMonthly, setFilteredMonthly] = useState<MonthlyRow[] | null>(null);
   const [filterLoading, setFilterLoading] = useState(false);
 
   const filtered = isFiltered(filters);
@@ -95,6 +96,73 @@ const DashboardTab = () => {
     };
 
     fetchFiltered();
+  }, [filters, filtered]);
+
+  // Fetch filtered monthly trends
+  useEffect(() => {
+    if (!filtered) {
+      setFilteredMonthly(null);
+      return;
+    }
+
+    const fetchMonthlyFiltered = async () => {
+      let query = supabase
+        .from('vw_funnel_by_month_filterable')
+        .select('cohort_month, cohort_label, registered, onboarded, viewed_product, added_to_cart, purchased');
+
+      if (filters.age !== 'all') query = query.eq('age_group', filters.age);
+      if (filters.device !== 'all') query = query.eq('device', filters.device);
+      if (filters.location !== 'all') query = query.eq('location', filters.location);
+      if (filters.gender !== 'all') query = query.eq('gender', filters.gender);
+
+      const { data, error } = await query;
+      if (error || !data?.length) {
+        setFilteredMonthly(null);
+        return;
+      }
+
+      const grouped: Record<string, {
+        cohort_label: string;
+        registered: number;
+        onboarded: number;
+        viewed_product: number;
+        added_to_cart: number;
+        purchased: number;
+      }> = {};
+
+      data.forEach(row => {
+        const key = row.cohort_month;
+        if (!grouped[key]) {
+          grouped[key] = {
+            cohort_label: row.cohort_label,
+            registered: 0, onboarded: 0,
+            viewed_product: 0, added_to_cart: 0, purchased: 0,
+          };
+        }
+        grouped[key].registered += Number(row.registered);
+        grouped[key].onboarded += Number(row.onboarded);
+        grouped[key].viewed_product += Number(row.viewed_product);
+        grouped[key].added_to_cart += Number(row.added_to_cart);
+        grouped[key].purchased += Number(row.purchased);
+      });
+
+      const pct = (a: number, b: number) => b > 0 ? Math.round(a / b * 1000) / 10 : 0;
+
+      setFilteredMonthly(
+        Object.entries(grouped)
+          .sort(([a], [b]) => a.localeCompare(b))
+          .map(([, g]) => ({
+            cohort_label: g.cohort_label,
+            overall_conv: pct(g.purchased, g.registered),
+            step_reg_to_onb: pct(g.onboarded, g.registered),
+            step_onb_to_view: pct(g.viewed_product, g.onboarded),
+            step_view_to_cart: pct(g.added_to_cart, g.viewed_product),
+            step_cart_to_purch: pct(g.purchased, g.added_to_cart),
+          }))
+      );
+    };
+
+    fetchMonthlyFiltered();
   }, [filters, filtered]);
 
   // Filter segments client-side
@@ -181,7 +249,7 @@ const DashboardTab = () => {
         </div>
         <div className="lg:col-span-2">
           {errors.monthly && <ErrorBanner message={errors.monthly} />}
-          {monthly.length > 0 && <MonthlyTrend monthly={monthly} />}
+          {(filteredMonthly || monthly).length > 0 && <MonthlyTrend monthly={filteredMonthly || monthly} />}
         </div>
       </div>
 
