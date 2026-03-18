@@ -316,7 +316,7 @@ const DashboardTab = () => {
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-stretch">
         <div className="lg:col-span-3 flex flex-col">
           {errors.segments && <ErrorBanner message={errors.segments} />}
-          {filteredSegments.length > 0 && <SegmentBreakdown segments={filteredSegments} highlights={highlights} audience={audience} filters={filters} />}
+          {(activeSegments).length > 0 && <SegmentBreakdown segments={activeSegments} highlights={highlights} audience={audience} filters={filters} />}
         </div>
         <div className="lg:col-span-2 flex flex-col">
           {errors.monthly && <ErrorBanner message={errors.monthly} />}
