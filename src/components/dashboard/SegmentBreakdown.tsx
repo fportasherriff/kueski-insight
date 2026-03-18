@@ -145,7 +145,7 @@ const SegmentBreakdown = ({ segments, filters }: {
       </div>
 
       {insightText && (
-        <div className="bg-[#FFF7ED] border-l-4 border-[#F59E0B] p-3 rounded-r-lg text-sm mt-3" style={{ color: '#384550' }}>
+        <div className="bg-[#F5F6FB] border-l-4 border-[#0075FF] p-3 rounded-r-lg text-sm mt-3" style={{ color: '#384550' }}>
           {insightText}
         </div>
       )}
