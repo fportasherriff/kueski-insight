@@ -4,6 +4,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import InsightCallout from './InsightCallout';
 import type { SegmentRow } from '@/hooks/useDashboardData';
 import type { AudienceHighlight } from './AudienceTabs';
+import type { Audience } from './AudienceTabs';
 
 const dimensionTabs = [
   { key: 'age', dimension: 'age_group' },
@@ -19,15 +20,74 @@ const insightKeys: Record<string, string> = {
   gender: 'insightGender',
 };
 
-const SegmentBreakdown = ({ segments, highlights }: { segments: SegmentRow[]; highlights?: AudienceHighlight[] }) => {
+const audienceDimensionMap: Record<Audience, string> = {
+  exec: 'age',
+  product: 'age',
+  engineering: 'device',
+  growth: 'gender',
+};
+
+const audienceSegmentMap: Record<Audience, string> = {
+  exec: '>50',
+  product: '>50',
+  engineering: 'web',
+  growth: 'non-binary',
+};
+
+const audienceBadges: Record<Audience, string> = {
+  exec: '⚠ 0.6% — Critical',
+  product: '🎯 Top priority: >50 onboarding cliff',
+  engineering: '🔧 Web = 7× below iOS — structural',
+  growth: '📈 Non-binary = 1.75× avg conversion',
+};
+
+const DarkTooltip = ({ active, payload, label }: any) => {
+  if (!active || !payload?.length) return null;
+  const d = payload[0]?.payload ?? {};
+  return (
+    <div style={{
+      background: '#141C22', color: 'white', borderRadius: 8,
+      padding: '10px 14px', fontSize: 12, boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+      minWidth: 200, border: '1px solid rgba(255,255,255,0.1)',
+    }}>
+      <div style={{ fontWeight: 700, marginBottom: 8, paddingBottom: 6, borderBottom: '1px solid rgba(255,255,255,0.15)', fontSize: 13 }}>
+        {label ?? d.segment ?? ''}
+      </div>
+      {payload.map((p: any, i: number) => (
+        <div key={i} style={{ display: 'flex', justifyContent: 'space-between', gap: 16, marginBottom: 3 }}>
+          <span style={{ color: p.color ?? '#60A5FA', fontWeight: 500 }}>{p.name}:</span>
+          <span style={{ fontWeight: 600 }}>{typeof p.value === 'number' ? p.value.toFixed(1) + '%' : p.value}</span>
+        </div>
+      ))}
+      {d.step_reg_to_onb !== undefined && (
+        <div style={{ marginTop: 6, paddingTop: 6, borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+          {[
+            ['Reg→Onb', d.step_reg_to_onb],
+            ['Onb→View', d.step_onb_to_view],
+            ['View→Cart', d.step_view_to_cart],
+            ['Cart→Purch', d.step_cart_to_purch],
+          ].map(([k, v]) => (
+            <div key={String(k)} style={{ display: 'flex', justifyContent: 'space-between', gap: 12, marginBottom: 2 }}>
+              <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 11 }}>{k}:</span>
+              <span style={{ fontWeight: 500, fontSize: 11 }}>{Number(v).toFixed(1)}%</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const SegmentBreakdown = ({ segments, highlights, audience }: { segments: SegmentRow[]; highlights?: AudienceHighlight[]; audience?: Audience }) => {
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState('age');
 
-  // Auto-switch tab if audience highlight targets a specific tab
-  const segHighlight = highlights?.find(h => h.chartId === 'segment');
+  // Auto-switch tab based on audience
   useEffect(() => {
-    if (segHighlight?.segmentTab) setActiveTab(segHighlight.segmentTab);
-  }, [segHighlight?.segmentTab]);
+    if (audience) {
+      setActiveTab(audienceDimensionMap[audience]);
+    }
+  }, [audience]);
 
   const currentDim = dimensionTabs.find(d => d.key === activeTab)!;
   const data = segments
@@ -37,14 +97,18 @@ const SegmentBreakdown = ({ segments, highlights }: { segments: SegmentRow[]; hi
   const maxConv = Math.max(...data.map(d => d.overall_conv), 0);
   const minConv = Math.min(...data.map(d => d.overall_conv), 0);
 
+  const highlightSegment = audience ? audienceSegmentMap[audience] : null;
+  const showBadge = audience && audienceDimensionMap[audience] === activeTab;
+
   return (
     <div className="bg-card rounded-2xl shadow-sm p-6 animate-fade-in relative" style={{ animationDelay: '400ms', animationFillMode: 'backwards' }}>
-      {segHighlight?.badge && activeTab === segHighlight.segmentTab && (
+      {showBadge && (
         <span className="absolute top-4 right-4 text-xs font-semibold bg-primary/10 text-primary px-2.5 py-1 rounded-full z-10">
-          {segHighlight.badge}
+          {audienceBadges[audience!]}
         </span>
       )}
-      <h2 className="text-lg font-bold text-foreground mb-4">{t('segmentBreakdown')}</h2>
+      <h2 className="text-lg font-bold text-foreground">{t('segmentBreakdown')}</h2>
+      <p className="text-xs text-muted-foreground mt-0.5 mb-4">{t('segmentSubtitle')}</p>
 
       <div className="flex gap-1 p-1 bg-secondary rounded-full mb-4">
         {dimensionTabs.map(tab => (
@@ -74,51 +138,17 @@ const SegmentBreakdown = ({ segments, highlights }: { segments: SegmentRow[]; hi
             />
             <Tooltip
               cursor={{ fill: 'rgba(0,117,255,0.08)' }}
-              content={(props) => {
-                const { active, payload, label } = props;
-                if (!active || !payload?.length) return null;
-                const d = payload[0].payload;
-                return (
-                  <div style={{
-                    background: '#141C22', color: 'white', borderRadius: 8,
-                    padding: '10px 14px', fontSize: 12, boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
-                    minWidth: 180
-                  }}>
-                    <div style={{ fontWeight: 700, marginBottom: 6, borderBottom: '1px solid rgba(255,255,255,0.15)', paddingBottom: 4 }}>
-                      {label || d.segment}
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, marginBottom: 2 }}>
-                      <span style={{ color: 'rgba(255,255,255,0.6)' }}>Overall conv:</span>
-                      <span style={{ fontWeight: 600, color: '#60A5FA' }}>{d.overall_conv}%</span>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, marginBottom: 2 }}>
-                      <span style={{ color: 'rgba(255,255,255,0.6)' }}>Reg→Onb:</span>
-                      <span style={{ fontWeight: 500 }}>{d.step_reg_to_onb}%</span>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, marginBottom: 2 }}>
-                      <span style={{ color: 'rgba(255,255,255,0.6)' }}>Onb→View:</span>
-                      <span style={{ fontWeight: 500 }}>{d.step_onb_to_view}%</span>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, marginBottom: 2 }}>
-                      <span style={{ color: 'rgba(255,255,255,0.6)' }}>View→Cart:</span>
-                      <span style={{ fontWeight: 500 }}>{d.step_view_to_cart}%</span>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}>
-                      <span style={{ color: 'rgba(255,255,255,0.6)' }}>Cart→Purch:</span>
-                      <span style={{ fontWeight: 500 }}>{d.step_cart_to_purch}%</span>
-                    </div>
-                  </div>
-                );
-              }}
+              content={<DarkTooltip />}
             />
             <Bar dataKey="overall_conv" radius={[0, 4, 4, 0]} barSize={24}>
               {data.map((entry, idx) => {
                 let fill = 'hsl(var(--primary))';
                 if (entry.overall_conv === maxConv) fill = '#008246';
                 if (entry.overall_conv === minConv) fill = '#EF4444';
-                // Audience highlight ring effect via brighter fill
-                if (segHighlight?.segmentKey && entry.segment.toLowerCase() === segHighlight.segmentKey.toLowerCase() && activeTab === segHighlight.segmentTab) {
-                  fill = segHighlight.ringColor || fill;
+                // Audience highlight
+                if (highlightSegment && activeTab === audienceDimensionMap[audience!] &&
+                    entry.segment.toLowerCase() === highlightSegment.toLowerCase()) {
+                  fill = '#F59E0B';
                 }
                 return <Cell key={idx} fill={fill} />;
               })}

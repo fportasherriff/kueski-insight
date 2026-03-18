@@ -4,6 +4,43 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import InsightCallout from './InsightCallout';
 import type { MonthlyRow } from '@/hooks/useDashboardData';
 
+const DarkTooltip = ({ active, payload, label }: any) => {
+  if (!active || !payload?.length) return null;
+  const d = payload[0]?.payload ?? {};
+  return (
+    <div style={{
+      background: '#141C22', color: 'white', borderRadius: 8,
+      padding: '10px 14px', fontSize: 12, boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+      minWidth: 200, border: '1px solid rgba(255,255,255,0.1)',
+    }}>
+      <div style={{ fontWeight: 700, marginBottom: 8, paddingBottom: 6, borderBottom: '1px solid rgba(255,255,255,0.15)', fontSize: 13 }}>
+        {label ?? d.cohort_label ?? ''}
+      </div>
+      {payload.map((p: any, i: number) => (
+        <div key={i} style={{ display: 'flex', justifyContent: 'space-between', gap: 16, marginBottom: 3 }}>
+          <span style={{ color: p.color ?? '#60A5FA', fontWeight: 500 }}>{p.name}:</span>
+          <span style={{ fontWeight: 600 }}>{typeof p.value === 'number' ? p.value.toFixed(1) + '%' : p.value}</span>
+        </div>
+      ))}
+      {d.step_reg_to_onb !== undefined && (
+        <div style={{ marginTop: 6, paddingTop: 6, borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+          {[
+            ['Reg→Onb', d.step_reg_to_onb],
+            ['Onb→View', d.step_onb_to_view],
+            ['View→Cart', d.step_view_to_cart],
+            ['Cart→Purch', d.step_cart_to_purch],
+          ].map(([k, v]) => (
+            <div key={String(k)} style={{ display: 'flex', justifyContent: 'space-between', gap: 12, marginBottom: 2 }}>
+              <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 11 }}>{k}:</span>
+              <span style={{ fontWeight: 500, fontSize: 11 }}>{Number(v).toFixed(1)}%</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 const MonthlyTrend = ({ monthly }: { monthly: MonthlyRow[] }) => {
   const { t } = useLanguage();
 
@@ -16,40 +53,7 @@ const MonthlyTrend = ({ monthly }: { monthly: MonthlyRow[] }) => {
           <LineChart data={monthly} margin={{ left: 0, right: 8, top: 8, bottom: 0 }}>
             <XAxis dataKey="cohort_label" tick={{ fontSize: 11 }} />
             <YAxis domain={[0, 100]} tickFormatter={v => `${v}%`} tick={{ fontSize: 11 }} />
-            <Tooltip
-              content={({ active, payload, label }) => {
-                if (!active || !payload?.length) return null;
-                return (
-                  <div style={{
-                    background: '#141C22', color: 'white', borderRadius: 8,
-                    padding: '10px 14px', fontSize: 12, boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
-                    minWidth: 180
-                  }}>
-                    <div style={{ fontWeight: 700, marginBottom: 6, borderBottom: '1px solid rgba(255,255,255,0.15)', paddingBottom: 4 }}>
-                      {label}
-                    </div>
-                    {payload.map((p: any) => (
-                      <div key={p.name} style={{ display: 'flex', justifyContent: 'space-between', gap: 16, marginBottom: 2 }}>
-                        <span style={{ color: p.color, fontWeight: 500 }}>{p.name}:</span>
-                        <span style={{ fontWeight: 600 }}>{Number(p.value).toFixed(1)}%</span>
-                      </div>
-                    ))}
-                    {payload[0]?.payload && (
-                      <div style={{ marginTop: 4, paddingTop: 4, borderTop: '1px solid rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.6)' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}>
-                          <span>Registered:</span>
-                          <span style={{ fontWeight: 500, color: 'white' }}>{Number(payload[0].payload.registered).toLocaleString()}</span>
-                        </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}>
-                          <span>Purchased:</span>
-                          <span style={{ fontWeight: 500, color: 'white' }}>{Number(payload[0].payload.purchased).toLocaleString()}</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              }}
-            />
+            <Tooltip content={<DarkTooltip />} />
             <Legend wrapperStyle={{ fontSize: 12 }} />
             <Line type="monotone" dataKey="overall_conv" name={t('overall')} stroke="#0075FF" strokeWidth={2.5} dot={{ r: 4, fill: '#0075FF' }} />
             <Line type="monotone" dataKey="step_reg_to_onb" name={t('onboarding')} stroke="#7D6CFF" strokeWidth={2} dot={{ r: 4, fill: '#7D6CFF' }} />
