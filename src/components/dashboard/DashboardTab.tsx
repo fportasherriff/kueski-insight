@@ -317,6 +317,7 @@ const DashboardTab = () => {
         activeFunnel.length > 0 && <FunnelChart funnel={activeFunnel} filters={filters} />
       )}
 
+      {activeSegments.length > 0 && <DeviceStepCard segments={activeSegments} />}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-stretch">
         <div className="lg:col-span-3 flex flex-col">
           {errors.segments && <ErrorBanner message={errors.segments} />}
