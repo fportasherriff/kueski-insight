@@ -2,7 +2,6 @@ import React from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import InsightCallout from './InsightCallout';
 import type { AgeDeviceRow } from '@/hooks/useDashboardData';
-import type { AudienceHighlight } from './AudienceTabs';
 
 const getCellColor = (conv: number) => {
   if (conv >= 15) return { bg: '#008246', text: 'white' };
@@ -17,7 +16,7 @@ const deviceOrder = ['ios', 'android', 'web'];
 const deviceLabels: Record<string, string> = { ios: 'iOS', android: 'Android', web: 'Web' };
 const ageLabels: Record<string, string> = { '<25': '<25 yrs', '26-50': '26-50 yrs', '>50': '50+ yrs' };
 
-const SegmentHeatmap = ({ ageDevice, highlights }: { ageDevice: AgeDeviceRow[]; highlights?: AudienceHighlight[] }) => {
+const SegmentHeatmap = ({ ageDevice }: { ageDevice: AgeDeviceRow[] }) => {
   const { t } = useLanguage();
 
   const grid: Record<string, Record<string, AgeDeviceRow>> = {};
@@ -31,11 +30,9 @@ const SegmentHeatmap = ({ ageDevice, highlights }: { ageDevice: AgeDeviceRow[]; 
     if (row.overall_conv < worstVal) { worstVal = row.overall_conv; worstKey = `${row.age_group}-${row.device}`; }
   });
 
-  const heatHighlight = highlights?.find(h => h.chartId === 'heatmap');
-
   return (
     <div className="bg-card rounded-2xl shadow-sm p-6 animate-fade-in relative" style={{ animationDelay: '600ms', animationFillMode: 'backwards' }}>
-      <h2 className="text-lg font-bold text-foreground">{t('heatmapTitle')}</h2>
+      <h2 className="text-lg font-bold" style={{ color: '#141C22' }}>{t('heatmapTitle')}</h2>
       <p className="text-xs text-muted-foreground mb-5">{t('heatmapSubtitle')}</p>
 
       <div className="grid grid-cols-[80px_1fr_1fr_1fr] gap-2 mb-2">
@@ -57,19 +54,14 @@ const SegmentHeatmap = ({ ageDevice, highlights }: { ageDevice: AgeDeviceRow[]; 
             const key = `${age}-${device}`;
             const isBest = key === bestKey;
             const isWorst = key === worstKey;
-            const isHighlighted = heatHighlight?.heatmapCell?.age === age && heatHighlight?.heatmapCell?.device === device;
 
             return (
               <div key={device} className="relative group">
                 <div
                   className={`rounded-[10px] p-4 min-h-[80px] flex flex-col items-center justify-center transition-all ${
-                    isHighlighted ? 'ring-2 ring-offset-1' : isWorst || isBest ? 'ring-2 ring-white' : ''
+                    isWorst || isBest ? 'ring-2 ring-white' : ''
                   }`}
-                  style={{
-                    backgroundColor: colors.bg,
-                    color: colors.text,
-                    ...(isHighlighted ? { ringColor: heatHighlight?.ringColor, boxShadow: `0 0 0 2px ${heatHighlight?.ringColor}` } : {}),
-                  }}
+                  style={{ backgroundColor: colors.bg, color: colors.text }}
                   title={`${ageLabels[age]} × ${deviceLabels[device]}\nConversion: ${cell.overall_conv}%\nUsers: ${cell.n.toLocaleString()}\nReg→Onb: ${cell.step_reg_to_onb}%\nCart→Purch: ${cell.step_cart_to_purch}%`}
                 >
                   {isWorst && (

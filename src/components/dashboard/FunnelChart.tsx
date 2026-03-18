@@ -87,7 +87,7 @@ const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: Acti
       className="bg-card rounded-2xl shadow-sm p-6 mb-6 animate-fade-in"
       style={{ animationDelay: '400ms', animationFillMode: 'backwards' }}
     >
-      <h2 className="text-lg font-bold text-foreground">{t('conversionFunnel')}</h2>
+      <h2 className="text-lg font-bold" style={{ color: '#141C22' }}>{t('conversionFunnel')}</h2>
       <p className="text-xs text-muted-foreground mb-5">{t('funnelSubtitle')}</p>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">

@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, LabelList } from 'recharts';
 import { useLanguage } from '@/contexts/LanguageContext';
-import InsightCallout from './InsightCallout';
 import type { SegmentRow } from '@/hooks/useDashboardData';
-import type { AudienceHighlight } from './AudienceTabs';
-import type { Audience } from './AudienceTabs';
 import type { ActiveFilters } from './FilterBar';
 
 const dimensionTabs = [
@@ -13,27 +10,6 @@ const dimensionTabs = [
   { key: 'location', dimension: 'location' },
   { key: 'gender', dimension: 'gender' },
 ];
-
-const insightKeys: Record<string, string> = {
-  age: 'insightAge',
-  device: 'insightDevice',
-  location: 'insightLocation',
-  gender: 'insightGender',
-};
-
-const audienceDimensionMap: Record<Audience, string> = {
-  exec: 'age',
-  product: 'age',
-  engineering: 'device',
-  growth: 'gender',
-};
-
-const audienceSegmentMap: Record<Audience, string> = {
-  exec: '>50',
-  product: '>50',
-  engineering: 'web',
-  growth: 'non-binary',
-};
 
 const getSegmentInsight = (
   segments: SegmentRow[],
@@ -94,25 +70,15 @@ const DarkTooltip = ({ active, payload, label }: any) => {
   );
 };
 
-const SegmentBreakdown = ({ segments, highlights, audience, filters }: {
+const SegmentBreakdown = ({ segments, filters }: {
   segments: SegmentRow[];
-  highlights?: AudienceHighlight[];
-  audience?: Audience;
   filters?: ActiveFilters;
 }) => {
   const { language, t } = useLanguage();
   const [activeTab, setActiveTab] = useState('age');
 
-  // Auto-switch tab based on audience
-  useEffect(() => {
-    if (audience) {
-      setActiveTab(audienceDimensionMap[audience]);
-    }
-  }, [audience]);
-
   const currentDim = dimensionTabs.find(d => d.key === activeTab)!;
 
-  // Check if current tab's dimension is filtered (would show only 1 bar = pointless)
   const dimFilterMap: Record<string, string> = { age: filters?.age ?? 'all', device: filters?.device ?? 'all', location: filters?.location ?? 'all', gender: filters?.gender ?? 'all' };
   const isDimFiltered = dimFilterMap[activeTab] !== 'all';
 
@@ -123,13 +89,11 @@ const SegmentBreakdown = ({ segments, highlights, audience, filters }: {
   const maxConv = Math.max(...data.map(d => d.overall_conv), 0);
   const minConv = Math.min(...data.map(d => d.overall_conv), 0);
 
-  const highlightSegment = audience ? audienceSegmentMap[audience] : null;
-
   const insightText = !isDimFiltered ? getSegmentInsight(segments, activeTab, language === 'ES' ? 'es' : 'en') : '';
 
   return (
     <div className="bg-card rounded-2xl shadow-sm p-6 animate-fade-in relative flex flex-col h-full" style={{ animationDelay: '400ms', animationFillMode: 'backwards' }}>
-      <h2 className="text-lg font-bold text-foreground">{t('segmentBreakdown')}</h2>
+      <h2 className="text-lg font-bold" style={{ color: '#141C22' }}>{t('segmentBreakdown')}</h2>
       <p className="text-xs text-muted-foreground mt-0.5 mb-4">{t('segmentSubtitle')}</p>
 
       <div className="flex gap-1 p-1 bg-secondary rounded-full mb-4">
@@ -167,13 +131,9 @@ const SegmentBreakdown = ({ segments, highlights, audience, filters }: {
               <Tooltip cursor={{ fill: 'rgba(0,117,255,0.08)' }} content={<DarkTooltip />} />
               <Bar dataKey="overall_conv" radius={[0, 4, 4, 0]} barSize={24}>
                 {data.map((entry, idx) => {
-                  let fill = 'hsl(var(--primary))';
+                  let fill = '#0075FF';
                   if (entry.overall_conv === maxConv) fill = '#008246';
                   if (entry.overall_conv === minConv) fill = '#EF4444';
-                  if (highlightSegment && activeTab === audienceDimensionMap[audience!] &&
-                      entry.segment.toLowerCase() === highlightSegment.toLowerCase()) {
-                    fill = '#F59E0B';
-                  }
                   return <Cell key={idx} fill={fill} />;
                 })}
                 <LabelList dataKey="overall_conv" position="right" formatter={(v: number) => `${v}%`} style={{ fontSize: 11, fontWeight: 600 }} />
