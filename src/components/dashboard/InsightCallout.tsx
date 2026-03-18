@@ -20,7 +20,7 @@ const bgColors = {
 
 const InsightCallout = ({ text, variant = 'amber' }: InsightCalloutProps) => (
   <div className={`${bgColors[variant]} border-l-4 ${borderColors[variant]} p-3 rounded-r-lg mt-4`}>
-    <p className="text-xs text-foreground/80 whitespace-pre-line leading-relaxed">{text}</p>
+    <p className="text-xs whitespace-pre-line leading-relaxed" style={{ color: '#384550' }}>{text}</p>
   </div>
 );
 
