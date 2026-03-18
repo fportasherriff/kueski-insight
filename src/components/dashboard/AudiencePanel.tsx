@@ -63,10 +63,10 @@ const ExecPanel = ({ ageDevice }: { ageDevice: AgeDeviceRow[] }) => {
       <ResponsiveContainer width="100%" height={220}>
         <BarChart data={data} margin={{ left: 0, right: 10, top: 5, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-          <XAxis dataKey="step" tick={{ fontSize: 11 }} />
-          <YAxis tickFormatter={v => `${v}%`} tick={{ fontSize: 11 }} />
+          <XAxis dataKey="step" tick={{ fontSize: 11, fill: '#384550' }} />
+          <YAxis tickFormatter={v => `${v}%`} tick={{ fontSize: 11, fill: '#384550' }} />
           <Tooltip content={<DarkTooltip />} />
-          <Legend wrapperStyle={{ fontSize: 11 }} />
+          <Legend wrapperStyle={{ fontSize: 11, color: '#384550' }} />
           <Bar dataKey="iOS" fill="#008246" radius={[3, 3, 0, 0]} barSize={18} />
           <Bar dataKey="Android" fill="#0075FF" radius={[3, 3, 0, 0]} barSize={18} />
           <Bar dataKey="Web" fill="#EF4444" radius={[3, 3, 0, 0]} barSize={18} />
@@ -109,14 +109,14 @@ const ProductPanel = ({ segments }: { segments: SegmentRow[] }) => {
     <div>
       <ResponsiveContainer width="100%" height={180}>
         <BarChart data={data} layout="vertical" margin={{ left: 0, right: 40, top: 0, bottom: 0 }}>
-          <XAxis type="number" domain={[0, 100]} tickFormatter={v => `${v}%`} tick={{ fontSize: 11 }} />
-          <YAxis type="category" dataKey="segment" width={60} tick={{ fontSize: 11 }} />
+          <XAxis type="number" domain={[0, 100]} tickFormatter={v => `${v}%`} tick={{ fontSize: 11, fill: '#384550' }} />
+          <YAxis type="category" dataKey="segment" width={60} tick={{ fontSize: 11, fill: '#384550' }} />
           <Tooltip content={<DarkTooltip />} />
           <Bar dataKey="onboarding" name="Onboarding Rate" radius={[0, 4, 4, 0]} barSize={22}>
             {data.map((entry, idx) => (
               <Cell key={idx} fill={getBarColor(entry.onboarding)} />
             ))}
-            <LabelList dataKey="onboarding" position="right" formatter={(v: number) => `${v.toFixed(1)}%`} style={{ fontSize: 11, fontWeight: 600 }} />
+            <LabelList dataKey="onboarding" position="right" formatter={(v: number) => `${v.toFixed(1)}%`} style={{ fontSize: 11, fontWeight: 600, fill: '#384550' }} />
           </Bar>
         </BarChart>
       </ResponsiveContainer>
@@ -153,10 +153,10 @@ const EngineeringPanel = ({ ageDevice }: { ageDevice: AgeDeviceRow[] }) => {
       <ResponsiveContainer width="100%" height={220}>
         <BarChart data={data} margin={{ left: 0, right: 10, top: 5, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-          <XAxis dataKey="step" tick={{ fontSize: 11 }} />
-          <YAxis tickFormatter={v => `${v}%`} tick={{ fontSize: 11 }} />
+          <XAxis dataKey="step" tick={{ fontSize: 11, fill: '#384550' }} />
+          <YAxis tickFormatter={v => `${v}%`} tick={{ fontSize: 11, fill: '#384550' }} />
           <Tooltip content={<DarkTooltip />} />
-          <Legend wrapperStyle={{ fontSize: 11 }} />
+          <Legend wrapperStyle={{ fontSize: 11, color: '#384550' }} />
           <Bar dataKey="iOS" fill="#008246" radius={[3, 3, 0, 0]} barSize={18} />
           <Bar dataKey="Android" fill="#0075FF" radius={[3, 3, 0, 0]} barSize={18} />
           <Bar dataKey="Web" fill="#EF4444" radius={[3, 3, 0, 0]} barSize={18} />
@@ -197,38 +197,38 @@ const GrowthPanel = ({ segments }: { segments: SegmentRow[] }) => {
   return (
     <div className="grid grid-cols-2 gap-4">
       <div>
-        <p className="text-xs font-semibold text-muted-foreground mb-2">
+        <p className="text-xs font-semibold mb-2" style={{ color: '#66727D' }}>
           {language === 'ES' ? 'Conv. por Género' : 'Conv. by Gender'}
         </p>
         <ResponsiveContainer width="100%" height={160}>
           <BarChart data={genderData} layout="vertical" margin={{ left: 0, right: 35, top: 0, bottom: 0 }}>
-            <XAxis type="number" tickFormatter={v => `${v}%`} tick={{ fontSize: 10 }} />
-            <YAxis type="category" dataKey="segment" width={75} tick={{ fontSize: 10 }} />
+            <XAxis type="number" tickFormatter={v => `${v}%`} tick={{ fontSize: 10, fill: '#384550' }} />
+            <YAxis type="category" dataKey="segment" width={75} tick={{ fontSize: 10, fill: '#384550' }} />
             <Tooltip content={<DarkTooltip />} />
             <Bar dataKey="overall_conv" name="Conv %" radius={[0, 4, 4, 0]} barSize={18}>
               {genderData.map((e, i) => (
                 <Cell key={i} fill={genderColors[e.segment] ?? '#0075FF'} />
               ))}
-              <LabelList dataKey="overall_conv" position="right" formatter={(v: number) => `${v.toFixed(1)}%`} style={{ fontSize: 10, fontWeight: 600 }} />
+              <LabelList dataKey="overall_conv" position="right" formatter={(v: number) => `${v.toFixed(1)}%`} style={{ fontSize: 10, fontWeight: 600, fill: '#384550' }} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
         <InsightCallout text={genderInsight} variant="blue" />
       </div>
       <div>
-        <p className="text-xs font-semibold text-muted-foreground mb-2">
+        <p className="text-xs font-semibold mb-2" style={{ color: '#66727D' }}>
           {language === 'ES' ? 'Conv. por Ubicación' : 'Conv. by Location'}
         </p>
         <ResponsiveContainer width="100%" height={160}>
           <BarChart data={locationData} layout="vertical" margin={{ left: 0, right: 35, top: 0, bottom: 0 }}>
-            <XAxis type="number" tickFormatter={v => `${v}%`} tick={{ fontSize: 10 }} />
-            <YAxis type="category" dataKey="segment" width={55} tick={{ fontSize: 10 }} />
+            <XAxis type="number" tickFormatter={v => `${v}%`} tick={{ fontSize: 10, fill: '#384550' }} />
+            <YAxis type="category" dataKey="segment" width={55} tick={{ fontSize: 10, fill: '#384550' }} />
             <Tooltip content={<DarkTooltip />} />
             <Bar dataKey="overall_conv" name="Conv %" radius={[0, 4, 4, 0]} barSize={18}>
               {locationData.map((e, i) => (
                 <Cell key={i} fill={locationColors[e.segment] ?? '#0075FF'} />
               ))}
-              <LabelList dataKey="overall_conv" position="right" formatter={(v: number) => `${v.toFixed(1)}%`} style={{ fontSize: 10, fontWeight: 600 }} />
+              <LabelList dataKey="overall_conv" position="right" formatter={(v: number) => `${v.toFixed(1)}%`} style={{ fontSize: 10, fontWeight: 600, fill: '#384550' }} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
@@ -255,8 +255,8 @@ const AudiencePanel = ({ audience, segments, ageDevice }: {
 
   return (
     <div className="bg-card rounded-2xl shadow-sm p-6 animate-fade-in" style={{ animationDelay: '150ms', animationFillMode: 'backwards' }}>
-      <h2 className="text-lg font-bold text-foreground mb-1">{title}</h2>
-      <p className="text-xs text-muted-foreground mb-4">
+      <h2 className="text-lg font-bold mb-1" style={{ color: '#00164C' }}>{title}</h2>
+      <p className="text-xs mb-4" style={{ color: '#384550' }}>
         {lang === 'es' ? 'Vista adaptada al perfil seleccionado' : 'View tailored to selected persona'}
       </p>
       {audience === 'exec' && <ExecPanel ageDevice={ageDevice} />}
