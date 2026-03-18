@@ -240,7 +240,7 @@ const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: Acti
                     />
                   ))}
                 </div>
-                <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                <div className="flex justify-between text-xs mt-1" style={{ color: '#66727D' }}>
                   {orderedDevices.map((d: any) => (
                     <span key={d.device_label}>{d.device_label} {Number(d.pct_of_parque).toFixed(0)}%</span>
                   ))}
