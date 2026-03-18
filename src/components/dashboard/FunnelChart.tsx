@@ -216,7 +216,7 @@ const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: Acti
                           className="inline-block rounded-full"
                           style={{ width: 10, height: 10, backgroundColor: dotColors[d.device_label] }}
                         />
-                        <span className="text-sm font-semibold text-foreground">{d.device_label}</span>
+                        <span className="text-sm font-semibold" style={{ color: '#00164C' }}>{d.device_label}</span>
                       </div>
                       <span className="text-xs text-muted-foreground">
                         {Number(d.pct_of_parque).toFixed(1)}% {isEs ? 'de usuarios' : 'of users'}
