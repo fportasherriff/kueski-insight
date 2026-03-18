@@ -35,11 +35,26 @@ const audienceSegmentMap: Record<Audience, string> = {
   growth: 'non-binary',
 };
 
-const audienceBadges: Record<Audience, string> = {
-  exec: '⚠ 0.6% — Critical',
-  product: '🎯 Top priority: >50 onboarding cliff',
-  engineering: '🔧 Web = 7× below iOS — structural',
-  growth: '📈 Non-binary = 1.75× avg conversion',
+const getSegmentInsight = (
+  segments: SegmentRow[],
+  activeDimension: string,
+  lang: string
+) => {
+  const dimKey = dimensionTabs.find(d => d.key === activeDimension)?.dimension;
+  if (!dimKey) return '';
+  const rows = segments.filter(r => r.dimension === dimKey);
+  if (!rows.length) return '';
+
+  const best = rows.reduce((a, b) => Number(a.overall_conv) > Number(b.overall_conv) ? a : b);
+  const worst = rows.reduce((a, b) => Number(a.overall_conv) < Number(b.overall_conv) ? a : b);
+  const worstConv = Number(worst.overall_conv);
+  const ratio = worstConv > 0 ? (Number(best.overall_conv) / worstConv).toFixed(1) : '∞';
+  const bestConv = Number(best.overall_conv).toFixed(1);
+
+  if (lang === 'es') {
+    return `${best.segment} convierte al ${bestConv}% — ${ratio}× más que ${worst.segment} (${worstConv.toFixed(1)}%).`;
+  }
+  return `${best.segment} converts at ${bestConv}% — ${ratio}× above ${worst.segment} at ${worstConv.toFixed(1)}%.`;
 };
 
 const DarkTooltip = ({ active, payload, label }: any) => {
