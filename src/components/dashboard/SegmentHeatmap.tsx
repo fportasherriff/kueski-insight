@@ -2,6 +2,7 @@ import React from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import InsightCallout from './InsightCallout';
 import type { AgeDeviceRow } from '@/hooks/useDashboardData';
+import type { AudienceHighlight } from './AudienceTabs';
 
 const getCellColor = (conv: number) => {
   if (conv >= 15) return { bg: '#008246', text: 'white' };
@@ -14,8 +15,9 @@ const getCellColor = (conv: number) => {
 const ageOrder = ['<25', '26-50', '>50'];
 const deviceOrder = ['ios', 'android', 'web'];
 const deviceLabels: Record<string, string> = { ios: 'iOS', android: 'Android', web: 'Web' };
+const ageLabels: Record<string, string> = { '<25': '<25 yrs', '26-50': '26-50 yrs', '>50': '50+ yrs' };
 
-const SegmentHeatmap = ({ ageDevice }: { ageDevice: AgeDeviceRow[] }) => {
+const SegmentHeatmap = ({ ageDevice, highlights }: { ageDevice: AgeDeviceRow[]; highlights?: AudienceHighlight[] }) => {
   const { t } = useLanguage();
 
   const grid: Record<string, Record<string, AgeDeviceRow>> = {};
@@ -29,8 +31,15 @@ const SegmentHeatmap = ({ ageDevice }: { ageDevice: AgeDeviceRow[] }) => {
     if (row.overall_conv < worstVal) { worstVal = row.overall_conv; worstKey = `${row.age_group}-${row.device}`; }
   });
 
+  const heatHighlight = highlights?.find(h => h.chartId === 'heatmap');
+
   return (
-    <div className="bg-card rounded-2xl shadow-sm p-6 animate-fade-in" style={{ animationDelay: '600ms', animationFillMode: 'backwards' }}>
+    <div className="bg-card rounded-2xl shadow-sm p-6 animate-fade-in relative" style={{ animationDelay: '600ms', animationFillMode: 'backwards' }}>
+      {heatHighlight?.badge && (
+        <span className="absolute top-4 right-4 text-xs font-semibold bg-destructive/10 text-destructive px-2.5 py-1 rounded-full z-10">
+          {heatHighlight.badge}
+        </span>
+      )}
       <h2 className="text-lg font-bold text-foreground">{t('heatmapTitle')}</h2>
       <p className="text-xs text-muted-foreground mb-5">{t('heatmapSubtitle')}</p>
 
@@ -44,7 +53,7 @@ const SegmentHeatmap = ({ ageDevice }: { ageDevice: AgeDeviceRow[] }) => {
       {ageOrder.map(age => (
         <div key={age} className="grid grid-cols-[80px_1fr_1fr_1fr] gap-2 mb-2">
           <div className="flex items-center">
-            <span className="text-xs font-semibold text-muted-foreground">{age}</span>
+            <span className="text-xs font-semibold text-muted-foreground">{ageLabels[age]}</span>
           </div>
           {deviceOrder.map(device => {
             const cell = grid[age]?.[device];
@@ -53,14 +62,20 @@ const SegmentHeatmap = ({ ageDevice }: { ageDevice: AgeDeviceRow[] }) => {
             const key = `${age}-${device}`;
             const isBest = key === bestKey;
             const isWorst = key === worstKey;
+            const isHighlighted = heatHighlight?.heatmapCell?.age === age && heatHighlight?.heatmapCell?.device === device;
 
             return (
               <div key={device} className="relative group">
                 <div
-                  className={`rounded-[10px] p-4 min-h-[80px] flex flex-col items-center justify-center ${
-                    isWorst || isBest ? 'ring-2 ring-white' : ''
+                  className={`rounded-[10px] p-4 min-h-[80px] flex flex-col items-center justify-center transition-all ${
+                    isHighlighted ? 'ring-2 ring-offset-1' : isWorst || isBest ? 'ring-2 ring-white' : ''
                   }`}
-                  style={{ backgroundColor: colors.bg, color: colors.text }}
+                  style={{
+                    backgroundColor: colors.bg,
+                    color: colors.text,
+                    ...(isHighlighted ? { ringColor: heatHighlight?.ringColor, boxShadow: `0 0 0 2px ${heatHighlight?.ringColor}` } : {}),
+                  }}
+                  title={`${ageLabels[age]} × ${deviceLabels[device]}\nConversion: ${cell.overall_conv}%\nUsers: ${cell.n.toLocaleString()}\nReg→Onb: ${cell.step_reg_to_onb}%\nCart→Purch: ${cell.step_cart_to_purch}%`}
                 >
                   {isWorst && (
                     <span className="absolute top-1 right-1 text-[9px] font-bold bg-white/20 px-1.5 py-0.5 rounded">
@@ -75,7 +90,8 @@ const SegmentHeatmap = ({ ageDevice }: { ageDevice: AgeDeviceRow[] }) => {
                   <span className="text-xl font-bold">{cell.overall_conv}%</span>
                   <span className="text-xs opacity-80 mt-1">n={cell.n?.toLocaleString()}</span>
                 </div>
-                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-foreground text-background text-xs rounded-lg p-2 whitespace-nowrap z-10 shadow-lg">
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-10 shadow-lg"
+                  style={{ background: '#141C22', color: 'white', borderRadius: 8, padding: '8px 12px', fontSize: 12, whiteSpace: 'nowrap' }}>
                   <div>Conv: {cell.overall_conv}%</div>
                   <div>n={Number(cell.n).toLocaleString()}</div>
                   <div>Reg→Onb: {cell.step_reg_to_onb}%</div>

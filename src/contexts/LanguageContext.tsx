@@ -111,7 +111,11 @@ export const translations: Translations = {
   period: { EN: 'Period', ES: 'Período' },
   datasetCovers: { EN: 'Dataset covers Jan–Apr 2025', ES: 'El dataset cubre Ene–Abr 2025' },
   filteredView: { EN: 'Filtered view', ES: 'Vista filtrada' },
-  filteredLabel: { EN: 'filtered', ES: 'filtrado' },
+  filteredLabel: { EN: 'Filtered', ES: 'Filtrado' },
+  allSegments: { EN: 'All Segments', ES: 'Todos los segmentos' },
+  allDevices: { EN: 'All Devices', ES: 'Todos los dispositivos' },
+  allLocations: { EN: 'All Locations', ES: 'Todas las regiones' },
+  allGenders: { EN: 'All Genders', ES: 'Todos los géneros' },
 
   // Audience tabs
   audience_exec: { EN: 'Exec', ES: 'Ejecutivo' },

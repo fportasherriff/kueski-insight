@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, LabelList } from 'recharts';
 import { useLanguage } from '@/contexts/LanguageContext';
 import InsightCallout from './InsightCallout';
 import type { SegmentRow } from '@/hooks/useDashboardData';
+import type { AudienceHighlight } from './AudienceTabs';
 
 const dimensionTabs = [
   { key: 'age', dimension: 'age_group' },
@@ -18,21 +19,31 @@ const insightKeys: Record<string, string> = {
   gender: 'insightGender',
 };
 
-const SegmentBreakdown = ({ segments }: { segments: SegmentRow[] }) => {
+const SegmentBreakdown = ({ segments, highlights }: { segments: SegmentRow[]; highlights?: AudienceHighlight[] }) => {
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState('age');
+
+  // Auto-switch tab if audience highlight targets a specific tab
+  const segHighlight = highlights?.find(h => h.chartId === 'segment');
+  useEffect(() => {
+    if (segHighlight?.segmentTab) setActiveTab(segHighlight.segmentTab);
+  }, [segHighlight?.segmentTab]);
 
   const currentDim = dimensionTabs.find(d => d.key === activeTab)!;
   const data = segments
     .filter(s => s.dimension === currentDim.dimension)
-    .sort((a, b) => b.overall_conv - a.overall_conv)
-    .map(s => ({ ...s, label: `${s.segment} (n=${s.n.toLocaleString()})` }));
+    .sort((a, b) => b.overall_conv - a.overall_conv);
 
   const maxConv = Math.max(...data.map(d => d.overall_conv), 0);
   const minConv = Math.min(...data.map(d => d.overall_conv), 0);
 
   return (
-    <div className="bg-card rounded-2xl shadow-sm p-6 animate-fade-in" style={{ animationDelay: '400ms', animationFillMode: 'backwards' }}>
+    <div className="bg-card rounded-2xl shadow-sm p-6 animate-fade-in relative" style={{ animationDelay: '400ms', animationFillMode: 'backwards' }}>
+      {segHighlight?.badge && activeTab === segHighlight.segmentTab && (
+        <span className="absolute top-4 right-4 text-xs font-semibold bg-primary/10 text-primary px-2.5 py-1 rounded-full z-10">
+          {segHighlight.badge}
+        </span>
+      )}
       <h2 className="text-lg font-bold text-foreground mb-4">{t('segmentBreakdown')}</h2>
 
       <div className="flex gap-1 p-1 bg-secondary rounded-full mb-4">
@@ -57,44 +68,44 @@ const SegmentBreakdown = ({ segments }: { segments: SegmentRow[] }) => {
             <XAxis type="number" domain={[0, Math.ceil(maxConv / 5) * 5 + 5]} tickFormatter={v => `${v}%`} tick={{ fontSize: 11 }} />
             <YAxis
               type="category"
-              dataKey="label"
-              width={140}
+              dataKey="segment"
+              width={100}
               tick={{ fontSize: 11 }}
             />
             <Tooltip
-              content={({ active, payload, label }) => {
+              cursor={{ fill: 'rgba(0,117,255,0.08)' }}
+              content={(props) => {
+                const { active, payload, label } = props;
                 if (!active || !payload?.length) return null;
-                const d = payload[0]?.payload;
+                const d = payload[0].payload;
                 return (
-                  <div className="bg-card border border-border rounded-lg shadow-lg p-3 text-xs min-w-[200px]">
-                    <p className="font-semibold text-foreground mb-2 pb-1 border-b border-border">
-                      {label}
-                    </p>
-                    <div className="space-y-1">
-                      <div className="flex justify-between gap-4">
-                        <span className="text-muted-foreground">Overall Conv:</span>
-                        <span className="font-semibold text-primary">{d?.overall_conv}%</span>
-                      </div>
-                      <div className="flex justify-between gap-4">
-                        <span className="text-muted-foreground">Reg→Onb:</span>
-                        <span className="font-semibold text-foreground">{d?.step_reg_to_onb}%</span>
-                      </div>
-                      <div className="flex justify-between gap-4">
-                        <span className="text-muted-foreground">Onb→View:</span>
-                        <span className="font-semibold text-foreground">{d?.step_onb_to_view}%</span>
-                      </div>
-                      <div className="flex justify-between gap-4">
-                        <span className="text-muted-foreground">View→Cart:</span>
-                        <span className="font-semibold text-foreground">{d?.step_view_to_cart}%</span>
-                      </div>
-                      <div className="flex justify-between gap-4">
-                        <span className="text-muted-foreground">Cart→Purch:</span>
-                        <span className="font-semibold text-foreground">{d?.step_cart_to_purch}%</span>
-                      </div>
-                      <div className="flex justify-between gap-4 pt-1 border-t border-border">
-                        <span className="text-muted-foreground">Users (n):</span>
-                        <span className="font-semibold text-foreground">{Number(d?.n).toLocaleString()}</span>
-                      </div>
+                  <div style={{
+                    background: '#141C22', color: 'white', borderRadius: 8,
+                    padding: '10px 14px', fontSize: 12, boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
+                    minWidth: 180
+                  }}>
+                    <div style={{ fontWeight: 700, marginBottom: 6, borderBottom: '1px solid rgba(255,255,255,0.15)', paddingBottom: 4 }}>
+                      {label || d.segment}
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, marginBottom: 2 }}>
+                      <span style={{ color: 'rgba(255,255,255,0.6)' }}>Overall conv:</span>
+                      <span style={{ fontWeight: 600, color: '#60A5FA' }}>{d.overall_conv}%</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, marginBottom: 2 }}>
+                      <span style={{ color: 'rgba(255,255,255,0.6)' }}>Reg→Onb:</span>
+                      <span style={{ fontWeight: 500 }}>{d.step_reg_to_onb}%</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, marginBottom: 2 }}>
+                      <span style={{ color: 'rgba(255,255,255,0.6)' }}>Onb→View:</span>
+                      <span style={{ fontWeight: 500 }}>{d.step_onb_to_view}%</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, marginBottom: 2 }}>
+                      <span style={{ color: 'rgba(255,255,255,0.6)' }}>View→Cart:</span>
+                      <span style={{ fontWeight: 500 }}>{d.step_view_to_cart}%</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}>
+                      <span style={{ color: 'rgba(255,255,255,0.6)' }}>Cart→Purch:</span>
+                      <span style={{ fontWeight: 500 }}>{d.step_cart_to_purch}%</span>
                     </div>
                   </div>
                 );
@@ -105,6 +116,10 @@ const SegmentBreakdown = ({ segments }: { segments: SegmentRow[] }) => {
                 let fill = 'hsl(var(--primary))';
                 if (entry.overall_conv === maxConv) fill = '#008246';
                 if (entry.overall_conv === minConv) fill = '#EF4444';
+                // Audience highlight ring effect via brighter fill
+                if (segHighlight?.segmentKey && entry.segment.toLowerCase() === segHighlight.segmentKey.toLowerCase() && activeTab === segHighlight.segmentTab) {
+                  fill = segHighlight.ringColor || fill;
+                }
                 return <Cell key={idx} fill={fill} />;
               })}
               <LabelList dataKey="overall_conv" position="right" formatter={(v: number) => `${v}%`} style={{ fontSize: 11, fontWeight: 600 }} />

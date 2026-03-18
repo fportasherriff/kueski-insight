@@ -20,23 +20,29 @@ const MonthlyTrend = ({ monthly }: { monthly: MonthlyRow[] }) => {
               content={({ active, payload, label }) => {
                 if (!active || !payload?.length) return null;
                 return (
-                  <div className="bg-card border border-border rounded-lg shadow-lg p-3 text-xs min-w-[180px]">
-                    <p className="font-semibold text-foreground mb-2 pb-1 border-b border-border">{label}</p>
+                  <div style={{
+                    background: '#141C22', color: 'white', borderRadius: 8,
+                    padding: '10px 14px', fontSize: 12, boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
+                    minWidth: 180
+                  }}>
+                    <div style={{ fontWeight: 700, marginBottom: 6, borderBottom: '1px solid rgba(255,255,255,0.15)', paddingBottom: 4 }}>
+                      {label}
+                    </div>
                     {payload.map((p: any) => (
-                      <div key={p.name} className="flex justify-between gap-4 py-0.5">
-                        <span style={{ color: p.color }} className="font-medium">{p.name}:</span>
-                        <span className="font-semibold text-foreground">{Number(p.value).toFixed(1)}%</span>
+                      <div key={p.name} style={{ display: 'flex', justifyContent: 'space-between', gap: 16, marginBottom: 2 }}>
+                        <span style={{ color: p.color, fontWeight: 500 }}>{p.name}:</span>
+                        <span style={{ fontWeight: 600 }}>{Number(p.value).toFixed(1)}%</span>
                       </div>
                     ))}
                     {payload[0]?.payload && (
-                      <div className="mt-1 pt-1 border-t border-border text-muted-foreground">
-                        <div className="flex justify-between gap-4">
+                      <div style={{ marginTop: 4, paddingTop: 4, borderTop: '1px solid rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.6)' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}>
                           <span>Registered:</span>
-                          <span className="font-medium text-foreground">{Number(payload[0].payload.registered).toLocaleString()}</span>
+                          <span style={{ fontWeight: 500, color: 'white' }}>{Number(payload[0].payload.registered).toLocaleString()}</span>
                         </div>
-                        <div className="flex justify-between gap-4">
+                        <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}>
                           <span>Purchased:</span>
-                          <span className="font-medium text-foreground">{Number(payload[0].payload.purchased).toLocaleString()}</span>
+                          <span style={{ fontWeight: 500, color: 'white' }}>{Number(payload[0].payload.purchased).toLocaleString()}</span>
                         </div>
                       </div>
                     )}

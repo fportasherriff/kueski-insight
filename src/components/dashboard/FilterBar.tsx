@@ -1,118 +1,118 @@
 import React from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-export interface DashboardFilters {
-  dateStart: string;
-  dateEnd: string;
-  age: string[];
-  device: string[];
-  location: string[];
-  gender: string[];
+export interface ActiveFilters {
+  age: string;
+  device: string;
+  location: string;
+  gender: string;
 }
 
-export const defaultFilters: DashboardFilters = {
-  dateStart: '2025-01',
-  dateEnd: '2025-04',
-  age: [],
-  device: [],
-  location: [],
-  gender: [],
+export const defaultFilters: ActiveFilters = {
+  age: 'all',
+  device: 'all',
+  location: 'all',
+  gender: 'all',
 };
 
-export const isFiltered = (filters: DashboardFilters) =>
-  filters.age.length > 0 || filters.device.length > 0 || filters.location.length > 0 || filters.gender.length > 0;
+export const isFiltered = (f: ActiveFilters) =>
+  f.age !== 'all' || f.device !== 'all' || f.location !== 'all' || f.gender !== 'all';
 
 interface FilterBarProps {
-  filters: DashboardFilters;
-  onChange: (f: DashboardFilters) => void;
+  filters: ActiveFilters;
+  onChange: (f: ActiveFilters) => void;
+  onExport: () => void;
 }
 
-const PillGroup = ({
-  label,
-  options,
-  selected,
-  onToggle,
-}: {
+const FilterSelect = ({ label, value, options, onChange }: {
   label: string;
-  options: string[];
-  selected: string[];
-  onToggle: (val: string) => void;
-}) => {
-  const allSelected = selected.length === 0;
-  return (
-    <div className="flex items-center gap-2">
-      <span className="text-xs font-semibold text-muted-foreground whitespace-nowrap">{label}</span>
-      <button
-        onClick={() => onToggle('__ALL__')}
-        className={`px-3 py-1 text-xs font-medium rounded-full border transition-colors ${
-          allSelected
-            ? 'bg-primary text-primary-foreground border-primary'
-            : 'bg-card border-border text-muted-foreground hover:border-primary/40'
-        }`}
-      >
-        All
-      </button>
-      {options.map(opt => {
-        const active = selected.includes(opt);
-        return (
-          <button
-            key={opt}
-            onClick={() => onToggle(opt)}
-            className={`px-3 py-1 text-xs font-medium rounded-full border transition-colors ${
-              active
-                ? 'bg-primary text-primary-foreground border-primary'
-                : 'bg-card border-border text-muted-foreground hover:border-primary/40'
-            }`}
-          >
-            {opt}
-          </button>
-        );
-      })}
-    </div>
-  );
-};
+  value: string;
+  options: { value: string; label: string }[];
+  onChange: (v: string) => void;
+}) => (
+  <select
+    value={value}
+    onChange={e => onChange(e.target.value)}
+    className="bg-card border border-border rounded-lg px-3 py-2 text-sm text-foreground min-w-[140px] cursor-pointer"
+    aria-label={label}
+  >
+    {options.map(o => (
+      <option key={o.value} value={o.value}>{o.label}</option>
+    ))}
+  </select>
+);
 
-const FilterBar = ({ filters, onChange }: FilterBarProps) => {
+const FilterBar = ({ filters, onChange, onExport }: FilterBarProps) => {
   const { t } = useLanguage();
 
-  const toggle = (key: keyof Pick<DashboardFilters, 'age' | 'device' | 'location' | 'gender'>, val: string) => {
-    if (val === '__ALL__') {
-      onChange({ ...filters, [key]: [] });
-      return;
-    }
-    const cur = filters[key];
-    const next = cur.includes(val) ? cur.filter(v => v !== val) : [...cur, val];
-    onChange({ ...filters, [key]: next });
-  };
+  const set = (key: keyof ActiveFilters, val: string) =>
+    onChange({ ...filters, [key]: val });
 
   return (
-    <div className="sticky top-0 z-30 bg-card border-b border-border px-8 py-3 -mx-4 md:-mx-10 mb-6 flex flex-wrap items-center gap-x-6 gap-y-2">
-      <div className="flex items-center gap-2 group relative">
-        <span className="text-xs font-semibold text-muted-foreground">{t('period')}</span>
-        <input
-          type="month"
-          value={filters.dateStart}
-          onChange={e => onChange({ ...filters, dateStart: e.target.value })}
-          className="text-xs border border-border rounded-md px-2 py-1 bg-background text-foreground"
-        />
-        <span className="text-xs text-muted-foreground">–</span>
-        <input
-          type="month"
-          value={filters.dateEnd}
-          onChange={e => onChange({ ...filters, dateEnd: e.target.value })}
-          className="text-xs border border-border rounded-md px-2 py-1 bg-background text-foreground"
-        />
-        <div className="absolute top-full left-0 mt-1 hidden group-hover:block bg-foreground text-background text-[10px] px-2 py-1 rounded shadow-lg whitespace-nowrap z-50">
-          {t('datasetCovers')}
-        </div>
+    <div className="sticky top-0 z-30 bg-card border-b border-border px-6 py-3 -mx-4 md:-mx-10 mb-6 flex flex-wrap items-center gap-3">
+      <FilterSelect
+        label={t('age')}
+        value={filters.age}
+        options={[
+          { value: 'all', label: t('allSegments') },
+          { value: '<25', label: '<25' },
+          { value: '26-50', label: '26-50' },
+          { value: '>50', label: '>50' },
+        ]}
+        onChange={v => set('age', v)}
+      />
+      <FilterSelect
+        label={t('device')}
+        value={filters.device}
+        options={[
+          { value: 'all', label: t('allDevices') },
+          { value: 'ios', label: 'iOS' },
+          { value: 'android', label: 'Android' },
+          { value: 'web', label: 'Web' },
+        ]}
+        onChange={v => set('device', v)}
+      />
+      <FilterSelect
+        label={t('location')}
+        value={filters.location}
+        options={[
+          { value: 'all', label: t('allLocations') },
+          { value: 'CDMX', label: 'CDMX' },
+          { value: 'Guadalajara', label: 'Guadalajara' },
+          { value: 'Monterrey', label: 'Monterrey' },
+          { value: 'Other', label: 'Other' },
+        ]}
+        onChange={v => set('location', v)}
+      />
+      <FilterSelect
+        label={t('gender')}
+        value={filters.gender}
+        options={[
+          { value: 'all', label: t('allGenders') },
+          { value: 'female', label: 'Female' },
+          { value: 'male', label: 'Male' },
+          { value: 'non-binary', label: 'Non-binary' },
+        ]}
+        onChange={v => set('gender', v)}
+      />
+
+      <span className="bg-muted text-muted-foreground rounded-lg px-3 py-2 text-sm select-none">
+        Jan–Apr 2025
+      </span>
+
+      <div className="ml-auto flex items-center gap-2">
+        {isFiltered(filters) && (
+          <span className="text-xs font-semibold bg-primary/10 text-primary px-2.5 py-1 rounded-full">
+            {t('filteredLabel')}
+          </span>
+        )}
+        <button
+          onClick={onExport}
+          className="flex items-center gap-2 px-4 py-2 rounded-lg border border-primary text-primary text-sm font-medium hover:bg-primary/5 transition-colors"
+        >
+          {t('exportCsv')}
+        </button>
       </div>
-
-      <div className="h-6 w-px bg-border" />
-
-      <PillGroup label={t('age')} options={['<25', '26-50', '>50']} selected={filters.age} onToggle={v => toggle('age', v)} />
-      <PillGroup label={t('device')} options={['iOS', 'Android', 'Web']} selected={filters.device} onToggle={v => toggle('device', v)} />
-      <PillGroup label={t('location')} options={['CDMX', 'Guadalajara', 'Monterrey', 'Other']} selected={filters.location} onToggle={v => toggle('location', v)} />
-      <PillGroup label={t('gender')} options={['Female', 'Male', 'Non-binary']} selected={filters.gender} onToggle={v => toggle('gender', v)} />
     </div>
   );
 };
