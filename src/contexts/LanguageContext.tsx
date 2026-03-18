@@ -175,8 +175,8 @@ export const translations: Translations = {
 
   pres_s3_k1_name: { EN: "Onboarding Completion Rate by Age", ES: "Tasa de Onboarding Completado por Edad" },
   pres_s3_k1_why: {
-    EN: "Predicts 30-day purchase likelihood. The 45pp gap between >50 and <25 is the single largest conversion lever in the funnel.",
-    ES: "Predice la probabilidad de compra a 30 días. La brecha de 45pp entre >50 y <25 es la mayor palanca de conversión del funnel.",
+    EN: "The onboarding step is the entry gate to the entire funnel. Users who don't complete it never reach any product. The 45pp gap between >50 (39.5%) and <25 (84.9%) is the single largest conversion lever we can pull.",
+    ES: "El paso de onboarding es la puerta de entrada a todo el funnel. Los usuarios que no lo completan nunca llegan a ningún producto. La brecha de 45pp entre >50 (39.5%) y <25 (84.9%) es la mayor palanca de conversión que podemos accionar.",
   },
   pres_s3_k1_watch: { EN: "Target: bring >50 from 39.5% → 55%", ES: "Meta: llevar >50 de 39.5% → 55%" },
   pres_s3_k1_clarify: {
