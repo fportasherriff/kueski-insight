@@ -50,6 +50,8 @@ const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: Acti
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
+  const insightText = getFunnelInsight(funnel, filters, language === 'ES' ? 'es' : 'en');
+
   if (!funnel.length) return null;
 
   const maxWidth = 760;
