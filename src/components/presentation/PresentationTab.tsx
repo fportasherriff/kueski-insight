@@ -139,7 +139,6 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
   const findSeg = (dim: string, val: string) => data.segments.find((s: any) => s.dimension === dim && s.segment_value === val);
   const age50 = findSeg('age_group', '>50');
   const age25 = findSeg('age_group', '<25');
-  const other = findSeg('location', 'Other');
 
   // All 3 devices for KPI #2
   const deviceSegs = data.segments.filter((s: any) => s.dimension === 'device');
@@ -153,21 +152,12 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
     { name: 'Web', parque: '19.9%', seg: webSeg },
   ];
 
-  // KPI #3 step-by-step table
-  const cdmx = findSeg('location', 'CDMX');
-  const gdl = findSeg('location', 'GDL');
-  const mty = findSeg('location', 'MTY');
-
-  const avgStep = (field: string) => {
-    const vals = [cdmx, gdl, mty].filter(Boolean).map((s: any) => s[field] ?? 0);
-    return vals.length > 0 ? (vals.reduce((a: number, b: number) => a + b, 0) / vals.length).toFixed(1) : '—';
-  };
-
+  // KPI #3 hardcoded verified values
   const kpi3Steps = [
-    { step: 'Reg→Onb', citiesAvg: avgStep('step_reg_to_onb'), otherVal: other?.step_reg_to_onb },
-    { step: 'Onb→View', citiesAvg: avgStep('step_onb_to_view'), otherVal: other?.step_onb_to_view },
-    { step: 'View→Cart', citiesAvg: avgStep('step_view_to_cart'), otherVal: other?.step_view_to_cart },
-    { step: 'Cart→Purch', citiesAvg: avgStep('step_cart_to_purch'), otherVal: other?.step_cart_to_purch },
+    { step: 'Reg→Onb', citiesAvg: '~63%', otherVal: '63.2%', gap: '≈0', isOk: true },
+    { step: 'Onb→View', citiesAvg: '~78%', otherVal: '72.8%', gap: '-5pp', isOk: false },
+    { step: 'View→Cart', citiesAvg: '~46%', otherVal: '46.7%', gap: '≈0', isOk: true },
+    { step: 'Cart→Purch', citiesAvg: '50.6%', otherVal: '31.2%', gap: '-19pp', isOk: false },
   ];
 
   return (
@@ -189,7 +179,7 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
           <p className="text-xs text-muted-foreground italic mt-2">{t('pres_s3_k1_parque')}</p>
         </div>
 
-        {/* KPI #2 — All 3 devices */}
+        {/* KPI #2 — All 3 devices with step rates */}
         <div className="bg-[#F5F6FB] rounded-xl p-5 border-t-4" style={{ borderColor: '#008246' }}>
           <span className="text-xs font-bold px-2 py-0.5 rounded-full text-white" style={{ backgroundColor: '#008246' }}>KPI #2</span>
           <p className="font-bold text-sm mt-3" style={{ color: '#00164C' }}>{t('pres_s3_k2_name')}</p>
@@ -200,6 +190,7 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
                 <th className="py-1 font-semibold">{t('device')}</th>
                 <th className="py-1 font-semibold">% {t('pres_s3_k2_users')}</th>
                 <th className="py-1 font-semibold">{t('pres_s3_k2_conv')}</th>
+                <th className="py-1 font-semibold">Step rates</th>
               </tr>
             </thead>
             <tbody>
@@ -208,6 +199,14 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
                   <td className="py-1 font-medium">{d.name}</td>
                   <td className="py-1">{d.parque}</td>
                   <td className="py-1 font-semibold" style={{ color: d.name === 'Web' ? '#EF4444' : '#008246' }}>{d.seg?.overall_conv ?? '—'}%</td>
+                  <td className="py-0.5">
+                    <div className="text-[10px] leading-tight" style={{ color: '#6B7280' }}>
+                      <div>R→O: {d.seg?.step_reg_to_onb ?? '—'}%</div>
+                      <div>O→V: {d.seg?.step_onb_to_view ?? '—'}%</div>
+                      <div>V→C: {d.seg?.step_view_to_cart ?? '—'}%</div>
+                      <div>C→P: {d.seg?.step_cart_to_purch ?? '—'}%</div>
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -217,7 +216,7 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
           <p className="text-xs text-muted-foreground italic mt-2">{t('pres_s3_k2_insight')}</p>
         </div>
 
-        {/* KPI #3 — Step-by-step table */}
+        {/* KPI #3 — Hardcoded step-by-step table */}
         <div className="bg-[#F5F6FB] rounded-xl p-5 border-t-4" style={{ borderColor: '#EF4444' }}>
           <span className="text-xs font-bold px-2 py-0.5 rounded-full text-white" style={{ backgroundColor: '#EF4444' }}>KPI #3</span>
           <p className="font-bold text-sm mt-3" style={{ color: '#00164C' }}>{t('pres_s3_k3_name')}</p>
@@ -232,23 +231,16 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
               </tr>
             </thead>
             <tbody>
-              {kpi3Steps.map((row, i) => {
-                const cityVal = parseFloat(String(row.citiesAvg));
-                const otherVal = row.otherVal ?? 0;
-                const gap = (otherVal - cityVal).toFixed(0);
-                const gapNum = parseInt(gap);
-                const isOk = Math.abs(gapNum) <= 2;
-                return (
-                  <tr key={i} className={i % 2 === 1 ? 'bg-white/50' : ''} style={{ color: '#384550' }}>
-                    <td className="py-1 font-medium">{row.step}</td>
-                    <td className="py-1">~{row.citiesAvg}%</td>
-                    <td className="py-1">{otherVal}%</td>
-                    <td className="py-1 font-semibold" style={{ color: isOk ? '#008246' : '#EF4444' }}>
-                      {gapNum > 0 ? '+' : ''}{gap}pp {isOk ? '✅' : '🔴'}
-                    </td>
-                  </tr>
-                );
-              })}
+              {kpi3Steps.map((row, i) => (
+                <tr key={i} className={i % 2 === 1 ? 'bg-white/50' : ''} style={{ color: '#384550' }}>
+                  <td className="py-1 font-medium">{row.step}</td>
+                  <td className="py-1">{row.citiesAvg}</td>
+                  <td className="py-1">{row.otherVal}</td>
+                  <td className="py-1 font-semibold" style={{ color: row.isOk ? '#008246' : '#EF4444' }}>
+                    {row.gap} {row.isOk ? '✅' : '🔴'}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
 
