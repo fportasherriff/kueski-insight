@@ -126,7 +126,7 @@ const SegmentBreakdown = ({ segments, highlights, audience }: { segments: Segmen
         ))}
       </div>
 
-      <div className="h-[200px]">
+      <div className="flex-1 min-h-0 h-[200px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} layout="vertical" margin={{ left: 0, right: 40, top: 0, bottom: 0 }}>
             <XAxis type="number" domain={[0, Math.ceil(maxConv / 5) * 5 + 5]} tickFormatter={v => `${v}%`} tick={{ fontSize: 11 }} />
