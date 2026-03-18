@@ -4,6 +4,7 @@ import type { FunnelStep, DashboardKPI, MonthlyRow, SegmentRow } from '@/hooks/u
 import DashboardHeader from './DashboardHeader';
 import FilterBar, { ActiveFilters, defaultFilters, isFiltered } from './FilterBar';
 import AudienceTabs, { Audience, getAudienceHighlights } from './AudienceTabs';
+import AudiencePanel from './AudiencePanel';
 import KPICards from './KPICards';
 import FunnelChart from './FunnelChart';
 import SegmentBreakdown from './SegmentBreakdown';
