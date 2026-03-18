@@ -138,7 +138,7 @@ export const translations: Translations = {
     EN: "Dataset: 100,000 anonymized BNPL users · Mexico · Jan–Apr 2025",
     ES: "Dataset: 100,000 usuarios BNPL anonimizados · México · Ene–Abr 2025",
   },
-  pres_s1_presented: { EN: "Presented by: Francisco Portas", ES: "Presentado por: Francisco Portas Herriff" },
+  pres_s1_presented: { EN: "Presented by: Francisco Porta", ES: "Presentado por: Francisco Portas Herriff" },
   pres_s1_problem_title: { EN: "The Problem", ES: "El Problema" },
   pres_s1_problem_text: {
     EN: "The checkout funnel shows uneven performance across segments — age, device, location, and gender. The goal: identify where conversion breaks down, understand why, and deliver an executable action plan for next quarter.",
