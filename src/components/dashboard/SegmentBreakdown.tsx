@@ -101,7 +101,7 @@ const SegmentBreakdown = ({ segments, highlights, audience }: { segments: Segmen
   const showBadge = audience && audienceDimensionMap[audience] === activeTab;
 
   return (
-    <div className="bg-card rounded-2xl shadow-sm p-6 animate-fade-in relative" style={{ animationDelay: '400ms', animationFillMode: 'backwards' }}>
+    <div className="bg-card rounded-2xl shadow-sm p-6 animate-fade-in relative flex flex-col h-full" style={{ animationDelay: '400ms', animationFillMode: 'backwards' }}>
       {showBadge && (
         <span className="absolute top-4 right-4 text-xs font-semibold bg-primary/10 text-primary px-2.5 py-1 rounded-full z-10">
           {audienceBadges[audience!]}
