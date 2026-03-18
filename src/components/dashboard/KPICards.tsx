@@ -37,7 +37,7 @@ const KPICard = ({ icon: Icon, value, label, subtext, color, delay }: KPICardPro
   </div>
 );
 
-const KPICards = ({ kpis }: { kpis: DashboardKPI }) => {
+const KPICards = ({ kpis, filtered }: { kpis: DashboardKPI; filtered?: boolean }) => {
   const { t } = useLanguage();
 
   const cards: Omit<KPICardProps, 'delay'>[] = [

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, LabelList } from 'recharts';
 import { useLanguage } from '@/contexts/LanguageContext';
 import InsightCallout from './InsightCallout';
-import CustomTooltip from './CustomTooltip';
 import type { SegmentRow } from '@/hooks/useDashboardData';
 
 const dimensionTabs = [
@@ -62,7 +61,45 @@ const SegmentBreakdown = ({ segments }: { segments: SegmentRow[] }) => {
               width={140}
               tick={{ fontSize: 11 }}
             />
-            <Tooltip content={<CustomTooltip />} />
+            <Tooltip
+              content={({ active, payload, label }) => {
+                if (!active || !payload?.length) return null;
+                const d = payload[0]?.payload;
+                return (
+                  <div className="bg-card border border-border rounded-lg shadow-lg p-3 text-xs min-w-[200px]">
+                    <p className="font-semibold text-foreground mb-2 pb-1 border-b border-border">
+                      {label}
+                    </p>
+                    <div className="space-y-1">
+                      <div className="flex justify-between gap-4">
+                        <span className="text-muted-foreground">Overall Conv:</span>
+                        <span className="font-semibold text-primary">{d?.overall_conv}%</span>
+                      </div>
+                      <div className="flex justify-between gap-4">
+                        <span className="text-muted-foreground">Reg→Onb:</span>
+                        <span className="font-semibold text-foreground">{d?.step_reg_to_onb}%</span>
+                      </div>
+                      <div className="flex justify-between gap-4">
+                        <span className="text-muted-foreground">Onb→View:</span>
+                        <span className="font-semibold text-foreground">{d?.step_onb_to_view}%</span>
+                      </div>
+                      <div className="flex justify-between gap-4">
+                        <span className="text-muted-foreground">View→Cart:</span>
+                        <span className="font-semibold text-foreground">{d?.step_view_to_cart}%</span>
+                      </div>
+                      <div className="flex justify-between gap-4">
+                        <span className="text-muted-foreground">Cart→Purch:</span>
+                        <span className="font-semibold text-foreground">{d?.step_cart_to_purch}%</span>
+                      </div>
+                      <div className="flex justify-between gap-4 pt-1 border-t border-border">
+                        <span className="text-muted-foreground">Users (n):</span>
+                        <span className="font-semibold text-foreground">{Number(d?.n).toLocaleString()}</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              }}
+            />
             <Bar dataKey="overall_conv" radius={[0, 4, 4, 0]} barSize={24}>
               {data.map((entry, idx) => {
                 let fill = 'hsl(var(--primary))';

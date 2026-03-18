@@ -55,6 +55,10 @@ export interface AgeDeviceRow {
   overall_conv: number;
   delta_vs_best: number;
   users_below_best: number;
+  step_reg_to_onb: number;
+  step_onb_to_view: number;
+  step_view_to_cart: number;
+  step_cart_to_purch: number;
 }
 
 interface DashboardData {
