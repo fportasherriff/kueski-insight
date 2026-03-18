@@ -261,7 +261,7 @@ const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: Acti
 
           <div className="mt-4">
             {insightText && (
-              <div className="bg-[#FFF7ED] border-l-4 border-[#F59E0B] p-3 rounded-r-lg text-sm text-foreground">
+              <div className="bg-[#F5F6FB] border-l-4 border-[#0075FF] p-3 rounded-r-lg text-sm" style={{ color: '#384550' }}>
                 💡 {insightText}
               </div>
             )}
