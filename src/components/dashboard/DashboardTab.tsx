@@ -7,7 +7,6 @@ import AudienceTabs, { Audience, getAudienceHighlights } from './AudienceTabs';
 import AudiencePanel from './AudiencePanel';
 import KPICards from './KPICards';
 import FunnelChart from './FunnelChart';
-import DeviceDistribution from './DeviceDistribution';
 import SegmentBreakdown from './SegmentBreakdown';
 import MonthlyTrend from './MonthlyTrend';
 import SegmentHeatmap from './SegmentHeatmap';
@@ -316,8 +315,6 @@ const DashboardTab = () => {
       ) : (
         activeFunnel.length > 0 && <FunnelChart funnel={activeFunnel} filters={filters} />
       )}
-
-      <DeviceDistribution />
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-stretch">
         <div className="lg:col-span-3 flex flex-col">
