@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { LayoutDashboard, Presentation, Bot, Map, LucideIcon } from 'lucide-react';
 import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext';
+import DashboardTab from '@/components/dashboard/DashboardTab';
 
 const NavItem = ({
   icon: Icon,
@@ -150,7 +151,7 @@ const AppContent = () => {
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard':
-        return <PlaceholderCard icon={LayoutDashboard} title={t('dashboard')} subtitle="BNPL Funnel Analytics · 100,000 users · Jan–Apr 2025" />;
+        return <DashboardTab />;
       case 'presentation':
         return <PlaceholderCard icon={Presentation} title={t('presentation')} subtitle="7 slides · Tasks 1–4 · Live data from Supabase" />;
       case 'ask':
