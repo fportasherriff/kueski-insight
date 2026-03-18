@@ -291,48 +291,47 @@ const Slide5 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
   const priorityColors = ['#EF4444', '#F59E0B', '#008246'];
   const rows = data.roadmap.slice(0, 3);
 
-  // Hardcoded EN/ES translations for DB fields that are in Spanish
   const initiativeTranslations: Record<number, { desc: { EN: string; ES: string }; rationale: { EN: string; ES: string }; whyQuarter: { EN: string; ES: string } }> = {
     0: {
       desc: {
-        EN: 'Redesign onboarding into short steps with contextual help and plain language for users over 50',
-        ES: 'Rediseñar el onboarding en pasos cortos con ayuda contextual y lenguaje claro para usuarios mayores de 50',
+        EN: 'Redesign onboarding as short progressive steps with plain language and contextual help — targeted at users 50+',
+        ES: 'Rediseñar el onboarding como pasos cortos progresivos con lenguaje claro y ayuda contextual — dirigido a usuarios 50+',
       },
       rationale: {
-        EN: 'GREENLIGHT — Highest confidence + 30% of user base + deployable Q2 with 1 squad. Largest single conversion lever in the funnel.',
-        ES: 'LUZ VERDE — Mayor confianza + 30% de la base de usuarios + desplegable en Q2 con 1 squad. La mayor palanca de conversión del funnel.',
+        EN: 'Highest confidence · 30% of user base · deployable Q2 with 1 squad · largest conversion lever in funnel',
+        ES: 'Mayor confianza · 30% de la base · desplegable Q2 con 1 squad · mayor palanca de conversión del funnel',
       },
       whyQuarter: {
-        EN: 'Highest confidence, lowest effort — ship with 1 squad in Q2.',
-        ES: 'Mayor confianza, menor esfuerzo — entregar con 1 squad en Q2.',
+        EN: 'Q2 — Low engineering effort, clear hypothesis, fast to test',
+        ES: 'Q2 — Bajo esfuerzo de ingeniería, hipótesis clara, rápido de testear',
       },
     },
     1: {
       desc: {
-        EN: 'Simplify checkout flow on Android: reduce steps, improve payment UI, optimize performance',
-        ES: 'Simplificar el flujo de checkout en Android: reducir pasos, mejorar UI de pago, optimizar rendimiento',
+        EN: 'Simplify Android checkout: fewer steps, better payment UI, performance optimization',
+        ES: 'Simplificar checkout en Android: menos pasos, mejor UI de pago, optimización de rendimiento',
       },
       rationale: {
-        EN: 'Highest reach (50% of users) + high technical confidence. Requires more engineering effort → Q3.',
-        ES: 'Mayor alcance (50% de usuarios) + alta confianza técnica. Requiere más esfuerzo de ingeniería → Q3.',
+        EN: '50% of user base · +4,690 purchases potential · high technical confidence',
+        ES: '50% de la base · +4,690 compras potenciales · alta confianza técnica',
       },
       whyQuarter: {
-        EN: 'Largest user base but needs more eng effort — plan for Q3.',
-        ES: 'Mayor base de usuarios pero necesita más esfuerzo de ing — planificar para Q3.',
+        EN: 'Q3 — Higher engineering effort, needs dedicated squad',
+        ES: 'Q3 — Mayor esfuerzo de ingeniería, necesita squad dedicado',
       },
     },
     2: {
       desc: {
-        EN: 'Add trust signals at checkout for non-tier-1 regions: clear delivery times, guarantees, local payment methods',
-        ES: 'Agregar señales de confianza en checkout para regiones no tier-1: tiempos de entrega claros, garantías, métodos de pago locales',
+        EN: 'Add trust signals at checkout for non-major-city regions: clear delivery times, guarantees, local payment methods',
+        ES: 'Agregar señales de confianza en checkout para regiones no principales: tiempos de entrega claros, garantías, métodos de pago locales',
       },
       rationale: {
-        EN: 'Quick win with low effort, but lower confidence — requires qualitative research before shipping. Q3-Q4.',
-        ES: 'Ganancia rápida con poco esfuerzo, pero menor confianza — requiere investigación cualitativa antes de lanzar. Q3-Q4.',
+        EN: '25% of user base · isolated to checkout only · needs qualitative research first',
+        ES: '25% de la base · aislado al checkout · necesita investigación cualitativa primero',
       },
       whyQuarter: {
-        EN: 'Low effort but needs qualitative validation first — Q3-Q4.',
-        ES: 'Bajo esfuerzo pero necesita validación cualitativa primero — Q3-Q4.',
+        EN: 'Q3-Q4 — Requires post-abandon research before shipping',
+        ES: 'Q3-Q4 — Requiere investigación post-abandono antes de lanzar',
       },
     },
   };
@@ -350,6 +349,7 @@ const Slide5 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
           const trans = initiativeTranslations[i];
           const desc = trans?.desc[lang] ?? r.description ?? '';
           const whyQ = trans?.whyQuarter[lang] ?? '';
+          const rationaleShort = trans?.rationale[lang] ?? '';
           return (
             <div key={i} className="rounded-xl p-5 border-l-4 bg-white border border-gray-100" style={{ borderLeftColor: clr }}>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
@@ -370,11 +370,12 @@ const Slide5 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
                 <div className="text-center">
                   <p className="text-2xl font-extrabold" style={{ color: clr }}>{r.rice_score}</p>
                   <p className="text-xs text-muted-foreground">{t('pres_s5_rice')}</p>
-                  {whyQ && <p className="text-xs italic text-muted-foreground mt-1">{t('pres_s5_why_quarter')}: {whyQ}</p>}
+                  <p className="text-xs italic text-muted-foreground mt-1">{rationaleShort}</p>
                 </div>
                 <div className="text-xs" style={{ color: '#384550' }}>
                   <p className="font-semibold">{r.current_rate}% → {r.target_rate}%</p>
                   <span className="inline-block bg-gray-100 rounded-full px-2 py-0.5 mt-1 text-xs">{r.critical_step}</span>
+                  {whyQ && <p className="text-xs italic text-muted-foreground mt-2">{t('pres_s5_why_quarter')}: {whyQ}</p>}
                 </div>
               </div>
             </div>
