@@ -176,10 +176,12 @@ const AppContent = () => {
   );
 };
 
-const Index = () => (
-  <LanguageProvider>
-    <AppContent />
-  </LanguageProvider>
-);
+const Index = () => {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
+  );
+};
 
 export default Index;
