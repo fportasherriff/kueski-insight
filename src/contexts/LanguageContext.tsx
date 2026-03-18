@@ -19,6 +19,10 @@ export const translations: Translations = {
   funnelOverview: { EN: 'Funnel Overview', ES: 'Resumen del Funnel' },
   monthlyTrends: { EN: 'Monthly Trends', ES: 'Tendencias Mensuales' },
   segmentBreakdown: { EN: 'Segment Breakdown', ES: 'Desglose por Segmento' },
+  segmentSubtitle: {
+    EN: 'Overall conversion rate per group — bars show % of each group that purchased',
+    ES: 'Tasa de conversión por grupo — las barras muestran % del grupo que compró',
+  },
   hypothesisValidation: { EN: 'Hypothesis Validation', ES: 'Validación de Hipótesis' },
   actionRoadmap: { EN: 'Action Roadmap', ES: 'Hoja de Ruta de Acción' },
   experimentDesign: { EN: 'Experiment Design', ES: 'Diseño de Experimento' },
@@ -54,6 +58,7 @@ export const translations: Translations = {
   addedToCart: { EN: 'Added to Cart', ES: 'Agregaron al Carrito' },
   purchased: { EN: 'Purchased', ES: 'Compraron' },
   usersDropped: { EN: 'users dropped', ES: 'usuarios perdidos' },
+  keyMetrics: { EN: 'Key Metrics', ES: 'Métricas Clave' },
 
   // Funnel insight
   funnelInsight: {

@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useDashboardData } from '@/hooks/useDashboardData';
-import type { FunnelStep } from '@/hooks/useDashboardData';
+import type { FunnelStep, DashboardKPI } from '@/hooks/useDashboardData';
 import DashboardHeader from './DashboardHeader';
 import FilterBar, { ActiveFilters, defaultFilters, isFiltered } from './FilterBar';
 import AudienceTabs, { Audience, getAudienceHighlights } from './AudienceTabs';
@@ -13,6 +13,31 @@ import ErrorBanner from './ErrorBanner';
 import { DashboardSkeleton } from './DashboardSkeleton';
 import { supabase } from '@/lib/supabaseClient';
 
+const buildFunnelFromGlobal = (d: any): FunnelStep[] => {
+  if (!d) return [];
+  return [
+    { name: 'Registered',     users: d.registered,     rate: 100,                          drop: 0,                   dropPct: 0 },
+    { name: 'Onboarded',      users: d.onboarded,      rate: Number(d.step_reg_to_onb),    drop: d.drop_reg_to_onb,   dropPct: Number(d.pct_registered_to_onboarded) },
+    { name: 'Viewed Product', users: d.viewed_product,  rate: Number(d.step_onb_to_view),   drop: d.drop_onb_to_view,  dropPct: Number(d.pct_registered_to_viewed) },
+    { name: 'Added to Cart',  users: d.added_to_cart,   rate: Number(d.step_view_to_cart),  drop: d.drop_view_to_cart,  dropPct: Number(d.pct_registered_to_cart) },
+    { name: 'Purchased',      users: d.purchased,       rate: Number(d.step_cart_to_purch), drop: d.drop_cart_to_purch, dropPct: Number(d.pct_registered_to_purchased) },
+  ];
+};
+
+const computeKPIsFromSteps = (steps: FunnelStep[]): Partial<DashboardKPI> | null => {
+  if (!steps?.length || steps.length < 5) return null;
+  const reg = steps[0].users;
+  const purchased = steps[4].users;
+  const cart = steps[3].users;
+  return {
+    overall_conv_rate: steps[4].rate,
+    onboarding_rate: steps[1].rate,
+    cart_to_purch_rate: cart > 0 ? Math.round(purchased / cart * 1000) / 10 : 0,
+    total_users: reg,
+    total_purchases: purchased,
+  };
+};
+
 const DashboardTab = () => {
   const { kpis, funnel, segments, monthly, ageDevice, loading, errors } = useDashboardData();
   const [filters, setFilters] = useState<ActiveFilters>(defaultFilters);
@@ -23,7 +48,7 @@ const DashboardTab = () => {
   const filtered = isFiltered(filters);
   const highlights = useMemo(() => getAudienceHighlights(audience), [audience]);
 
-  // Fetch filtered funnel from kueski_dataset when filters active
+  // Fetch filtered funnel from vw_funnel_filterable
   useEffect(() => {
     if (!filtered) {
       setFilteredFunnel(null);
@@ -32,33 +57,39 @@ const DashboardTab = () => {
 
     const fetchFiltered = async () => {
       setFilterLoading(true);
-      let query = supabase.from('kueski_dataset').select(
-        'onboarded, viewed_product, added_to_cart, purchased'
-      );
+
+      let query = supabase
+        .from('vw_funnel_filterable')
+        .select('registered,onboarded,viewed_product,added_to_cart,purchased');
+
       if (filters.age !== 'all') query = query.eq('age_group', filters.age);
       if (filters.device !== 'all') query = query.eq('device', filters.device);
       if (filters.location !== 'all') query = query.eq('location', filters.location);
       if (filters.gender !== 'all') query = query.eq('gender', filters.gender);
 
       const { data, error } = await query;
-      if (error || !data) {
+      if (error || !data?.length) {
         setFilteredFunnel(null);
         setFilterLoading(false);
         return;
       }
 
-      const n = data.length;
-      const onboarded = data.filter((r: any) => r.onboarded === 1).length;
-      const viewed = data.filter((r: any) => r.viewed_product === 1).length;
-      const cart = data.filter((r: any) => r.added_to_cart === 1).length;
-      const purchased = data.filter((r: any) => r.purchased === 1).length;
+      const agg = data.reduce((acc, row) => ({
+        registered:     acc.registered     + Number(row.registered),
+        onboarded:      acc.onboarded      + Number(row.onboarded),
+        viewed_product: acc.viewed_product + Number(row.viewed_product),
+        added_to_cart:  acc.added_to_cart  + Number(row.added_to_cart),
+        purchased:      acc.purchased      + Number(row.purchased),
+      }), { registered: 0, onboarded: 0, viewed_product: 0, added_to_cart: 0, purchased: 0 });
+
+      const s = (a: number, b: number) => b > 0 ? Math.round(a / b * 1000) / 10 : 0;
 
       setFilteredFunnel([
-        { name: 'Registered', users: n, rate: 100, drop: 0, dropPct: 0 },
-        { name: 'Onboarded', users: onboarded, rate: Math.round(onboarded / n * 1000) / 10, drop: n - onboarded, dropPct: Math.round((1 - onboarded / n) * 1000) / 10 },
-        { name: 'Viewed Product', users: viewed, rate: Math.round(viewed / onboarded * 1000) / 10, drop: onboarded - viewed, dropPct: Math.round((1 - viewed / n) * 1000) / 10 },
-        { name: 'Added to Cart', users: cart, rate: Math.round(cart / viewed * 1000) / 10, drop: viewed - cart, dropPct: Math.round((1 - cart / n) * 1000) / 10 },
-        { name: 'Purchased', users: purchased, rate: Math.round(purchased / cart * 1000) / 10, drop: cart - purchased, dropPct: Math.round((1 - purchased / n) * 1000) / 10 },
+        { name: 'Registered',     users: agg.registered,     rate: 100,                                           drop: agg.registered - agg.onboarded,          dropPct: s(agg.registered - agg.onboarded, agg.registered) },
+        { name: 'Onboarded',      users: agg.onboarded,      rate: s(agg.onboarded, agg.registered),              drop: agg.onboarded - agg.viewed_product,      dropPct: s(agg.onboarded - agg.viewed_product, agg.onboarded) },
+        { name: 'Viewed Product', users: agg.viewed_product,  rate: s(agg.viewed_product, agg.onboarded),          drop: agg.viewed_product - agg.added_to_cart,  dropPct: s(agg.viewed_product - agg.added_to_cart, agg.viewed_product) },
+        { name: 'Added to Cart',  users: agg.added_to_cart,   rate: s(agg.added_to_cart, agg.viewed_product),      drop: agg.added_to_cart - agg.purchased,       dropPct: s(agg.added_to_cart - agg.purchased, agg.added_to_cart) },
+        { name: 'Purchased',      users: agg.purchased,       rate: s(agg.purchased, agg.added_to_cart),           drop: 0, dropPct: 0 },
       ]);
       setFilterLoading(false);
     };
@@ -66,7 +97,7 @@ const DashboardTab = () => {
     fetchFiltered();
   }, [filters, filtered]);
 
-  // Filter segments by active filters
+  // Filter segments client-side
   const filteredSegments = useMemo(() => {
     if (!filtered) return segments;
     return segments.filter(s => {
@@ -111,6 +142,19 @@ const DashboardTab = () => {
 
   const activeFunnel = filteredFunnel || funnel;
 
+  // Compute KPIs from filtered funnel when filters active
+  const computedKpis = filtered && filteredFunnel ? computeKPIsFromSteps(filteredFunnel) : null;
+  const activeKpis = computedKpis && kpis
+    ? {
+        ...kpis,
+        overall_conv_rate: computedKpis.overall_conv_rate!,
+        onboarding_rate: computedKpis.onboarding_rate!,
+        cart_to_purch_rate: computedKpis.cart_to_purch_rate!,
+        total_users: computedKpis.total_users!,
+        total_purchases: computedKpis.total_purchases!,
+      }
+    : kpis;
+
   return (
     <div className="space-y-6">
       <DashboardHeader segments={segments} filtered={filtered} />
@@ -119,7 +163,7 @@ const DashboardTab = () => {
       <AudienceTabs active={audience} onChange={setAudience} />
 
       {errors.kpis && <ErrorBanner message={errors.kpis} />}
-      {kpis && <KPICards kpis={kpis} filtered={filtered} highlights={highlights} />}
+      {activeKpis && <KPICards kpis={activeKpis} filtered={filtered} highlights={highlights} />}
 
       {errors.funnel && <ErrorBanner message={errors.funnel} />}
       {filterLoading ? (
@@ -133,7 +177,7 @@ const DashboardTab = () => {
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
         <div className="lg:col-span-3">
           {errors.segments && <ErrorBanner message={errors.segments} />}
-          {filteredSegments.length > 0 && <SegmentBreakdown segments={filteredSegments} highlights={highlights} />}
+          {filteredSegments.length > 0 && <SegmentBreakdown segments={filteredSegments} highlights={highlights} audience={audience} />}
         </div>
         <div className="lg:col-span-2">
           {errors.monthly && <ErrorBanner message={errors.monthly} />}

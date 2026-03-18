@@ -24,77 +24,61 @@ interface FilterBarProps {
   onExport: () => void;
 }
 
-const FilterSelect = ({ label, value, options, onChange }: {
-  label: string;
-  value: string;
-  options: { value: string; label: string }[];
-  onChange: (v: string) => void;
-}) => (
-  <select
-    value={value}
-    onChange={e => onChange(e.target.value)}
-    className="bg-card border border-border rounded-lg px-3 py-2 text-sm text-foreground min-w-[140px] cursor-pointer"
-    aria-label={label}
-  >
-    {options.map(o => (
-      <option key={o.value} value={o.value}>{o.label}</option>
-    ))}
-  </select>
-);
+const FILTER_OPTIONS = {
+  age: [
+    { label: 'All Ages', labelEs: 'Todas las edades', value: 'all' },
+    { label: 'Under 25', labelEs: 'Menor de 25', value: '<25' },
+    { label: '26 to 50', labelEs: '26 a 50', value: '26-50' },
+    { label: 'Over 50', labelEs: 'Mayor de 50', value: '>50' },
+  ],
+  device: [
+    { label: 'All Devices', labelEs: 'Todos los dispositivos', value: 'all' },
+    { label: 'iOS', labelEs: 'iOS', value: 'ios' },
+    { label: 'Android', labelEs: 'Android', value: 'android' },
+    { label: 'Web', labelEs: 'Web', value: 'web' },
+  ],
+  location: [
+    { label: 'All Regions', labelEs: 'Todas las regiones', value: 'all' },
+    { label: 'CDMX', labelEs: 'CDMX', value: 'CDMX' },
+    { label: 'Guadalajara', labelEs: 'Guadalajara', value: 'GDL' },
+    { label: 'Monterrey', labelEs: 'Monterrey', value: 'MTY' },
+    { label: 'Other Regions', labelEs: 'Otras regiones', value: 'Other' },
+  ],
+  gender: [
+    { label: 'All Genders', labelEs: 'Todos los géneros', value: 'all' },
+    { label: 'Female', labelEs: 'Femenino', value: 'female' },
+    { label: 'Male', labelEs: 'Masculino', value: 'male' },
+    { label: 'Non-binary', labelEs: 'No binario', value: 'non-binary' },
+  ],
+};
 
 const FilterBar = ({ filters, onChange, onExport }: FilterBarProps) => {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
 
   const set = (key: keyof ActiveFilters, val: string) =>
     onChange({ ...filters, [key]: val });
 
+  const renderSelect = (key: keyof typeof FILTER_OPTIONS, filterKey: keyof ActiveFilters) => (
+    <select
+      value={filters[filterKey]}
+      onChange={e => set(filterKey, e.target.value)}
+      className="bg-card border border-border rounded-lg px-3 py-2 text-sm text-foreground min-w-[140px] cursor-pointer"
+      aria-label={key}
+    >
+      {FILTER_OPTIONS[key].map(o => (
+        <option key={o.value} value={o.value}>
+          {language === 'ES' ? o.labelEs : o.label}
+        </option>
+      ))}
+    </select>
+  );
+
   return (
     <div className="sticky top-0 z-30 bg-card border-b border-border px-6 py-3 -mx-4 md:-mx-10 mb-6 flex flex-wrap items-center gap-3">
-      <FilterSelect
-        label={t('age')}
-        value={filters.age}
-        options={[
-          { value: 'all', label: t('allSegments') },
-          { value: '<25', label: '<25' },
-          { value: '26-50', label: '26-50' },
-          { value: '>50', label: '>50' },
-        ]}
-        onChange={v => set('age', v)}
-      />
-      <FilterSelect
-        label={t('device')}
-        value={filters.device}
-        options={[
-          { value: 'all', label: t('allDevices') },
-          { value: 'ios', label: 'iOS' },
-          { value: 'android', label: 'Android' },
-          { value: 'web', label: 'Web' },
-        ]}
-        onChange={v => set('device', v)}
-      />
-      <FilterSelect
-        label={t('location')}
-        value={filters.location}
-        options={[
-          { value: 'all', label: t('allLocations') },
-          { value: 'CDMX', label: 'CDMX' },
-          { value: 'Guadalajara', label: 'Guadalajara' },
-          { value: 'Monterrey', label: 'Monterrey' },
-          { value: 'Other', label: 'Other' },
-        ]}
-        onChange={v => set('location', v)}
-      />
-      <FilterSelect
-        label={t('gender')}
-        value={filters.gender}
-        options={[
-          { value: 'all', label: t('allGenders') },
-          { value: 'female', label: 'Female' },
-          { value: 'male', label: 'Male' },
-          { value: 'non-binary', label: 'Non-binary' },
-        ]}
-        onChange={v => set('gender', v)}
-      />
+      {renderSelect('age', 'age')}
+      {renderSelect('device', 'device')}
+      {renderSelect('location', 'location')}
+      {renderSelect('gender', 'gender')}
 
       <span className="bg-muted text-muted-foreground rounded-lg px-3 py-2 text-sm select-none">
         Jan–Apr 2025
