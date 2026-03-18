@@ -48,7 +48,7 @@ const MonthlyTrend = ({ monthly }: { monthly: MonthlyRow[] }) => {
     <div className="bg-card rounded-2xl shadow-sm p-6 animate-fade-in flex flex-col h-full" style={{ animationDelay: '400ms', animationFillMode: 'backwards' }}>
       <h2 className="text-lg font-bold text-foreground mb-4">{t('monthlyTrends')}</h2>
 
-      <div className="flex-1 min-h-0 h-[200px]">
+      <div className="flex-1 min-h-[280px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={monthly} margin={{ left: 0, right: 8, top: 8, bottom: 0 }}>
             <XAxis dataKey="cohort_label" tick={{ fontSize: 11 }} />
