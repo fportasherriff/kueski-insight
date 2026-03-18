@@ -160,7 +160,11 @@ const SegmentBreakdown = ({ segments, highlights, audience, filters }: {
         </ResponsiveContainer>
       </div>
 
-      <InsightCallout text={t(insightKeys[activeTab])} variant="amber" />
+      {insightText && (
+        <div className="bg-[#FFF7ED] border-l-4 border-[#F59E0B] p-3 rounded-r-lg text-sm text-foreground mt-3">
+          {insightText}
+        </div>
+      )}
     </div>
   );
 };
