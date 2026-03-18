@@ -9,8 +9,8 @@ const DarkTooltip = ({ active, payload, label }: any) => {
   const d = payload[0]?.payload ?? {};
   return (
     <div style={{
-      background: '#141C22', color: 'white', borderRadius: 8,
-      padding: '10px 14px', fontSize: 12, boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+      background: 'hsl(var(--sidebar-bg))', color: 'white', borderRadius: 8,
+      padding: '10px 14px', fontSize: 12, boxShadow: '0 4px 20px hsl(var(--sidebar-bg) / 0.28)',
       minWidth: 200, border: '1px solid rgba(255,255,255,0.1)',
     }}>
       <div style={{ fontWeight: 700, marginBottom: 8, paddingBottom: 6, borderBottom: '1px solid rgba(255,255,255,0.15)', fontSize: 13 }}>

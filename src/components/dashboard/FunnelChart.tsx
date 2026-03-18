@@ -155,8 +155,8 @@ const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: Acti
               style={{ left: mousePos.x + 16, top: mousePos.y - 10 }}
             >
               <div style={{
-                background: '#141C22', color: 'white', borderRadius: 8,
-                padding: '10px 14px', fontSize: 12, boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+                background: 'hsl(var(--sidebar-bg))', color: 'white', borderRadius: 8,
+                padding: '10px 14px', fontSize: 12, boxShadow: '0 4px 20px hsl(var(--sidebar-bg) / 0.28)',
                 minWidth: 200, whiteSpace: 'nowrap', border: '1px solid rgba(255,255,255,0.1)',
               }}>
                 <div style={{ fontWeight: 700, marginBottom: 8, borderBottom: '1px solid rgba(255,255,255,0.15)', paddingBottom: 6, fontSize: 13 }}>
