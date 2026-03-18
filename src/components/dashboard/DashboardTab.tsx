@@ -252,24 +252,6 @@ const DashboardTab = () => {
     });
   }, [ageDevice, filters, filtered]);
 
-  const handleExport = useCallback(() => {
-    if (!segments.length) return;
-    const headers = ['Dimension', 'Segment', 'Users', 'Onboarded', 'Viewed', 'Added to Cart',
-      'Purchased', 'Reg→Onb %', 'Onb→View %', 'View→Cart %', 'Cart→Purch %', 'Overall Conv %'];
-    const rows = segments.map(d => [
-      d.dimension, d.segment, d.n, d.onboarded, d.viewed_product, d.added_to_cart,
-      d.purchased, d.step_reg_to_onb, d.step_onb_to_view, d.step_view_to_cart,
-      d.step_cart_to_purch, d.overall_conv
-    ]);
-    const csv = [headers, ...rows].map(r => r.join(',')).join('\n');
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'kueski-funnel-segments.csv';
-    a.click();
-    URL.revokeObjectURL(url);
-  }, [segments]);
 
   if (loading) return <DashboardSkeleton />;
 
