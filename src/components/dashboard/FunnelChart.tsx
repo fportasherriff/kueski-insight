@@ -218,7 +218,7 @@ const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: Acti
                         />
                         <span className="text-sm font-semibold" style={{ color: '#00164C' }}>{d.device_label}</span>
                       </div>
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-xs" style={{ color: '#66727D' }}>
                         {Number(d.pct_of_parque).toFixed(1)}% {isEs ? 'de usuarios' : 'of users'}
                       </span>
                       <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${badgeStyles[d.device_label]}`}>
