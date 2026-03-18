@@ -7,6 +7,7 @@ import AudienceTabs, { Audience, getAudienceHighlights } from './AudienceTabs';
 import AudiencePanel from './AudiencePanel';
 import KPICards from './KPICards';
 import FunnelChart from './FunnelChart';
+import DeviceStepCard from './DeviceStepCard';
 import SegmentBreakdown from './SegmentBreakdown';
 import MonthlyTrend from './MonthlyTrend';
 import SegmentHeatmap from './SegmentHeatmap';
