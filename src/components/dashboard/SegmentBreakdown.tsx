@@ -111,6 +111,11 @@ const SegmentBreakdown = ({ segments, highlights, audience, filters }: {
   }, [audience]);
 
   const currentDim = dimensionTabs.find(d => d.key === activeTab)!;
+
+  // Check if current tab's dimension is filtered (would show only 1 bar = pointless)
+  const dimFilterMap: Record<string, string> = { age: filters?.age ?? 'all', device: filters?.device ?? 'all', location: filters?.location ?? 'all', gender: filters?.gender ?? 'all' };
+  const isDimFiltered = dimFilterMap[activeTab] !== 'all';
+
   const data = segments
     .filter(s => s.dimension === currentDim.dimension)
     .sort((a, b) => b.overall_conv - a.overall_conv);
@@ -120,7 +125,7 @@ const SegmentBreakdown = ({ segments, highlights, audience, filters }: {
 
   const highlightSegment = audience ? audienceSegmentMap[audience] : null;
 
-  const insightText = getSegmentInsight(segments, activeTab, language === 'ES' ? 'es' : 'en');
+  const insightText = !isDimFiltered ? getSegmentInsight(segments, activeTab, language === 'ES' ? 'es' : 'en') : '';
 
   return (
     <div className="bg-card rounded-2xl shadow-sm p-6 animate-fade-in relative flex flex-col h-full" style={{ animationDelay: '400ms', animationFillMode: 'backwards' }}>
@@ -144,35 +149,38 @@ const SegmentBreakdown = ({ segments, highlights, audience, filters }: {
       </div>
 
       <div className="flex-1 min-h-0 h-[200px]">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data} layout="vertical" margin={{ left: 0, right: 40, top: 0, bottom: 0 }}>
-            <XAxis type="number" domain={[0, Math.ceil(maxConv / 5) * 5 + 5]} tickFormatter={v => `${v}%`} tick={{ fontSize: 11 }} />
-            <YAxis
-              type="category"
-              dataKey="segment"
-              width={100}
-              tick={{ fontSize: 11 }}
-            />
-            <Tooltip
-              cursor={{ fill: 'rgba(0,117,255,0.08)' }}
-              content={<DarkTooltip />}
-            />
-            <Bar dataKey="overall_conv" radius={[0, 4, 4, 0]} barSize={24}>
-              {data.map((entry, idx) => {
-                let fill = 'hsl(var(--primary))';
-                if (entry.overall_conv === maxConv) fill = '#008246';
-                if (entry.overall_conv === minConv) fill = '#EF4444';
-                // Audience highlight
-                if (highlightSegment && activeTab === audienceDimensionMap[audience!] &&
-                    entry.segment.toLowerCase() === highlightSegment.toLowerCase()) {
-                  fill = '#F59E0B';
-                }
-                return <Cell key={idx} fill={fill} />;
-              })}
-              <LabelList dataKey="overall_conv" position="right" formatter={(v: number) => `${v}%`} style={{ fontSize: 11, fontWeight: 600 }} />
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
+        {isDimFiltered ? (
+          <div className="flex items-center justify-center h-full text-sm text-muted-foreground">
+            {language === 'ES' ? 'Filtrado a:' : 'Filtered to:'}
+            <span className="font-semibold ml-1 text-primary">
+              {dimFilterMap[activeTab].toUpperCase()}
+            </span>
+            <span className="ml-2 text-xs text-muted-foreground">
+              {language === 'ES' ? '— cambia de pestaña para ver desglose' : '— switch tab to see breakdown'}
+            </span>
+          </div>
+        ) : (
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={data} layout="vertical" margin={{ left: 0, right: 40, top: 0, bottom: 0 }}>
+              <XAxis type="number" domain={[0, Math.ceil(maxConv / 5) * 5 + 5]} tickFormatter={v => `${v}%`} tick={{ fontSize: 11 }} />
+              <YAxis type="category" dataKey="segment" width={100} tick={{ fontSize: 11 }} />
+              <Tooltip cursor={{ fill: 'rgba(0,117,255,0.08)' }} content={<DarkTooltip />} />
+              <Bar dataKey="overall_conv" radius={[0, 4, 4, 0]} barSize={24}>
+                {data.map((entry, idx) => {
+                  let fill = 'hsl(var(--primary))';
+                  if (entry.overall_conv === maxConv) fill = '#008246';
+                  if (entry.overall_conv === minConv) fill = '#EF4444';
+                  if (highlightSegment && activeTab === audienceDimensionMap[audience!] &&
+                      entry.segment.toLowerCase() === highlightSegment.toLowerCase()) {
+                    fill = '#F59E0B';
+                  }
+                  return <Cell key={idx} fill={fill} />;
+                })}
+                <LabelList dataKey="overall_conv" position="right" formatter={(v: number) => `${v}%`} style={{ fontSize: 11, fontWeight: 600 }} />
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        )}
       </div>
 
       {insightText && (

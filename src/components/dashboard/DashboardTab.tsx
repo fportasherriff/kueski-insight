@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useDashboardData } from '@/hooks/useDashboardData';
-import type { FunnelStep, DashboardKPI, MonthlyRow } from '@/hooks/useDashboardData';
+import type { FunnelStep, DashboardKPI, MonthlyRow, SegmentRow } from '@/hooks/useDashboardData';
 import DashboardHeader from './DashboardHeader';
 import FilterBar, { ActiveFilters, defaultFilters, isFiltered } from './FilterBar';
 import AudienceTabs, { Audience, getAudienceHighlights } from './AudienceTabs';
@@ -44,6 +44,7 @@ const DashboardTab = () => {
   const [audience, setAudience] = useState<Audience>('exec');
   const [filteredFunnel, setFilteredFunnel] = useState<FunnelStep[] | null>(null);
   const [filteredMonthly, setFilteredMonthly] = useState<MonthlyRow[] | null>(null);
+  const [filteredSegments, setFilteredSegments] = useState<SegmentRow[] | null>(null);
   const [filterLoading, setFilterLoading] = useState(false);
 
   const filtered = isFiltered(filters);
@@ -165,17 +166,87 @@ const DashboardTab = () => {
     fetchMonthlyFiltered();
   }, [filters, filtered]);
 
-  // Filter segments client-side
-  const filteredSegments = useMemo(() => {
-    if (!filtered) return segments;
-    return segments.filter(s => {
-      if (filters.age !== 'all' && s.dimension === 'age_group' && s.segment !== filters.age) return false;
-      if (filters.device !== 'all' && s.dimension === 'device' && s.segment !== filters.device) return false;
-      if (filters.location !== 'all' && s.dimension === 'location' && s.segment !== filters.location) return false;
-      if (filters.gender !== 'all' && s.dimension === 'gender' && s.segment !== filters.gender) return false;
-      return true;
-    });
-  }, [segments, filters, filtered]);
+  // Fetch filtered segment breakdown
+  useEffect(() => {
+    if (!filtered) {
+      setFilteredSegments(null);
+      return;
+    }
+
+    const fetchSegments = async () => {
+      let query = supabase
+        .from('vw_segment_breakdown_filterable')
+        .select('age_group, device, location, gender, n, onboarded, viewed_product, added_to_cart, purchased');
+
+      if (filters.age !== 'all') query = query.eq('age_group', filters.age);
+      if (filters.device !== 'all') query = query.eq('device', filters.device);
+      if (filters.location !== 'all') query = query.eq('location', filters.location);
+      if (filters.gender !== 'all') query = query.eq('gender', filters.gender);
+
+      const { data, error } = await query;
+      if (error || !data?.length) {
+        setFilteredSegments(null);
+        return;
+      }
+
+      const pct = (a: number, b: number) => b > 0 ? Math.round(a / b * 1000) / 10 : 0;
+
+      const aggregate = (rows: typeof data, dimKey: string, dimValue: string) => {
+        const filtered = rows.filter(r => (r as any)[dimKey] === dimValue);
+        if (!filtered.length) return null;
+        const totals = filtered.reduce((acc, r) => ({
+          n: acc.n + Number(r.n),
+          onboarded: acc.onboarded + Number(r.onboarded),
+          viewed_product: acc.viewed_product + Number(r.viewed_product),
+          added_to_cart: acc.added_to_cart + Number(r.added_to_cart),
+          purchased: acc.purchased + Number(r.purchased),
+        }), { n: 0, onboarded: 0, viewed_product: 0, added_to_cart: 0, purchased: 0 });
+        return {
+          n: totals.n,
+          onboarded: totals.onboarded,
+          viewed_product: totals.viewed_product,
+          added_to_cart: totals.added_to_cart,
+          purchased: totals.purchased,
+          step_reg_to_onb: pct(totals.onboarded, totals.n),
+          step_onb_to_view: pct(totals.viewed_product, totals.onboarded),
+          step_view_to_cart: pct(totals.added_to_cart, totals.viewed_product),
+          step_cart_to_purch: pct(totals.purchased, totals.added_to_cart),
+          overall_conv: pct(totals.purchased, totals.n),
+        };
+      };
+
+      const result: SegmentRow[] = [];
+
+      if (filters.age === 'all') {
+        for (const seg of ['<25', '26-50', '>50']) {
+          const agg = aggregate(data, 'age_group', seg);
+          if (agg) result.push({ dimension: 'age_group', segment: seg, ...agg });
+        }
+      }
+      if (filters.device === 'all') {
+        for (const seg of ['ios', 'android', 'web']) {
+          const agg = aggregate(data, 'device', seg);
+          if (agg) result.push({ dimension: 'device', segment: seg, ...agg });
+        }
+      }
+      if (filters.location === 'all') {
+        for (const seg of ['CDMX', 'GDL', 'MTY', 'Other']) {
+          const agg = aggregate(data, 'location', seg);
+          if (agg) result.push({ dimension: 'location', segment: seg, ...agg });
+        }
+      }
+      if (filters.gender === 'all') {
+        for (const seg of ['female', 'male', 'non-binary']) {
+          const agg = aggregate(data, 'gender', seg);
+          if (agg) result.push({ dimension: 'gender', segment: seg, ...agg });
+        }
+      }
+
+      setFilteredSegments(result);
+    };
+
+    fetchSegments();
+  }, [filters, filtered]);
 
   // Filter heatmap
   const filteredAgeDevice = useMemo(() => {
@@ -208,6 +279,7 @@ const DashboardTab = () => {
 
   if (loading) return <DashboardSkeleton />;
 
+  const activeSegments = filteredSegments || segments;
   const activeFunnel = filteredFunnel || funnel;
 
   // Compute KPIs from filtered funnel when filters active
@@ -245,7 +317,7 @@ const DashboardTab = () => {
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-stretch">
         <div className="lg:col-span-3 flex flex-col">
           {errors.segments && <ErrorBanner message={errors.segments} />}
-          {filteredSegments.length > 0 && <SegmentBreakdown segments={filteredSegments} highlights={highlights} audience={audience} filters={filters} />}
+          {(activeSegments).length > 0 && <SegmentBreakdown segments={activeSegments} highlights={highlights} audience={audience} filters={filters} />}
         </div>
         <div className="lg:col-span-2 flex flex-col">
           {errors.monthly && <ErrorBanner message={errors.monthly} />}
