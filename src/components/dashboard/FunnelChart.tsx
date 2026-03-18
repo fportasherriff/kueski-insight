@@ -1,13 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { supabase } from '@/lib/supabaseClient';
 import type { FunnelStep } from '@/hooks/useDashboardData';
 import type { ActiveFilters } from './FilterBar';
-
-const stepBadge = (rate: number): { emoji: string; label: string } => {
-  if (rate >= 70) return { emoji: '✅', label: '' };
-  if (rate >= 45) return { emoji: '🟡', label: 'Watch' };
-  return { emoji: '🔴', label: 'Biggest drop' };
-};
 
 const getFunnelInsight = (steps: FunnelStep[], filters: ActiveFilters | undefined, lang: string) => {
   if (!steps?.length || steps.length < 5) return '';
@@ -45,12 +40,32 @@ const getFunnelInsight = (steps: FunnelStep[], filters: ActiveFilters | undefine
   return `Of ${totalUsers} users${context}, the biggest drop is at ${biggestDrop.step} — ${dropUsers} users (${dropPct}%) don't continue. Overall conversion: ${overallConv}%.`;
 };
 
+const DEVICE_ORDER = ['Android', 'iOS', 'Web'] as const;
+
+const dotColors: Record<string, string> = { iOS: '#008246', Android: '#F59E0B', Web: '#EF4444' };
+const badgeStyles: Record<string, string> = {
+  iOS: 'bg-[#F0FDF4] text-[#008246]',
+  Android: 'bg-[#FFF7ED] text-[#F59E0B]',
+  Web: 'bg-[#FEF2F2] text-[#EF4444]',
+};
+
 const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: ActiveFilters }) => {
   const { language, t } = useLanguage();
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [deviceData, setDeviceData] = useState<any[]>([]);
 
-  const insightText = getFunnelInsight(funnel, filters, language === 'ES' ? 'es' : 'en');
+  const isEs = language === 'ES';
+  const lang = isEs ? 'es' : 'en';
+
+  useEffect(() => {
+    supabase
+      .from('vw_device_distribution')
+      .select('device_label, total_users, pct_of_parque, conv_rate, purchases_gap_vs_ios')
+      .then(({ data }) => { if (data) setDeviceData(data); });
+  }, []);
+
+  const insightText = getFunnelInsight(funnel, filters, lang);
 
   if (!funnel.length) return null;
 
@@ -64,6 +79,8 @@ const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: Acti
     const rect = e.currentTarget.getBoundingClientRect();
     setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
+
+  const orderedDevices = DEVICE_ORDER.map(label => deviceData.find(d => d.device_label === label)).filter(Boolean);
 
   return (
     <div
@@ -135,10 +152,7 @@ const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: Acti
           {hoveredIdx !== null && funnel[hoveredIdx] && (
             <div
               className="absolute pointer-events-none z-50"
-              style={{
-                left: mousePos.x + 16,
-                top: mousePos.y - 10,
-              }}
+              style={{ left: mousePos.x + 16, top: mousePos.y - 10 }}
             >
               <div style={{
                 background: '#141C22', color: 'white', borderRadius: 8,
@@ -169,31 +183,80 @@ const FunnelChart = ({ funnel, filters }: { funnel: FunnelStep[]; filters?: Acti
           )}
         </div>
 
-        {/* Side panel — 2/5 width */}
+        {/* Side panel — Device Distribution */}
         <div className="lg:col-span-2 bg-secondary/30 rounded-xl p-5 flex flex-col justify-between">
           <div>
-            <h3 className="text-sm font-bold text-foreground mb-4">{t('keyMetrics')}</h3>
-            <div className="space-y-3">
-              {funnel.map((step, i) => {
-                const badge = i === 0 ? { emoji: '✅', label: '' } : stepBadge(step.rate);
-                return (
-                  <div key={step.name} className="flex items-center justify-between gap-2">
-                    <span className="text-sm text-foreground font-medium truncate">{step.name}</span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-bold text-foreground tabular-nums">
-                        {i === 0 ? '100%' : `${step.rate}%`}
-                      </span>
-                      {badge.label && (
-                        <span className="text-xs whitespace-nowrap">
-                          {badge.emoji} {badge.label}
-                        </span>
-                      )}
-                      {!badge.label && <span className="text-xs">{badge.emoji}</span>}
-                    </div>
+            <h3 className="text-sm font-semibold text-foreground">
+              {isEs ? 'Distribución por Dispositivo' : 'Device Distribution'}
+            </h3>
+            <p className="text-xs text-muted-foreground mb-3">
+              {isEs ? 'Distribución del parque vs tasa de conversión' : 'Share of user base vs conversion rate'}
+            </p>
+
+            {orderedDevices.length === 0 ? (
+              <div className="space-y-3">
+                {[0, 1, 2].map(i => (
+                  <div key={i} className="flex items-center justify-between py-2">
+                    <div className="h-4 w-20 rounded bg-muted animate-pulse" />
+                    <div className="h-4 w-16 rounded bg-muted animate-pulse" />
+                    <div className="h-5 w-12 rounded-full bg-muted animate-pulse" />
                   </div>
-                );
-              })}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <>
+                <div>
+                  {orderedDevices.map((d: any, i: number) => (
+                    <div
+                      key={d.device_label}
+                      className={`flex items-center justify-between py-2 ${i < orderedDevices.length - 1 ? 'border-b border-border' : ''}`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span
+                          className="inline-block rounded-full"
+                          style={{ width: 10, height: 10, backgroundColor: dotColors[d.device_label] }}
+                        />
+                        <span className="text-sm font-semibold text-foreground">{d.device_label}</span>
+                      </div>
+                      <span className="text-xs text-muted-foreground">
+                        {Number(d.pct_of_parque).toFixed(1)}% {isEs ? 'de usuarios' : 'of users'}
+                      </span>
+                      <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${badgeStyles[d.device_label]}`}>
+                        {Number(d.conv_rate).toFixed(1)}%
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Stacked bar */}
+                <div className="flex h-2 rounded-full overflow-hidden mt-3">
+                  {orderedDevices.map((d: any) => (
+                    <div
+                      key={d.device_label}
+                      style={{
+                        width: `${Number(d.pct_of_parque)}%`,
+                        backgroundColor: dotColors[d.device_label],
+                      }}
+                    />
+                  ))}
+                </div>
+                <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                  {orderedDevices.map((d: any) => (
+                    <span key={d.device_label}>{d.device_label} {Number(d.pct_of_parque).toFixed(0)}%</span>
+                  ))}
+                </div>
+
+                {/* Gap hints for Android & Web */}
+                {orderedDevices
+                  .filter((d: any) => d.device_label !== 'iOS' && Number(d.purchases_gap_vs_ios) > 0)
+                  .map((d: any) => (
+                    <p key={d.device_label} className="text-xs text-muted-foreground italic mt-2">
+                      {d.device_label}: +{Number(d.purchases_gap_vs_ios).toLocaleString()}{' '}
+                      {isEs ? 'compras potenciales vs tasa iOS' : 'purchases potential vs iOS rate'}
+                    </p>
+                  ))}
+              </>
+            )}
           </div>
 
           <div className="mt-4">
