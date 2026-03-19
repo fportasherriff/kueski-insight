@@ -236,6 +236,11 @@ export const translations: Translations = {
     EN: "Android holds 50% of the user base — twice the iOS base — but converts at half the rate at every single step. This is structural platform debt, not a UX issue. Fixing Android checkout = highest potential ROI in the roadmap.",
     ES: "Android tiene el 50% de la base de usuarios — el doble de iOS — pero convierte a la mitad de la tasa en cada paso. Es deuda estructural de plataforma, no un problema de UX. Arreglar el checkout de Android = mayor ROI potencial del roadmap.",
   },
+  pres_s4d_best_performer: { EN: "Best performer", ES: "Mejor rendimiento" },
+  pres_s4d_structural_note: {
+    EN: "Gap is structural — consistent across all 4 funnel steps, not a single friction point.",
+    ES: "La brecha es estructural — consistente en los 4 pasos del funnel, no un punto de fricción aislado.",
+  },
 
   // Slide 4
   pres_s4_title: { EN: "3 Evidence-Based Hypotheses", ES: "3 Hipótesis Basadas en Evidencia" },
