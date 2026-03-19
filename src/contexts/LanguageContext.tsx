@@ -181,6 +181,10 @@ export const translations: Translations = {
   pres_s2_title: { EN: "Where Does the Funnel Break?", ES: "¿Dónde se Rompe el Funnel?" },
   pres_s2_subtitle: { EN: "Task 1 — Segmented Funnel Diagnosis", ES: "Tarea 1 — Diagnóstico Segmentado del Funnel" },
   pres_s2_global: { EN: "Global Drop-offs", ES: "Caídas Globales" },
+  pres_s2_funnel_title: {
+    EN: "Global Funnel — Cumulative conversion from 100K",
+    ES: "Funnel Global — Conversión acumulada desde 100K",
+  },
   pres_s2_damaging: { EN: "2 Most Damaging Combinations", ES: "2 Combinaciones más Dañinas" },
   pres_s2_gap: { EN: "Best vs Worst Gap", ES: "Brecha Mejor vs Peor" },
   pres_s2_overall_conv: { EN: "overall conversion", ES: "conversión total" },
