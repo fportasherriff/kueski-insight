@@ -124,7 +124,6 @@ const MobileNav = ({
     { id: 'dashboard', icon: LayoutDashboard },
     { id: 'presentation', icon: Presentation },
     { id: 'ask', icon: Bot },
-    { id: 'roadmap', icon: Map },
   ];
 
   return (
