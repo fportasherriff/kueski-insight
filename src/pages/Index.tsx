@@ -3,6 +3,7 @@ import { LayoutDashboard, Presentation, Bot, LucideIcon } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import DashboardTab from '@/components/dashboard/DashboardTab';
 import PresentationTab from '@/components/presentation/PresentationTab';
+import AskDataTab from '@/components/ask/AskDataTab';
 
 const NavItem = ({
   icon: Icon,
