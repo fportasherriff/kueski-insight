@@ -164,7 +164,7 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
         </div>
 
         {/* RIGHT — Checkout Gap */}
-        <div className="bg-[#F5F6FB] rounded-2xl p-8 flex flex-col overflow-hidden">
+        <div className="bg-[#F5F6FB] rounded-2xl p-6 flex flex-col overflow-hidden">
           <span className="self-start text-sm font-semibold px-4 py-1.5 rounded-full text-white" style={{ backgroundColor: '#EF4444' }}>
             {t('pres_s3_kpi3_pill_v2')}
           </span>
@@ -183,12 +183,6 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
               <span className="text-xl font-extrabold" style={{ color: '#EF4444' }}>−19pp</span>
             </div>
           </div>
-
-          <hr className="border-gray-200 my-4" />
-
-          <p className="text-sm" style={{ color: '#00164C', fontWeight: 500 }}>
-            {t('pres_s3_kpi3_insight')}
-          </p>
 
           <div className="mt-auto bg-[#FEF2F2] rounded-lg px-3 py-2 text-xs mt-4" style={{ color: '#EF4444' }}>
             {t('pres_s3_kpi3_target')}
