@@ -217,7 +217,7 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
         </div>
 
         {/* KPI #3 — Hardcoded step-by-step table */}
-        <div className="bg-[#F5F6FB] rounded-xl p-5 border-t-4" style={{ borderColor: '#EF4444' }}>
+        <div className="bg-[#F5F6FB] rounded-xl p-5 border-t-4 flex flex-col h-full" style={{ borderColor: '#EF4444' }}>
           <span className="text-xs font-bold px-2 py-0.5 rounded-full text-white" style={{ backgroundColor: '#EF4444' }}>KPI #3</span>
           <p className="font-bold text-sm mt-3" style={{ color: '#00164C' }}>{t('pres_s3_k3_name')}</p>
 
