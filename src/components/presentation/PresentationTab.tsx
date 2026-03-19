@@ -600,10 +600,10 @@ const PresentationTab = () => {
     <Slide1 key={0} t={t} />,
     <Slide2 key={1} data={data} t={t} />,
     <Slide3 key={2} data={data} t={t} />,
-    <Slide4 key={3} t={t} />,
-    <Slide5 key={4} data={data} t={t} />,
-    <Slide6 key={5} data={data} t={t} />,
-    <Slide7 key={6} t={t} />,
+    <Slide4Device key={3} t={t} />,
+    <Slide4 key={4} t={t} />,
+    <Slide5 key={5} data={data} t={t} />,
+    <Slide6 key={6} data={data} t={t} />,
   ];
 
   return (
