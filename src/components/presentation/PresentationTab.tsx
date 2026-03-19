@@ -185,7 +185,7 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
             </div>
           </div>
 
-          <div className="mt-auto bg-[#FEF2F2] rounded-lg px-3 py-2 text-xs mt-4" style={{ color: '#EF4444' }}>
+          <div className="mt-auto bg-[#FEF2F2] rounded-lg px-3 py-1.5 text-xs mt-3" style={{ color: '#EF4444' }}>
             {t('pres_s3_kpi3_target')}
           </div>
         </div>
