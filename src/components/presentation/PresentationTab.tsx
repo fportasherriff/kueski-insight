@@ -27,8 +27,8 @@ const Slide1 = ({ t }: { t: (k: string) => string }) => (
     <h1 className="text-3xl font-extrabold" style={{ color: '#00164C' }}>{t('pres_s1_title')}</h1>
     <p className="text-lg mt-2" style={{ color: '#384550' }}>{t('pres_s1_subtitle')}</p>
 
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-8 text-sm" style={{ color: '#384550' }}>
-      <span>{t('pres_s1_dataset')}</span>
+    <div className="mt-8 space-y-1 text-sm" style={{ color: '#66727D' }}>
+      <p>{t('pres_s1_dataset')}</p>
       <div className="flex items-center gap-2">
         <p>{t('pres_s1_presented')}</p>
         <a
