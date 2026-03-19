@@ -89,11 +89,11 @@ const Slide2 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
             const n = row.n ?? row.total_users ?? 0;
             const pctBase = totalBase > 0 ? ((n / totalBase) * 100).toFixed(1) : '0.0';
             return (
-              <div key={i} className="bg-[#F5F6FB] rounded-2xl p-8 text-center">
-                <span className="inline-block bg-white text-lg font-bold px-4 py-1 rounded-full mb-4" style={{ color: '#00164C' }}>
+              <div key={i} className="bg-[#F5F6FB] rounded-2xl py-4 px-6 text-center">
+                <span className="inline-block bg-white text-base font-bold px-3 py-0.5 rounded-full mb-3" style={{ color: '#00164C' }}>
                   {row.age_group} × {(row.device ?? '').toUpperCase()}
                 </span>
-                <p className="text-6xl font-[800]" style={{ color: '#EF4444' }}>{row.overall_conv}%</p>
+                <p className="font-[800]" style={{ color: '#EF4444', fontSize: '52px', lineHeight: 1 }}>{row.overall_conv}%</p>
                 <p className="text-xs italic mt-2" style={{ color: '#66727D' }}>
                   n = {n.toLocaleString()} {t('pres_s2_users')} · {pctBase}% {t('pres_s2_of_base')}
                 </p>
@@ -145,47 +145,47 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
         {/* LEFT — Onboarding Gap */}
-        <div className="bg-[#F5F6FB] rounded-2xl p-6 flex flex-col overflow-hidden">
-          <span className="self-start text-sm font-semibold px-4 py-1.5 rounded-full text-white" style={{ backgroundColor: '#0075FF' }}>
+        <div className="bg-[#F5F6FB] rounded-2xl py-4 px-5 flex flex-col overflow-hidden">
+          <span className="self-start text-xs font-semibold px-3 py-1 rounded-full text-white" style={{ backgroundColor: '#0075FF' }}>
             {t('pres_s3_kpi1_pill_v2')}
           </span>
 
-          <div className="flex items-center justify-center gap-4 mt-6">
-            <span className="text-4xl font-extrabold" style={{ color: '#EF4444' }}>39.5%</span>
-            <span className="text-2xl" style={{ color: '#384550' }}>→</span>
-            <span className="text-4xl font-extrabold" style={{ color: '#008246' }}>84.9%</span>
+          <div className="flex items-center justify-center gap-3 mt-4">
+            <span className="text-3xl font-extrabold" style={{ color: '#EF4444' }}>39.5%</span>
+            <span className="text-xl" style={{ color: '#384550' }}>→</span>
+            <span className="text-3xl font-extrabold" style={{ color: '#008246' }}>84.9%</span>
           </div>
           <p className="text-xs text-center mt-2" style={{ color: '#66727D' }}>
             {t('pres_s3_kpi1_ages')}
           </p>
 
-          <div className="mt-auto bg-[#EFF6FF] rounded-lg px-3 py-2 text-xs mt-4" style={{ color: '#0075FF' }}>
+          <div className="mt-auto bg-[#EFF6FF] rounded-lg px-3 py-1.5 text-xs mt-3" style={{ color: '#0075FF' }}>
             {t('pres_s3_kpi1_target')}
           </div>
         </div>
 
         {/* RIGHT — Checkout Gap */}
-        <div className="bg-[#F5F6FB] rounded-2xl p-6 flex flex-col overflow-hidden">
-          <span className="self-start text-sm font-semibold px-4 py-1.5 rounded-full text-white" style={{ backgroundColor: '#EF4444' }}>
+        <div className="bg-[#F5F6FB] rounded-2xl py-4 px-5 flex flex-col overflow-hidden">
+          <span className="self-start text-xs font-semibold px-3 py-1 rounded-full text-white" style={{ backgroundColor: '#EF4444' }}>
             {t('pres_s3_kpi3_pill_v2')}
           </span>
 
-          <div className="mt-6 space-y-0">
-            <div className="flex justify-between items-center py-2">
+          <div className="mt-4 space-y-0">
+            <div className="flex justify-between items-center py-1.5">
               <span className="text-sm font-semibold" style={{ color: '#00164C' }}>{t('pres_s3_kpi3_cities')}</span>
-              <span className="text-4xl font-extrabold" style={{ color: '#008246' }}>50.6%</span>
+              <span className="text-3xl font-extrabold" style={{ color: '#008246' }}>50.6%</span>
             </div>
-            <div className="flex justify-between items-center py-2 border-t border-b border-gray-200">
+            <div className="flex justify-between items-center py-1.5 border-t border-b border-gray-200">
               <span className="text-sm font-semibold" style={{ color: '#00164C' }}>{t('pres_s3_kpi3_other')}</span>
-              <span className="text-4xl font-extrabold" style={{ color: '#EF4444' }}>31.2%</span>
+              <span className="text-3xl font-extrabold" style={{ color: '#EF4444' }}>31.2%</span>
             </div>
-            <div className="flex justify-between items-center py-2 bg-[#FEF2F2] rounded-lg px-3 mt-2">
+            <div className="flex justify-between items-center py-1.5 bg-[#FEF2F2] rounded-lg px-3 mt-2">
               <span className="text-xs font-semibold" style={{ color: '#EF4444' }}>{t('pres_s3_kpi3_gap_label')}</span>
-              <span className="text-xl font-extrabold" style={{ color: '#EF4444' }}>−19pp</span>
+              <span className="text-lg font-extrabold" style={{ color: '#EF4444' }}>−19pp</span>
             </div>
           </div>
 
-          <div className="mt-auto bg-[#FEF2F2] rounded-lg px-3 py-2 text-xs mt-4" style={{ color: '#EF4444' }}>
+          <div className="mt-auto bg-[#FEF2F2] rounded-lg px-3 py-1.5 text-xs mt-3" style={{ color: '#EF4444' }}>
             {t('pres_s3_kpi3_target')}
           </div>
         </div>
@@ -216,10 +216,10 @@ const Slide4Device = ({ t }: { t: (k: string) => string }) => {
 
       <div className="grid grid-cols-3 gap-6 mt-4">
         {devices.map((d) => (
-          <div key={d.name} className="rounded-2xl p-6 text-center border-2 flex flex-col" style={{ backgroundColor: d.bg, borderColor: d.color }}>
+          <div key={d.name} className="rounded-2xl py-4 px-5 text-center border-2 flex flex-col" style={{ backgroundColor: d.bg, borderColor: d.color }}>
             <p className="text-sm font-semibold uppercase tracking-wide" style={{ color: d.color }}>{d.name}</p>
             <p className="text-xs mt-1" style={{ color: '#384550' }}>{d.share}% {t('pres_s4d_of_users')}</p>
-            <p className="text-5xl font-extrabold my-4" style={{ color: d.color }}>{d.conv}%</p>
+            <p className="font-extrabold my-3" style={{ color: d.color, fontSize: '40px', lineHeight: 1 }}>{d.conv}%</p>
             <p className="text-xs" style={{ color: '#384550' }}>{t('pres_s4d_overall_conv')}</p>
             <span
               className="mt-3 text-xs rounded-full px-3 py-1 font-semibold self-center"
@@ -240,7 +240,7 @@ const Slide4Device = ({ t }: { t: (k: string) => string }) => {
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-[#F5F6FB]">
-              <th className="text-left py-2 px-4 font-semibold" style={{ color: '#00164C' }}>{t('pres_s3_k3_step')}</th>
+              <th className="text-left py-2 px-4 font-semibold" style={{ color: '#00164C' }}>{t('pres_s4d_step_header')}</th>
               <th className="text-left py-2 px-4 font-semibold" style={{ color: '#008246' }}>iOS</th>
               <th className="text-left py-2 px-4 font-semibold" style={{ color: '#0075FF' }}>Android</th>
               <th className="text-left py-2 px-4 font-semibold" style={{ color: '#EF4444' }}>Web</th>
