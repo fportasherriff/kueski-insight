@@ -89,11 +89,11 @@ const Slide2 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
             const n = row.n ?? row.total_users ?? 0;
             const pctBase = totalBase > 0 ? ((n / totalBase) * 100).toFixed(1) : '0.0';
             return (
-              <div key={i} className="bg-[#F5F6FB] rounded-2xl p-8 text-center">
-                <span className="inline-block bg-white text-lg font-bold px-4 py-1 rounded-full mb-4" style={{ color: '#00164C' }}>
+              <div key={i} className="bg-[#F5F6FB] rounded-2xl py-4 px-6 text-center">
+                <span className="inline-block bg-white text-base font-bold px-3 py-0.5 rounded-full mb-3" style={{ color: '#00164C' }}>
                   {row.age_group} × {(row.device ?? '').toUpperCase()}
                 </span>
-                <p className="text-6xl font-[800]" style={{ color: '#EF4444' }}>{row.overall_conv}%</p>
+                <p className="font-[800]" style={{ color: '#EF4444', fontSize: '52px', lineHeight: 1 }}>{row.overall_conv}%</p>
                 <p className="text-xs italic mt-2" style={{ color: '#66727D' }}>
                   n = {n.toLocaleString()} {t('pres_s2_users')} · {pctBase}% {t('pres_s2_of_base')}
                 </p>
