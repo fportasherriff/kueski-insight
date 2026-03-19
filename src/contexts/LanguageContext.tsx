@@ -196,6 +196,8 @@ export const translations: Translations = {
   pres_s3_title_v2: { EN: "2 Critical Metrics to Watch", ES: "2 Métricas Críticas a Monitorear" },
   pres_s3_subtitle_v2: { EN: "Task 1 — Leading indicators with the highest action potential", ES: "Tarea 1 — Indicadores líderes con el mayor potencial de acción" },
   pres_s3_kpi1_pill: { EN: "Onboarding", ES: "Onboarding" },
+  pres_s3_kpi1_pill_v2: { EN: "Onboarding Gap", ES: "Brecha de Onboarding" },
+  pres_s3_kpi3_pill_v2: { EN: "Checkout Gap", ES: "Brecha de Checkout" },
   pres_s3_kpi1_ages: { EN: ">50 years old    |    Under 25", ES: ">50 años    |    Menores de 25" },
   pres_s3_kpi1_insight: {
     EN: "Users 50+ hit a wall at registration — only 39 in 100 complete onboarding. For under-25s that number is 84. This 45-point gap is the single largest conversion lever in the funnel.",
