@@ -145,15 +145,15 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
         {/* LEFT — Onboarding Gap */}
-        <div className="bg-[#F5F6FB] rounded-2xl p-6 flex flex-col overflow-hidden">
-          <span className="self-start text-sm font-semibold px-4 py-1.5 rounded-full text-white" style={{ backgroundColor: '#0075FF' }}>
+        <div className="bg-[#F5F6FB] rounded-2xl py-4 px-5 flex flex-col overflow-hidden">
+          <span className="self-start text-xs font-semibold px-3 py-1 rounded-full text-white" style={{ backgroundColor: '#0075FF' }}>
             {t('pres_s3_kpi1_pill_v2')}
           </span>
 
-          <div className="flex items-center justify-center gap-4 mt-6">
-            <span className="text-4xl font-extrabold" style={{ color: '#EF4444' }}>39.5%</span>
-            <span className="text-2xl" style={{ color: '#384550' }}>→</span>
-            <span className="text-4xl font-extrabold" style={{ color: '#008246' }}>84.9%</span>
+          <div className="flex items-center justify-center gap-3 mt-4">
+            <span className="text-3xl font-extrabold" style={{ color: '#EF4444' }}>39.5%</span>
+            <span className="text-xl" style={{ color: '#384550' }}>→</span>
+            <span className="text-3xl font-extrabold" style={{ color: '#008246' }}>84.9%</span>
           </div>
           <p className="text-xs text-center mt-2" style={{ color: '#66727D' }}>
             {t('pres_s3_kpi1_ages')}
