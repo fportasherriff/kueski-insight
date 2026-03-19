@@ -78,7 +78,7 @@ const SegmentHeatmap = ({ ageDevice }: { ageDevice: AgeDeviceRow[] }) => {
                   <span className="text-xs opacity-80 mt-1">n={cell.n?.toLocaleString()}</span>
                 </div>
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-10 shadow-lg"
-                  style={{ background: '#141C22', color: 'white', borderRadius: 8, padding: '10px 14px', fontSize: 12, whiteSpace: 'nowrap', boxShadow: '0 4px 20px rgba(0,0,0,0.35)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                  style={{ background: 'hsl(var(--sidebar-bg))', color: 'white', borderRadius: 8, padding: '10px 14px', fontSize: 12, whiteSpace: 'nowrap', boxShadow: '0 4px 20px hsl(var(--sidebar-bg) / 0.28)', border: '1px solid rgba(255,255,255,0.1)' }}>
                   <div>Conv: {cell.overall_conv}%</div>
                   <div>n={Number(cell.n).toLocaleString()}</div>
                   <div>Reg→Onb: {cell.step_reg_to_onb}%</div>
