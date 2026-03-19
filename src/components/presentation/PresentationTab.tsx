@@ -164,7 +164,7 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
     <div className="max-w-3xl mx-auto px-8 py-10 space-y-6">
       <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>{t('pres_s3_title')}</h2>
       <p className="text-sm" style={{ color: '#384550' }}>{t('pres_s3_subtitle')}</p>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch mt-4">
 
         {/* KPI #1 */}
         <div className="bg-[#F5F6FB] rounded-xl p-5 border-t-4" style={{ borderColor: '#0075FF' }}>
