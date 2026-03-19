@@ -258,9 +258,9 @@ const Slide4Device = ({ t }: { t: (k: string) => string }) => {
         </table>
       </div>
 
-      <div className="bg-[#F5F6FB] border-l-4 p-4 rounded-r-lg text-sm" style={{ borderColor: '#0075FF', color: '#00164C' }}>
-        {t('pres_s4d_insight')}
-      </div>
+      <p className="text-xs text-center" style={{ color: '#66727D' }}>
+        {t('pres_s4d_structural_note')}
+      </p>
     </div>
   );
 };
