@@ -331,6 +331,10 @@ export const translations: Translations = {
     EN: "If <5pp → Pivot to copy-only experiment",
     ES: "Si <5pp → Pivotear a experimento solo de copy",
   },
+  pres_s6_footer: {
+    EN: "All data and charts are live — explore the full dataset in the Dashboard tab.",
+    ES: "Todos los datos y gráficos están en vivo — explorá el dataset completo en la pestaña Tablero.",
+  },
 
   // Slide 7
   pres_s7_title: {
