@@ -3,6 +3,7 @@ import { LayoutDashboard, Presentation, Bot, LucideIcon } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import DashboardTab from '@/components/dashboard/DashboardTab';
 import PresentationTab from '@/components/presentation/PresentationTab';
+import AskDataTab from '@/components/ask/AskDataTab';
 
 const NavItem = ({
   icon: Icon,
@@ -154,7 +155,7 @@ const AppContent = () => {
       case 'presentation':
         return <PresentationTab />;
       case 'ask':
-        return <PlaceholderCard icon={Bot} title={t('askData')} subtitle="AI-powered analytics · Claude API · Supabase Edge Function" />;
+        return <AskDataTab />;
       default:
         return null;
     }

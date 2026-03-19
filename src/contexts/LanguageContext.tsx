@@ -39,6 +39,34 @@ export const translations: Translations = {
   langLabel: { EN: "Language / Idioma", ES: "Language / Idioma" },
   comingSoon: { EN: "Content coming in next iteration", ES: "Contenido en la próxima iteración" },
 
+  // Ask the Data
+  ask_title: { EN: "Ask the Data", ES: "Consulta los Datos" },
+  ask_subtitle: {
+    EN: "Ask anything about the Kueski BNPL funnel dataset — 100,000 users · Mexico · Jan–Apr 2025",
+    ES: "Preguntá lo que quieras sobre el dataset del funnel BNPL de Kueski — 100,000 usuarios · México · Ene–Abr 2025",
+  },
+  ask_disclaimer: {
+    EN: "Answers are based solely on the provided dataset. Outside-scope questions will be answered with available context.",
+    ES: "Las respuestas se basan únicamente en el dataset proporcionado. Las preguntas fuera del alcance se responderán con el contexto disponible.",
+  },
+  ask_quick: { EN: "Quick questions", ES: "Preguntas rápidas" },
+  ask_placeholder: {
+    EN: "Ask about the funnel data or request a recommendation...",
+    ES: "Pregunta sobre los datos del funnel o pedí una recomendación...",
+  },
+  ask_empty: {
+    EN: "Ask a question above or click a quick question to start",
+    ES: "Hacé una pregunta o seleccioná una pregunta rápida",
+  },
+  ask_error_generic: {
+    EN: "Sorry, I could not process that request.",
+    ES: "Lo siento, no pude procesar esa solicitud.",
+  },
+  ask_error_connection: {
+    EN: "Connection error. Please try again.",
+    ES: "Error de conexión. Por favor, intentá de nuevo.",
+  },
+
   // Dashboard header
   dashboardSubtitle: {
     EN: "BNPL Funnel · 100,000 users · Jan–Apr 2025",
