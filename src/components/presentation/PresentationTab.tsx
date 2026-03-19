@@ -216,10 +216,10 @@ const Slide4Device = ({ t }: { t: (k: string) => string }) => {
 
       <div className="grid grid-cols-3 gap-6 mt-4">
         {devices.map((d) => (
-          <div key={d.name} className="rounded-2xl p-6 text-center border-2 flex flex-col" style={{ backgroundColor: d.bg, borderColor: d.color }}>
+          <div key={d.name} className="rounded-2xl py-4 px-5 text-center border-2 flex flex-col" style={{ backgroundColor: d.bg, borderColor: d.color }}>
             <p className="text-sm font-semibold uppercase tracking-wide" style={{ color: d.color }}>{d.name}</p>
             <p className="text-xs mt-1" style={{ color: '#384550' }}>{d.share}% {t('pres_s4d_of_users')}</p>
-            <p className="text-5xl font-extrabold my-4" style={{ color: d.color }}>{d.conv}%</p>
+            <p className="font-extrabold my-3" style={{ color: d.color, fontSize: '40px', lineHeight: 1 }}>{d.conv}%</p>
             <p className="text-xs" style={{ color: '#384550' }}>{t('pres_s4d_overall_conv')}</p>
             <span
               className="mt-3 text-xs rounded-full px-3 py-1 font-semibold self-center"
