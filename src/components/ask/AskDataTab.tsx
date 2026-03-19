@@ -145,7 +145,7 @@ const AskDataTab = () => {
       <div className="p-6 pb-0">
         <h1 className="text-xl font-[800] text-[#00164C]">{t('ask_title')}</h1>
         <p className="text-sm text-[#384550] mt-1">{t('ask_subtitle')}</p>
-        <div className="mt-2 inline-flex items-center gap-1.5 bg-[#F5F6FB] rounded-full px-3 py-1">
+        <div className="mt-2 inline-flex items-center gap-1.5 bg-[#F5F6FB] border border-gray-200 rounded-full px-3 py-1">
           <AlertTriangle size={12} className="text-[#66727D]" />
           <span className="text-xs text-[#66727D]">{t('ask_disclaimer')}</span>
         </div>
@@ -208,7 +208,7 @@ const AskDataTab = () => {
             onKeyDown={handleKeyDown}
             placeholder={t('ask_placeholder')}
             rows={2}
-            className="flex-1 bg-[#F5F6FB] border border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-[#0075FF] focus:ring-1 focus:ring-[#0075FF] outline-none resize-none"
+            className="flex-1 bg-[#F5F6FB] border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#141C22] placeholder:text-[#66727D] focus:border-[#0075FF] focus:ring-1 focus:ring-[#0075FF] outline-none resize-none"
           />
           <button
             onClick={() => sendMessage()}
