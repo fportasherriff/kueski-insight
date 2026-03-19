@@ -190,6 +190,10 @@ export const translations: Translations = {
   pres_s2_overall_conv: { EN: "overall conversion", ES: "conversión total" },
   pres_s2_below_best: { EN: "pp below best segment", ES: "pp por debajo del mejor segmento" },
   pres_s2_gap_label: { EN: "gap between best and worst segment", ES: "brecha entre mejor y peor segmento" },
+  pres_s2_gap_caption: {
+    EN: "37.7× gap between best (iOS 26–50, 22.6%) and worst (Web >50, 0.6%) segments",
+    ES: "37.7× de brecha entre el mejor (iOS 26–50, 22.6%) y el peor (Web >50, 0.6%) segmento",
+  },
   pres_s2_best_label: { EN: "Best", ES: "Mejor" },
   pres_s2_worst_label: { EN: "Worst", ES: "Peor" },
   pres_s2_dropped: { EN: "users dropped", ES: "usuarios perdidos" },
@@ -235,6 +239,11 @@ export const translations: Translations = {
   pres_s4d_insight: {
     EN: "Android holds 50% of the user base — twice the iOS base — but converts at half the rate at every single step. This is structural platform debt, not a UX issue. Fixing Android checkout = highest potential ROI in the roadmap.",
     ES: "Android tiene el 50% de la base de usuarios — el doble de iOS — pero convierte a la mitad de la tasa en cada paso. Es deuda estructural de plataforma, no un problema de UX. Arreglar el checkout de Android = mayor ROI potencial del roadmap.",
+  },
+  pres_s4d_best_performer: { EN: "Best performer", ES: "Mejor rendimiento" },
+  pres_s4d_structural_note: {
+    EN: "Gap is structural — consistent across all 4 funnel steps, not a single friction point.",
+    ES: "La brecha es estructural — consistente en los 4 pasos del funnel, no un punto de fricción aislado.",
   },
 
   // Slide 4

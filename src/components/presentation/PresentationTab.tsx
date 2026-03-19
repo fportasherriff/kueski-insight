@@ -82,7 +82,7 @@ const Slide2 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
 
       {/* TOP — 2 Most Damaging Combinations */}
       <div>
-        <p className="text-xs font-bold uppercase tracking-wide mb-3" style={{ color: '#00164C' }}>{t('pres_s2_damaging')}</p>
+        <p className="text-xs font-medium uppercase tracking-wide mb-3" style={{ color: '#00164C' }}>{t('pres_s2_damaging')}</p>
         <div className="grid grid-cols-2 gap-6">
           {worst2.map((row: any, i: number) => {
             const n = row.n ?? row.total_users ?? 0;
@@ -93,10 +93,6 @@ const Slide2 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
                   {row.age_group} × {(row.device ?? '').toUpperCase()}
                 </span>
                 <p className="text-6xl font-[800]" style={{ color: '#EF4444' }}>{row.overall_conv}%</p>
-                <p className="text-sm mt-1" style={{ color: '#384550' }}>{t('pres_s2_overall_conv')}</p>
-                {row.delta_vs_best != null && (
-                  <p className="text-sm mt-2" style={{ color: '#EF4444' }}>{Math.abs(row.delta_vs_best)}pp {t('pres_s2_below_best')}</p>
-                )}
                 <p className="text-xs italic mt-2" style={{ color: '#66727D' }}>
                   n = {n.toLocaleString()} {t('pres_s2_users')} · {pctBase}% {t('pres_s2_of_base')}
                 </p>
@@ -108,7 +104,7 @@ const Slide2 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
 
       {/* MIDDLE — Funnel bars */}
       <div className="mt-8">
-        <p className="text-sm font-semibold uppercase tracking-wide mb-3" style={{ color: '#00164C' }}>
+        <p className="text-sm font-medium uppercase tracking-wide mb-3" style={{ color: '#00164C' }}>
           {t('pres_s2_funnel_title')}
         </p>
         <div className="space-y-2">
@@ -131,19 +127,10 @@ const Slide2 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
         </div>
       </div>
 
-      {/* BOTTOM — Best vs Worst gap */}
-      <div className="mt-8 text-center">
-        <p className="text-6xl font-[800]" style={{ color: '#0075FF' }}>{kpis?.best_to_worst_ratio ?? '37.7'}×</p>
-        <p className="text-sm mt-1" style={{ color: '#384550' }}>{t('pres_s2_gap_label')}</p>
-        <div className="mt-3 flex justify-center gap-3">
-          <span className="bg-[#F0FDF4] rounded-full px-4 py-1.5 text-sm font-semibold" style={{ color: '#008246' }}>
-            {t('pres_s2_best_label')}: {kpis?.best_segment_conv ?? '22.6'}% (iOS 26-50)
-          </span>
-          <span className="bg-[#FEF2F2] rounded-full px-4 py-1.5 text-sm font-semibold" style={{ color: '#EF4444' }}>
-            {t('pres_s2_worst_label')}: {kpis?.worst_segment_conv ?? '0.6'}% (Web &gt;50)
-          </span>
-        </div>
-      </div>
+      {/* BOTTOM — muted caption */}
+      <p className="text-xs mt-4 text-center" style={{ color: '#66727D' }}>
+        {t('pres_s2_gap_caption')}
+      </p>
     </div>
   );
 };
@@ -157,7 +144,7 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
         {/* LEFT — Onboarding Gap */}
-        <div className="bg-[#F5F6FB] rounded-2xl p-8 flex flex-col overflow-hidden">
+        <div className="bg-[#F5F6FB] rounded-2xl p-6 flex flex-col overflow-hidden">
           <span className="self-start text-sm font-semibold px-4 py-1.5 rounded-full text-white" style={{ backgroundColor: '#0075FF' }}>
             {t('pres_s3_kpi1_pill_v2')}
           </span>
@@ -167,14 +154,8 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
             <span className="text-2xl" style={{ color: '#384550' }}>→</span>
             <span className="text-4xl font-extrabold" style={{ color: '#008246' }}>84.9%</span>
           </div>
-          <p className="text-sm text-center mt-2" style={{ color: '#384550' }}>
+          <p className="text-xs text-center mt-2" style={{ color: '#66727D' }}>
             {t('pres_s3_kpi1_ages')}
-          </p>
-
-          <hr className="border-gray-200 my-4" />
-
-          <p className="text-sm" style={{ color: '#00164C', fontWeight: 500 }}>
-            {t('pres_s3_kpi1_insight')}
           </p>
 
           <div className="mt-auto bg-[#EFF6FF] rounded-lg px-3 py-2 text-xs mt-4" style={{ color: '#0075FF' }}>
@@ -183,7 +164,7 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
         </div>
 
         {/* RIGHT — Checkout Gap */}
-        <div className="bg-[#F5F6FB] rounded-2xl p-8 flex flex-col overflow-hidden">
+        <div className="bg-[#F5F6FB] rounded-2xl p-6 flex flex-col overflow-hidden">
           <span className="self-start text-sm font-semibold px-4 py-1.5 rounded-full text-white" style={{ backgroundColor: '#EF4444' }}>
             {t('pres_s3_kpi3_pill_v2')}
           </span>
@@ -203,12 +184,6 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
             </div>
           </div>
 
-          <hr className="border-gray-200 my-4" />
-
-          <p className="text-sm" style={{ color: '#00164C', fontWeight: 500 }}>
-            {t('pres_s3_kpi3_insight')}
-          </p>
-
           <div className="mt-auto bg-[#FEF2F2] rounded-lg px-3 py-2 text-xs mt-4" style={{ color: '#EF4444' }}>
             {t('pres_s3_kpi3_target')}
           </div>
@@ -221,7 +196,7 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
 /* ─── Slide 4 — KPI #2 Device Breakdown ─── */
 const Slide4Device = ({ t }: { t: (k: string) => string }) => {
   const devices = [
-    { name: 'iOS', share: '30.2', conv: '18.2', color: '#008246', bg: '#F0FDF4', chipBg: '#008246', chipText: 'white', chipLabel: 'Benchmark' },
+    { name: 'iOS', share: '30.2', conv: '18.2', color: '#008246', bg: '#F0FDF4', chipBg: '#F0FDF4', chipText: '#66727D', chipLabel: t('pres_s4d_best_performer') },
     { name: 'Android', share: '49.9', conv: '8.8', color: '#0075FF', bg: '#EFF6FF', chipBg: '#FFF7ED', chipText: '#F59E0B', chipBorder: '#F59E0B', chipLabel: '2.1× below iOS' },
     { name: 'Web', share: '19.9', conv: '2.6', color: '#EF4444', bg: '#FEF2F2', chipBg: '#FEF2F2', chipText: '#EF4444', chipBorder: '#EF4444', chipLabel: '7× below iOS' },
   ];
@@ -283,9 +258,9 @@ const Slide4Device = ({ t }: { t: (k: string) => string }) => {
         </table>
       </div>
 
-      <div className="bg-[#F5F6FB] border-l-4 p-4 rounded-r-lg text-sm" style={{ borderColor: '#0075FF', color: '#00164C' }}>
-        {t('pres_s4d_insight')}
-      </div>
+      <p className="text-xs text-center" style={{ color: '#66727D' }}>
+        {t('pres_s4d_structural_note')}
+      </p>
     </div>
   );
 };
