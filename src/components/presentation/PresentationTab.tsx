@@ -175,13 +175,13 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
               <span className="text-sm font-semibold" style={{ color: '#00164C' }}>{t('pres_s3_kpi3_cities')}</span>
               <span className="text-3xl font-extrabold" style={{ color: '#008246' }}>50.6%</span>
             </div>
-            <div className="flex justify-between items-center py-2 border-t border-b border-gray-200">
+            <div className="flex justify-between items-center py-1.5 border-t border-b border-gray-200">
               <span className="text-sm font-semibold" style={{ color: '#00164C' }}>{t('pres_s3_kpi3_other')}</span>
-              <span className="text-4xl font-extrabold" style={{ color: '#EF4444' }}>31.2%</span>
+              <span className="text-3xl font-extrabold" style={{ color: '#EF4444' }}>31.2%</span>
             </div>
-            <div className="flex justify-between items-center py-2 bg-[#FEF2F2] rounded-lg px-3 mt-2">
+            <div className="flex justify-between items-center py-1.5 bg-[#FEF2F2] rounded-lg px-3 mt-2">
               <span className="text-xs font-semibold" style={{ color: '#EF4444' }}>{t('pres_s3_kpi3_gap_label')}</span>
-              <span className="text-xl font-extrabold" style={{ color: '#EF4444' }}>−19pp</span>
+              <span className="text-lg font-extrabold" style={{ color: '#EF4444' }}>−19pp</span>
             </div>
           </div>
 
