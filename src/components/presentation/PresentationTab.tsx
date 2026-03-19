@@ -196,7 +196,7 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
 /* ─── Slide 4 — KPI #2 Device Breakdown ─── */
 const Slide4Device = ({ t }: { t: (k: string) => string }) => {
   const devices = [
-    { name: 'iOS', share: '30.2', conv: '18.2', color: '#008246', bg: '#F0FDF4', chipBg: '#008246', chipText: 'white', chipLabel: 'Benchmark' },
+    { name: 'iOS', share: '30.2', conv: '18.2', color: '#008246', bg: '#F0FDF4', chipBg: '#F0FDF4', chipText: '#66727D', chipLabel: t('pres_s4d_best_performer') },
     { name: 'Android', share: '49.9', conv: '8.8', color: '#0075FF', bg: '#EFF6FF', chipBg: '#FFF7ED', chipText: '#F59E0B', chipBorder: '#F59E0B', chipLabel: '2.1× below iOS' },
     { name: 'Web', share: '19.9', conv: '2.6', color: '#EF4444', bg: '#FEF2F2', chipBg: '#FEF2F2', chipText: '#EF4444', chipBorder: '#EF4444', chipLabel: '7× below iOS' },
   ];
