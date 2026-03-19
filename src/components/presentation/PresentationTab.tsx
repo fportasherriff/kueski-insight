@@ -82,7 +82,7 @@ const Slide2 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
 
       {/* TOP — 2 Most Damaging Combinations */}
       <div>
-        <p className="text-xs font-bold uppercase tracking-wide mb-3" style={{ color: '#00164C' }}>{t('pres_s2_damaging')}</p>
+        <p className="text-xs font-medium uppercase tracking-wide mb-3" style={{ color: '#00164C' }}>{t('pres_s2_damaging')}</p>
         <div className="grid grid-cols-2 gap-6">
           {worst2.map((row: any, i: number) => {
             const n = row.n ?? row.total_users ?? 0;
@@ -93,10 +93,6 @@ const Slide2 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
                   {row.age_group} × {(row.device ?? '').toUpperCase()}
                 </span>
                 <p className="text-6xl font-[800]" style={{ color: '#EF4444' }}>{row.overall_conv}%</p>
-                <p className="text-sm mt-1" style={{ color: '#384550' }}>{t('pres_s2_overall_conv')}</p>
-                {row.delta_vs_best != null && (
-                  <p className="text-sm mt-2" style={{ color: '#EF4444' }}>{Math.abs(row.delta_vs_best)}pp {t('pres_s2_below_best')}</p>
-                )}
                 <p className="text-xs italic mt-2" style={{ color: '#66727D' }}>
                   n = {n.toLocaleString()} {t('pres_s2_users')} · {pctBase}% {t('pres_s2_of_base')}
                 </p>
