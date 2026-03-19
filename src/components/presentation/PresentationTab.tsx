@@ -165,15 +165,15 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
         </div>
 
         {/* RIGHT — Checkout Gap */}
-        <div className="bg-[#F5F6FB] rounded-2xl p-6 flex flex-col overflow-hidden">
-          <span className="self-start text-sm font-semibold px-4 py-1.5 rounded-full text-white" style={{ backgroundColor: '#EF4444' }}>
+        <div className="bg-[#F5F6FB] rounded-2xl py-4 px-5 flex flex-col overflow-hidden">
+          <span className="self-start text-xs font-semibold px-3 py-1 rounded-full text-white" style={{ backgroundColor: '#EF4444' }}>
             {t('pres_s3_kpi3_pill_v2')}
           </span>
 
-          <div className="mt-6 space-y-0">
-            <div className="flex justify-between items-center py-2">
+          <div className="mt-4 space-y-0">
+            <div className="flex justify-between items-center py-1.5">
               <span className="text-sm font-semibold" style={{ color: '#00164C' }}>{t('pres_s3_kpi3_cities')}</span>
-              <span className="text-4xl font-extrabold" style={{ color: '#008246' }}>50.6%</span>
+              <span className="text-3xl font-extrabold" style={{ color: '#008246' }}>50.6%</span>
             </div>
             <div className="flex justify-between items-center py-2 border-t border-b border-gray-200">
               <span className="text-sm font-semibold" style={{ color: '#00164C' }}>{t('pres_s3_kpi3_other')}</span>
