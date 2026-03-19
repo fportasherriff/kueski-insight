@@ -584,7 +584,7 @@ const PresentationTab = () => {
       <div className="flex-1 overflow-auto">
         <div
           key={fadeKey}
-          className="animate-fade-in"
+          className="animate-fade-in flex flex-col justify-between h-full min-h-[520px]"
           style={{ animationDuration: '200ms' }}
         >
           {slideContent[slide]}

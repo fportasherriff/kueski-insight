@@ -82,6 +82,7 @@ const SegmentHeatmap = ({ ageDevice }: { ageDevice: AgeDeviceRow[] }) => {
                   <div>Conv: {cell.overall_conv}%</div>
                   <div>n={Number(cell.n).toLocaleString()}</div>
                   <div>Reg→Onb: {cell.step_reg_to_onb}%</div>
+                  <div>Onb→View: {cell.step_onb_to_view}%</div>
                   <div>View→Cart: {cell.step_view_to_cart}%</div>
                   <div>Cart→Purch: {cell.step_cart_to_purch}%</div>
                 </div>

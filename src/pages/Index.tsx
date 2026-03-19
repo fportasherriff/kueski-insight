@@ -155,8 +155,6 @@ const AppContent = () => {
         return <PresentationTab />;
       case 'ask':
         return <PlaceholderCard icon={Bot} title={t('askData')} subtitle="AI-powered analytics · Claude API · Supabase Edge Function" />;
-      case 'roadmap':
-        return <PlaceholderCard icon={Map} title={t('roadmap')} subtitle="RICE-prioritized initiatives · Q2–Q4 2026" />;
       default:
         return null;
     }
