@@ -127,19 +127,10 @@ const Slide2 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
         </div>
       </div>
 
-      {/* BOTTOM — Best vs Worst gap */}
-      <div className="mt-8 text-center">
-        <p className="text-6xl font-[800]" style={{ color: '#0075FF' }}>{kpis?.best_to_worst_ratio ?? '37.7'}×</p>
-        <p className="text-sm mt-1" style={{ color: '#384550' }}>{t('pres_s2_gap_label')}</p>
-        <div className="mt-3 flex justify-center gap-3">
-          <span className="bg-[#F0FDF4] rounded-full px-4 py-1.5 text-sm font-semibold" style={{ color: '#008246' }}>
-            {t('pres_s2_best_label')}: {kpis?.best_segment_conv ?? '22.6'}% (iOS 26-50)
-          </span>
-          <span className="bg-[#FEF2F2] rounded-full px-4 py-1.5 text-sm font-semibold" style={{ color: '#EF4444' }}>
-            {t('pres_s2_worst_label')}: {kpis?.worst_segment_conv ?? '0.6'}% (Web &gt;50)
-          </span>
-        </div>
-      </div>
+      {/* BOTTOM — muted caption */}
+      <p className="text-xs mt-4 text-center" style={{ color: '#66727D' }}>
+        {t('pres_s2_gap_caption')}
+      </p>
     </div>
   );
 };
