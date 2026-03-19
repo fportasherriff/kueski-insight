@@ -310,8 +310,8 @@ export const translations: Translations = {
   pres_s5_greenlight: { EN: "Green-light decision", ES: "Decisión de luz verde" },
   pres_s5_why_quarter: { EN: "Why this quarter", ES: "Por qué este trimestre" },
   pres_s5_sequencing_note: {
-    EN: "* Quarters represent sequencing estimates based on relative effort — not delivery commitments.",
-    ES: "* Los trimestres representan estimaciones de secuenciación basadas en esfuerzo relativo — no compromisos de entrega.",
+    EN: "* Effort and quarters are relative estimates — not delivery commitments.",
+    ES: "* Esfuerzo y trimestres son estimaciones relativas — no compromisos de entrega.",
   },
 
   // Slide 6

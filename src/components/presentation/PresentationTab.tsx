@@ -417,6 +417,10 @@ const Slide5 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
         </div>
       )}
 
+      <p className="text-xs italic mt-2" style={{ color: '#66727D' }}>
+        {t('pres_s5_sequencing_note')}
+      </p>
+
     </div>
   );
 };
