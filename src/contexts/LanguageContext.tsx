@@ -308,6 +308,10 @@ export const translations: Translations = {
   pres_s5_effort: { EN: "Effort", ES: "Esfuerzo" },
   pres_s5_current_target: { EN: "Current → Target", ES: "Actual → Meta" },
   pres_s5_greenlight: { EN: "Green-light decision", ES: "Decisión de luz verde" },
+  pres_s5_recommendation: {
+    EN: "Recommended first initiative: Progressive Onboarding >50 — highest confidence, largest conversion lever, lowest coordination cost.",
+    ES: "Primera iniciativa recomendada: Onboarding Progresivo >50 — mayor confianza, mayor palanca de conversión, menor costo de coordinación.",
+  },
   pres_s5_why_quarter: { EN: "Why this quarter", ES: "Por qué este trimestre" },
   pres_s5_sequencing_note: {
     EN: "* Effort and quarters are relative estimates — not delivery commitments.",

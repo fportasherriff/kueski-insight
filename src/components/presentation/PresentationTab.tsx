@@ -411,11 +411,9 @@ const Slide5 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
         })}
       </div>
 
-      {rows[0] && (
-        <div className="bg-[#F0FDF4] border border-[#008246] rounded-xl p-4 mt-4 text-sm" style={{ color: '#384550' }}>
-          ✅ <span className="font-semibold">{t('pres_s5_greenlight')}:</span> {initiativeTranslations[0]?.rationale[lang] ?? rows[0].rationale}
-        </div>
-      )}
+      <div className="bg-[#F5F6FB] border border-gray-200 rounded-xl p-4 mt-4 text-sm" style={{ color: '#384550' }}>
+        ⭐ {t('pres_s5_recommendation')}
+      </div>
 
       <p className="text-xs italic mt-2" style={{ color: '#66727D' }}>
         {t('pres_s5_sequencing_note')}
