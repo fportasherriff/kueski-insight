@@ -134,109 +134,146 @@ const Slide2 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
   );
 };
 
-/* ─── Slide 3 ─── */
+/* ─── Slide 3 — KPI #1 & KPI #3 ─── */
 const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string }) => {
-  const findSeg = (dim: string, val: string) => data.segments.find((s: any) => s.dimension === dim && s.segment_value === val);
-  const age50 = findSeg('age_group', '>50');
-  const age25 = findSeg('age_group', '<25');
+  const lang = t('pres_prev') === 'Anterior' ? 'ES' : 'EN';
 
-  // All 3 devices for KPI #2 — hardcoded verified values
-  const deviceStats = [
-    { label: 'iOS', pct: '30.2', conv: '18.2', color: '#008246', steps: 'Reg→Onb: 74.4% · Onb→View: 87.6% · View→Cart: 53.5% · Cart→Purch: 52.1%' },
-    { label: 'Android', pct: '49.9', conv: '8.8', color: '#0075FF', steps: 'Reg→Onb: 63.8% · Onb→View: 73.3% · View→Cart: 43.4% · Cart→Purch: 43.4%' },
-    { label: 'Web', pct: '19.9', conv: '2.6', color: '#EF4444', steps: 'Reg→Onb: 44.7% · Onb→View: 64.9% · View→Cart: 34.0% · Cart→Purch: 26.7%' },
+  return (
+    <div className="max-w-3xl mx-auto px-8 py-10 space-y-6">
+      <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>{t('pres_s3_title_v2')}</h2>
+      <p className="text-sm" style={{ color: '#384550' }}>{t('pres_s3_subtitle_v2')}</p>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
+        {/* LEFT — KPI #1 Onboarding */}
+        <div className="bg-[#F5F6FB] rounded-2xl p-8 flex flex-col">
+          <span className="self-start text-xs font-bold px-3 py-1 rounded-full text-white" style={{ backgroundColor: '#0075FF' }}>
+            KPI #1 · {t('pres_s3_kpi1_pill')}
+          </span>
+
+          <div className="flex items-center justify-center gap-4 mt-6">
+            <span className="text-5xl font-extrabold" style={{ color: '#EF4444' }}>39.5%</span>
+            <span className="text-3xl" style={{ color: '#384550' }}>→</span>
+            <span className="text-5xl font-extrabold" style={{ color: '#008246' }}>84.9%</span>
+          </div>
+          <p className="text-sm text-center mt-2" style={{ color: '#384550' }}>
+            {t('pres_s3_kpi1_ages')}
+          </p>
+
+          <hr className="border-gray-200 my-4" />
+
+          <p className="text-sm" style={{ color: '#00164C', fontWeight: 500 }}>
+            {t('pres_s3_kpi1_insight')}
+          </p>
+
+          <div className="mt-auto bg-[#EFF6FF] rounded-lg px-3 py-2 text-xs mt-4" style={{ color: '#0075FF' }}>
+            {t('pres_s3_kpi1_target')}
+          </div>
+        </div>
+
+        {/* RIGHT — KPI #3 Checkout */}
+        <div className="bg-[#F5F6FB] rounded-2xl p-8 flex flex-col">
+          <span className="self-start text-xs font-bold px-3 py-1 rounded-full text-white" style={{ backgroundColor: '#EF4444' }}>
+            KPI #3 · Checkout
+          </span>
+
+          <div className="mt-6 space-y-0">
+            <div className="flex justify-between items-center py-2">
+              <span className="text-sm font-semibold" style={{ color: '#00164C' }}>{t('pres_s3_kpi3_cities')}</span>
+              <span className="text-3xl font-extrabold" style={{ color: '#008246' }}>50.6%</span>
+            </div>
+            <div className="flex justify-between items-center py-2 border-t border-b border-gray-200">
+              <span className="text-sm font-semibold" style={{ color: '#00164C' }}>{t('pres_s3_kpi3_other')}</span>
+              <span className="text-3xl font-extrabold" style={{ color: '#EF4444' }}>31.2%</span>
+            </div>
+            <div className="flex justify-between items-center py-2 bg-[#FEF2F2] rounded-lg px-3 mt-2">
+              <span className="text-xs font-semibold" style={{ color: '#EF4444' }}>{t('pres_s3_kpi3_gap_label')}</span>
+              <span className="text-xl font-extrabold" style={{ color: '#EF4444' }}>−19pp</span>
+            </div>
+          </div>
+
+          <hr className="border-gray-200 my-4" />
+
+          <p className="text-sm" style={{ color: '#00164C', fontWeight: 500 }}>
+            {t('pres_s3_kpi3_insight')}
+          </p>
+
+          <div className="mt-auto bg-[#FEF2F2] rounded-lg px-3 py-2 text-xs mt-4" style={{ color: '#EF4444' }}>
+            {t('pres_s3_kpi3_target')}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ─── Slide 4 — KPI #2 Device Breakdown ─── */
+const Slide4Device = ({ t }: { t: (k: string) => string }) => {
+  const devices = [
+    { name: 'iOS', share: '30.2', conv: '18.2', color: '#008246', bg: '#F0FDF4', chipBg: '#008246', chipText: 'white', chipLabel: 'Benchmark' },
+    { name: 'Android', share: '49.9', conv: '8.8', color: '#0075FF', bg: '#EFF6FF', chipBg: '#FFF7ED', chipText: '#F59E0B', chipBorder: '#F59E0B', chipLabel: '2.1× below iOS' },
+    { name: 'Web', share: '19.9', conv: '2.6', color: '#EF4444', bg: '#FEF2F2', chipBg: '#FEF2F2', chipText: '#EF4444', chipBorder: '#EF4444', chipLabel: '7× below iOS' },
   ];
 
-  // KPI #3 hardcoded verified values
-  const kpi3Steps = [
-    { step: 'Reg→Onb', citiesAvg: '~63%', otherVal: '63.2%', gap: '≈0', isOk: true },
-    { step: 'Onb→View', citiesAvg: '~78%', otherVal: '72.8%', gap: '-5pp', isOk: false },
-    { step: 'View→Cart', citiesAvg: '~46%', otherVal: '46.7%', gap: '≈0', isOk: true },
-    { step: 'Cart→Purch', citiesAvg: '50.6%', otherVal: '31.2%', gap: '-19pp', isOk: false },
+  const steps = [
+    { name: 'Reg→Onb', ios: '74.4%', android: '63.8%', web: '44.7%' },
+    { name: 'Onb→View', ios: '87.6%', android: '73.3%', web: '64.9%' },
+    { name: 'View→Cart', ios: '53.5%', android: '43.4%', web: '34.0%' },
+    { name: 'Cart→Purch', ios: '52.1%', android: '43.4%', web: '26.7%' },
   ];
 
   return (
     <div className="max-w-3xl mx-auto px-8 py-10 space-y-6">
-      <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>{t('pres_s3_title')}</h2>
-      <p className="text-sm" style={{ color: '#384550' }}>{t('pres_s3_subtitle')}</p>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch mt-4">
+      <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>{t('pres_s4d_title')}</h2>
+      <p className="text-sm" style={{ color: '#384550' }}>{t('pres_s4d_subtitle')}</p>
 
-        {/* KPI #1 */}
-        <div className="bg-[#F5F6FB] rounded-xl p-5 border-t-4 flex flex-col h-full" style={{ borderColor: '#0075FF' }}>
-          <span className="text-xs font-bold px-2 py-0.5 rounded-full text-white" style={{ backgroundColor: '#0075FF' }}>KPI #1</span>
-          <p className="font-bold text-sm mt-3" style={{ color: '#00164C' }}>{t('pres_s3_k1_name')}</p>
-          <p className="text-sm font-semibold mt-2" style={{ color: '#0075FF' }}>
-            &gt;50: {age50?.step_reg_to_onb ?? '39.5'}% vs &lt;25: {age25?.step_reg_to_onb ?? '84.9'}%
-          </p>
-          <p className="text-xs text-muted-foreground italic mt-1">{t('pres_s3_k1_clarify')}</p>
-          <p className="text-xs mt-3" style={{ color: '#384550' }}><span className="font-semibold">{t('pres_s3_why')}:</span> {t('pres_s3_k1_why')}</p>
-          <p className="text-xs mt-2" style={{ color: '#384550' }}><span className="font-semibold">{t('pres_s3_watch')}:</span> {t('pres_s3_k1_watch')}</p>
-          <p className="text-xs text-muted-foreground italic mt-2">{t('pres_s3_k1_parque')}</p>
-        </div>
+      <div className="grid grid-cols-3 gap-6 mt-4">
+        {devices.map((d) => (
+          <div key={d.name} className="rounded-2xl p-6 text-center border-2 flex flex-col" style={{ backgroundColor: d.bg, borderColor: d.color }}>
+            <p className="text-sm font-semibold uppercase tracking-wide" style={{ color: d.color }}>{d.name}</p>
+            <p className="text-xs mt-1" style={{ color: '#384550' }}>{d.share}% {t('pres_s4d_of_users')}</p>
+            <p className="text-5xl font-extrabold my-4" style={{ color: d.color }}>{d.conv}%</p>
+            <p className="text-xs" style={{ color: '#384550' }}>{t('pres_s4d_overall_conv')}</p>
+            <span
+              className="mt-3 text-xs rounded-full px-3 py-1 font-semibold self-center"
+              style={{
+                backgroundColor: d.chipBg,
+                color: d.chipText,
+                border: d.chipBorder ? `1px solid ${d.chipBorder}` : undefined,
+              }}
+            >
+              {d.chipLabel}
+            </span>
+          </div>
+        ))}
+      </div>
 
-        {/* KPI #2 — All 3 devices with step rates */}
-        <div className="bg-[#F5F6FB] rounded-xl p-5 border-t-4 flex flex-col h-full" style={{ borderColor: '#008246' }}>
-          <span className="text-xs font-bold px-2 py-0.5 rounded-full text-white" style={{ backgroundColor: '#008246' }}>KPI #2</span>
-          <p className="font-bold text-sm mt-3" style={{ color: '#00164C' }}>{t('pres_s3_k2_name')}</p>
-
-          <table className="w-full text-xs mt-2 border-collapse">
-            <thead>
-              <tr className="text-left" style={{ color: '#00164C' }}>
-                <th className="py-1 font-semibold">{t('device')}</th>
-                <th className="py-1 font-semibold">% {t('pres_s3_k2_users')}</th>
-                <th className="py-1 font-semibold">{t('pres_s3_k2_conv')}</th>
-                <th className="py-1 font-semibold">Step rates</th>
+      {/* Step table */}
+      <div className="mt-8">
+        <p className="text-sm font-semibold mb-3" style={{ color: '#00164C' }}>{t('pres_s4d_table_title')}</p>
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="bg-[#F5F6FB]">
+              <th className="text-left py-2 px-4 font-semibold" style={{ color: '#00164C' }}>{t('pres_s3_k3_step')}</th>
+              <th className="text-left py-2 px-4 font-semibold" style={{ color: '#008246' }}>iOS</th>
+              <th className="text-left py-2 px-4 font-semibold" style={{ color: '#0075FF' }}>Android</th>
+              <th className="text-left py-2 px-4 font-semibold" style={{ color: '#EF4444' }}>Web</th>
+            </tr>
+          </thead>
+          <tbody>
+            {steps.map((s, i) => (
+              <tr key={i} className="border-b border-gray-100">
+                <td className="py-2 px-4 font-medium" style={{ color: '#384550' }}>{s.name}</td>
+                <td className="py-2 px-4" style={{ color: '#008246' }}>{s.ios}</td>
+                <td className="py-2 px-4" style={{ color: '#0075FF' }}>{s.android}</td>
+                <td className="py-2 px-4" style={{ color: '#EF4444' }}>{s.web}</td>
               </tr>
-            </thead>
-            <tbody>
-              {deviceStats.map((d, i) => (
-                <tr key={i} className={i % 2 === 1 ? 'bg-white/50' : ''} style={{ color: '#384550' }}>
-                  <td className="py-1 font-medium">{d.label}</td>
-                  <td className="py-1">{d.pct}%</td>
-                  <td className="py-1 font-semibold" style={{ color: d.color }}>{d.conv}%</td>
-                  <td className="py-0.5">
-                    <div className="text-[10px] leading-tight text-muted-foreground">{d.steps}</div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-          <p className="text-xs mt-3" style={{ color: '#384550' }}><span className="font-semibold">{t('pres_s3_why')}:</span> {t('pres_s3_k2_why')}</p>
-          <p className="text-xs text-muted-foreground italic mt-2">{t('pres_s3_k2_insight')}</p>
-        </div>
-
-        {/* KPI #3 — Hardcoded step-by-step table */}
-        <div className="bg-[#F5F6FB] rounded-xl p-5 border-t-4 flex flex-col h-full" style={{ borderColor: '#EF4444' }}>
-          <span className="text-xs font-bold px-2 py-0.5 rounded-full text-white" style={{ backgroundColor: '#EF4444' }}>KPI #3</span>
-          <p className="font-bold text-sm mt-3" style={{ color: '#00164C' }}>{t('pres_s3_k3_name')}</p>
-
-          <table className="w-full text-xs mt-2 border-collapse">
-            <thead>
-              <tr className="text-left" style={{ color: '#00164C' }}>
-                <th className="py-1 font-semibold">{t('pres_s3_k3_step')}</th>
-                <th className="py-1 font-semibold">{t('pres_s3_k3_cities')}</th>
-                <th className="py-1 font-semibold">{t('pres_s3_k3_other')}</th>
-                <th className="py-1 font-semibold">{t('pres_s3_k3_gap')}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {kpi3Steps.map((row, i) => (
-                <tr key={i} className={i % 2 === 1 ? 'bg-white/50' : ''} style={{ color: '#384550' }}>
-                  <td className="py-1 font-medium">{row.step}</td>
-                  <td className="py-1">{row.citiesAvg}</td>
-                  <td className="py-1">{row.otherVal}</td>
-                  <td className="py-1 font-semibold" style={{ color: row.isOk ? '#008246' : '#EF4444' }}>
-                    {row.gap} {row.isOk ? '✅' : '🔴'}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          <p className="text-xs mt-3" style={{ color: '#384550' }}><span className="font-semibold">{t('pres_s3_why')}:</span> {t('pres_s3_k3_why_v2')}</p>
-          <p className="text-xs mt-2" style={{ color: '#384550' }}><span className="font-semibold">{t('pres_s3_watch')}:</span> {t('pres_s3_k3_watch')}</p>
-        </div>
+      <div className="bg-[#F5F6FB] border-l-4 p-4 rounded-r-lg text-sm" style={{ borderColor: '#0075FF', color: '#00164C' }}>
+        {t('pres_s4d_insight')}
       </div>
     </div>
   );
