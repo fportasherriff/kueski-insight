@@ -104,7 +104,7 @@ const Slide2 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
 
       {/* MIDDLE — Funnel bars */}
       <div className="mt-8">
-        <p className="text-sm font-semibold uppercase tracking-wide mb-3" style={{ color: '#00164C' }}>
+        <p className="text-sm font-medium uppercase tracking-wide mb-3" style={{ color: '#00164C' }}>
           {t('pres_s2_funnel_title')}
         </p>
         <div className="space-y-2">
