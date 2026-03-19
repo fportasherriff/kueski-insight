@@ -40,7 +40,7 @@ export const translations: Translations = {
   comingSoon: { EN: "Content coming in next iteration", ES: "Contenido en la próxima iteración" },
 
   // Ask the Data
-  ask_title: { EN: "Ask the Data", ES: "Consulta los Datos" },
+  ask_title: { EN: "Analyst Assistant", ES: "Asistente Analítico" },
   ask_subtitle: {
     EN: "Ask anything about the Kueski BNPL funnel dataset — 100,000 users · Mexico · Jan–Apr 2025",
     ES: "Preguntá lo que quieras sobre el dataset del funnel BNPL de Kueski — 100,000 usuarios · México · Ene–Abr 2025",
