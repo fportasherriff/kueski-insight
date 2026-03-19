@@ -208,7 +208,7 @@ const AskDataTab = () => {
             onKeyDown={handleKeyDown}
             placeholder={t('ask_placeholder')}
             rows={2}
-            className="flex-1 bg-[#F5F6FB] border border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-[#0075FF] focus:ring-1 focus:ring-[#0075FF] outline-none resize-none"
+            className="flex-1 bg-[#F5F6FB] border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#141C22] placeholder:text-[#66727D] focus:border-[#0075FF] focus:ring-1 focus:ring-[#0075FF] outline-none resize-none"
           />
           <button
             onClick={() => sendMessage()}

@@ -46,8 +46,8 @@ export const translations: Translations = {
     ES: "Preguntá lo que quieras sobre el dataset del funnel BNPL de Kueski — 100,000 usuarios · México · Ene–Abr 2025",
   },
   ask_disclaimer: {
-    EN: "Answers are based solely on the provided dataset. Outside-scope questions will be answered with available context.",
-    ES: "Las respuestas se basan únicamente en el dataset proporcionado. Las preguntas fuera del alcance se responderán con el contexto disponible.",
+    EN: "Answers based on the provided dataset only · Jan–Apr 2025",
+    ES: "Respuestas basadas únicamente en el dataset proporcionado · Ene–Abr 2025",
   },
   ask_quick: { EN: "Quick questions", ES: "Preguntas rápidas" },
   ask_placeholder: {
