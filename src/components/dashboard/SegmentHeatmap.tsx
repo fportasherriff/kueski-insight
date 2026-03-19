@@ -62,7 +62,7 @@ const SegmentHeatmap = ({ ageDevice }: { ageDevice: AgeDeviceRow[] }) => {
                     isWorst || isBest ? 'ring-2 ring-white' : ''
                   }`}
                   style={{ backgroundColor: colors.bg, color: colors.text }}
-                  title={`${ageLabels[age]} × ${deviceLabels[device]}\nConversion: ${cell.overall_conv}%\nUsers: ${cell.n.toLocaleString()}\nReg→Onb: ${cell.step_reg_to_onb}%\nCart→Purch: ${cell.step_cart_to_purch}%`}
+                  title={`${ageLabels[age]} × ${deviceLabels[device]}\nConversion: ${cell.overall_conv}%\nUsers: ${cell.n.toLocaleString()}\nReg→Onb: ${cell.step_reg_to_onb}%\nOnb→View: ${cell.step_onb_to_view}%\nView→Cart: ${cell.step_view_to_cart}%\nCart→Purch: ${cell.step_cart_to_purch}%`}
                 >
                   {isWorst && (
                     <span className="absolute top-1 right-1 text-[9px] font-bold bg-white/20 px-1.5 py-0.5 rounded">
@@ -82,6 +82,7 @@ const SegmentHeatmap = ({ ageDevice }: { ageDevice: AgeDeviceRow[] }) => {
                   <div>Conv: {cell.overall_conv}%</div>
                   <div>n={Number(cell.n).toLocaleString()}</div>
                   <div>Reg→Onb: {cell.step_reg_to_onb}%</div>
+                  <div>Onb→View: {cell.step_onb_to_view}%</div>
                   <div>View→Cart: {cell.step_view_to_cart}%</div>
                   <div>Cart→Purch: {cell.step_cart_to_purch}%</div>
                 </div>

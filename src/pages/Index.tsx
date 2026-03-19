@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LayoutDashboard, Presentation, Bot, Map, LucideIcon } from 'lucide-react';
+import { LayoutDashboard, Presentation, Bot, LucideIcon } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import DashboardTab from '@/components/dashboard/DashboardTab';
 import PresentationTab from '@/components/presentation/PresentationTab';
@@ -65,7 +65,6 @@ const Sidebar = ({
     { id: 'dashboard', icon: LayoutDashboard, label: t('dashboard') },
     { id: 'presentation', icon: Presentation, label: t('presentation') },
     { id: 'ask', icon: Bot, label: t('askData') },
-    { id: 'roadmap', icon: Map, label: t('roadmap') },
   ];
 
   return (
@@ -125,7 +124,6 @@ const MobileNav = ({
     { id: 'dashboard', icon: LayoutDashboard },
     { id: 'presentation', icon: Presentation },
     { id: 'ask', icon: Bot },
-    { id: 'roadmap', icon: Map },
   ];
 
   return (
@@ -157,8 +155,6 @@ const AppContent = () => {
         return <PresentationTab />;
       case 'ask':
         return <PlaceholderCard icon={Bot} title={t('askData')} subtitle="AI-powered analytics · Claude API · Supabase Edge Function" />;
-      case 'roadmap':
-        return <PlaceholderCard icon={Map} title={t('roadmap')} subtitle="RICE-prioritized initiatives · Q2–Q4 2026" />;
       default:
         return null;
     }

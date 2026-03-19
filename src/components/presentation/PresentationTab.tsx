@@ -164,10 +164,10 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
     <div className="max-w-3xl mx-auto px-8 py-10 space-y-6">
       <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>{t('pres_s3_title')}</h2>
       <p className="text-sm" style={{ color: '#384550' }}>{t('pres_s3_subtitle')}</p>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch mt-4">
 
         {/* KPI #1 */}
-        <div className="bg-[#F5F6FB] rounded-xl p-5 border-t-4" style={{ borderColor: '#0075FF' }}>
+        <div className="bg-[#F5F6FB] rounded-xl p-5 border-t-4 flex flex-col h-full" style={{ borderColor: '#0075FF' }}>
           <span className="text-xs font-bold px-2 py-0.5 rounded-full text-white" style={{ backgroundColor: '#0075FF' }}>KPI #1</span>
           <p className="font-bold text-sm mt-3" style={{ color: '#00164C' }}>{t('pres_s3_k1_name')}</p>
           <p className="text-sm font-semibold mt-2" style={{ color: '#0075FF' }}>
@@ -180,7 +180,7 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
         </div>
 
         {/* KPI #2 — All 3 devices with step rates */}
-        <div className="bg-[#F5F6FB] rounded-xl p-5 border-t-4" style={{ borderColor: '#008246' }}>
+        <div className="bg-[#F5F6FB] rounded-xl p-5 border-t-4 flex flex-col h-full" style={{ borderColor: '#008246' }}>
           <span className="text-xs font-bold px-2 py-0.5 rounded-full text-white" style={{ backgroundColor: '#008246' }}>KPI #2</span>
           <p className="font-bold text-sm mt-3" style={{ color: '#00164C' }}>{t('pres_s3_k2_name')}</p>
 
@@ -217,7 +217,7 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
         </div>
 
         {/* KPI #3 — Hardcoded step-by-step table */}
-        <div className="bg-[#F5F6FB] rounded-xl p-5 border-t-4" style={{ borderColor: '#EF4444' }}>
+        <div className="bg-[#F5F6FB] rounded-xl p-5 border-t-4 flex flex-col h-full" style={{ borderColor: '#EF4444' }}>
           <span className="text-xs font-bold px-2 py-0.5 rounded-full text-white" style={{ backgroundColor: '#EF4444' }}>KPI #3</span>
           <p className="font-bold text-sm mt-3" style={{ color: '#00164C' }}>{t('pres_s3_k3_name')}</p>
 
@@ -584,7 +584,7 @@ const PresentationTab = () => {
       <div className="flex-1 overflow-auto">
         <div
           key={fadeKey}
-          className="animate-fade-in"
+          className="animate-fade-in flex flex-col justify-between h-full min-h-[520px]"
           style={{ animationDuration: '200ms' }}
         >
           {slideContent[slide]}
