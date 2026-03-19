@@ -9,7 +9,7 @@ interface Translations {
 export const translations: Translations = {
   dashboard: { EN: "Dashboard", ES: "Tablero" },
   presentation: { EN: "Presentation", ES: "Presentación" },
-  askData: { EN: "Ask the Data", ES: "Consultar Datos" },
+  askData: { EN: "Analyst Assistant", ES: "Asistente Analítico" },
   roadmap: { EN: "Roadmap", ES: "Hoja de Ruta" },
   loading: { EN: "Loading...", ES: "Cargando..." },
   overallConversion: { EN: "Overall Conversion", ES: "Conversión Total" },
