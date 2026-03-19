@@ -190,6 +190,10 @@ export const translations: Translations = {
   pres_s2_overall_conv: { EN: "overall conversion", ES: "conversión total" },
   pres_s2_below_best: { EN: "pp below best segment", ES: "pp por debajo del mejor segmento" },
   pres_s2_gap_label: { EN: "gap between best and worst segment", ES: "brecha entre mejor y peor segmento" },
+  pres_s2_gap_caption: {
+    EN: "37.7× gap between best (iOS 26–50, 22.6%) and worst (Web >50, 0.6%) segments",
+    ES: "37.7× de brecha entre el mejor (iOS 26–50, 22.6%) y el peor (Web >50, 0.6%) segmento",
+  },
   pres_s2_best_label: { EN: "Best", ES: "Mejor" },
   pres_s2_worst_label: { EN: "Worst", ES: "Peor" },
   pres_s2_dropped: { EN: "users dropped", ES: "usuarios perdidos" },
