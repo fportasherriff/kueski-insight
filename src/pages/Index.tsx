@@ -65,7 +65,6 @@ const Sidebar = ({
     { id: 'dashboard', icon: LayoutDashboard, label: t('dashboard') },
     { id: 'presentation', icon: Presentation, label: t('presentation') },
     { id: 'ask', icon: Bot, label: t('askData') },
-    { id: 'roadmap', icon: Map, label: t('roadmap') },
   ];
 
   return (
