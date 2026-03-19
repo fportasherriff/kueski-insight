@@ -189,18 +189,13 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
               </tr>
             </thead>
             <tbody>
-              {deviceRows.map((d, i) => (
+              {deviceStats.map((d, i) => (
                 <tr key={i} className={i % 2 === 1 ? 'bg-white/50' : ''} style={{ color: '#384550' }}>
-                  <td className="py-1 font-medium">{d.name}</td>
-                  <td className="py-1">{d.parque}</td>
-                  <td className="py-1 font-semibold" style={{ color: d.name === 'Web' ? '#EF4444' : '#008246' }}>{d.seg?.overall_conv ?? '—'}%</td>
+                  <td className="py-1 font-medium">{d.label}</td>
+                  <td className="py-1">{d.pct}%</td>
+                  <td className="py-1 font-semibold" style={{ color: d.color }}>{d.conv}%</td>
                   <td className="py-0.5">
-                    <div className="text-[10px] leading-tight" style={{ color: '#6B7280' }}>
-                      <div>R→O: {d.seg?.step_reg_to_onb ?? '—'}%</div>
-                      <div>O→V: {d.seg?.step_onb_to_view ?? '—'}%</div>
-                      <div>V→C: {d.seg?.step_view_to_cart ?? '—'}%</div>
-                      <div>C→P: {d.seg?.step_cart_to_purch ?? '—'}%</div>
-                    </div>
+                    <div className="text-[10px] leading-tight text-muted-foreground">{d.steps}</div>
                   </td>
                 </tr>
               ))}
