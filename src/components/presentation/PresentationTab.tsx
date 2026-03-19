@@ -392,7 +392,7 @@ const Slide5 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
                   <span>{t('pres_s5_reach')}: {(r.reach ?? 0).toLocaleString()}</span>
                   <span>{t('pres_s5_impact')}: {r.impact_score}</span>
                   <span>{t('pres_s5_conf')}: {r.confidence_pct}%</span>
-                  <span>{t('pres_s5_effort')}: {['S','M','L'][i] ?? 'M'}</span>
+                  <span>{t('pres_s5_effort')}: {['M','L','S'][i] ?? 'M'}</span>
                 </div>
                 <div className="text-center">
                   <p className="text-2xl font-extrabold" style={{ color: clr }}>{r.rice_score}</p>
