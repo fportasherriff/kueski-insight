@@ -140,16 +140,11 @@ const Slide3 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
   const age50 = findSeg('age_group', '>50');
   const age25 = findSeg('age_group', '<25');
 
-  // All 3 devices for KPI #2
-  const deviceSegs = data.segments.filter((s: any) => s.dimension === 'device');
-  const iosSeg = deviceSegs.find((s: any) => s.segment_value === 'ios');
-  const androidSeg = deviceSegs.find((s: any) => s.segment_value === 'android');
-  const webSeg = deviceSegs.find((s: any) => s.segment_value === 'web');
-
-  const deviceRows = [
-    { name: 'iOS', parque: '30.2%', seg: iosSeg },
-    { name: 'Android', parque: '49.9%', seg: androidSeg },
-    { name: 'Web', parque: '19.9%', seg: webSeg },
+  // All 3 devices for KPI #2 — hardcoded verified values
+  const deviceStats = [
+    { label: 'iOS', pct: '30.2', conv: '18.2', color: '#008246', steps: 'Reg→Onb: 74.4% · Onb→View: 87.6% · View→Cart: 53.5% · Cart→Purch: 52.1%' },
+    { label: 'Android', pct: '49.9', conv: '8.8', color: '#0075FF', steps: 'Reg→Onb: 63.8% · Onb→View: 73.3% · View→Cart: 43.4% · Cart→Purch: 43.4%' },
+    { label: 'Web', pct: '19.9', conv: '2.6', color: '#EF4444', steps: 'Reg→Onb: 44.7% · Onb→View: 64.9% · View→Cart: 34.0% · Cart→Purch: 26.7%' },
   ];
 
   // KPI #3 hardcoded verified values
