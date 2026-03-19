@@ -240,7 +240,7 @@ const Slide4Device = ({ t }: { t: (k: string) => string }) => {
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-[#F5F6FB]">
-              <th className="text-left py-2 px-4 font-semibold" style={{ color: '#00164C' }}>{t('pres_s3_k3_step')}</th>
+              <th className="text-left py-2 px-4 font-semibold" style={{ color: '#00164C' }}>{t('pres_s4d_step_header')}</th>
               <th className="text-left py-2 px-4 font-semibold" style={{ color: '#008246' }}>iOS</th>
               <th className="text-left py-2 px-4 font-semibold" style={{ color: '#0075FF' }}>Android</th>
               <th className="text-left py-2 px-4 font-semibold" style={{ color: '#EF4444' }}>Web</th>
