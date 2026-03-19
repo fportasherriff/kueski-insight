@@ -181,6 +181,10 @@ export const translations: Translations = {
   pres_s2_title: { EN: "Where Does the Funnel Break?", ES: "¿Dónde se Rompe el Funnel?" },
   pres_s2_subtitle: { EN: "Task 1 — Segmented Funnel Diagnosis", ES: "Tarea 1 — Diagnóstico Segmentado del Funnel" },
   pres_s2_global: { EN: "Global Drop-offs", ES: "Caídas Globales" },
+  pres_s2_funnel_title: {
+    EN: "Global Funnel — Cumulative conversion from 100K",
+    ES: "Funnel Global — Conversión acumulada desde 100K",
+  },
   pres_s2_damaging: { EN: "2 Most Damaging Combinations", ES: "2 Combinaciones más Dañinas" },
   pres_s2_gap: { EN: "Best vs Worst Gap", ES: "Brecha Mejor vs Peor" },
   pres_s2_overall_conv: { EN: "overall conversion", ES: "conversión total" },
@@ -196,6 +200,8 @@ export const translations: Translations = {
   pres_s3_title_v2: { EN: "2 Critical Metrics to Watch", ES: "2 Métricas Críticas a Monitorear" },
   pres_s3_subtitle_v2: { EN: "Task 1 — Leading indicators with the highest action potential", ES: "Tarea 1 — Indicadores líderes con el mayor potencial de acción" },
   pres_s3_kpi1_pill: { EN: "Onboarding", ES: "Onboarding" },
+  pres_s3_kpi1_pill_v2: { EN: "Onboarding Gap", ES: "Brecha de Onboarding" },
+  pres_s3_kpi3_pill_v2: { EN: "Checkout Gap", ES: "Brecha de Checkout" },
   pres_s3_kpi1_ages: { EN: ">50 years old    |    Under 25", ES: ">50 años    |    Menores de 25" },
   pres_s3_kpi1_insight: {
     EN: "Users 50+ hit a wall at registration — only 39 in 100 complete onboarding. For under-25s that number is 84. This 45-point gap is the single largest conversion lever in the funnel.",
@@ -293,6 +299,10 @@ export const translations: Translations = {
   pres_s5_current_target: { EN: "Current → Target", ES: "Actual → Meta" },
   pres_s5_greenlight: { EN: "Green-light decision", ES: "Decisión de luz verde" },
   pres_s5_why_quarter: { EN: "Why this quarter", ES: "Por qué este trimestre" },
+  pres_s5_sequencing_note: {
+    EN: "* Quarters represent sequencing estimates based on relative effort — not delivery commitments.",
+    ES: "* Los trimestres representan estimaciones de secuenciación basadas en esfuerzo relativo — no compromisos de entrega.",
+  },
 
   // Slide 6
   pres_s6_title: { EN: "Experiment Design — A/B Test", ES: "Diseño de Experimento — Test A/B" },
@@ -320,6 +330,10 @@ export const translations: Translations = {
   pres_s6_if_lt5: {
     EN: "If <5pp → Pivot to copy-only experiment",
     ES: "Si <5pp → Pivotear a experimento solo de copy",
+  },
+  pres_s6_footer: {
+    EN: "All data and charts are live — explore the full dataset in the Dashboard tab.",
+    ES: "Todos los datos y gráficos están en vivo — explorá el dataset completo en la pestaña Tablero.",
   },
 
   // Slide 7
