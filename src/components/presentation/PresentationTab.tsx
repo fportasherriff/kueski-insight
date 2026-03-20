@@ -550,10 +550,7 @@ const Slide8 = ({ t }: { t: (k: string) => string }) => {
           }}
         >
           <CheckCircle size={48} color="white" />
-          <div className="flex flex-col items-center" style={{ marginTop: '8px' }}>
-            <span className="text-white" style={{ fontSize: '32px', fontWeight: 300, letterSpacing: '2px' }}>personal</span>
-            <span className="text-white" style={{ fontSize: '32px', fontWeight: 700, letterSpacing: '2px' }}>pay</span>
-          </div>
+          <span className="text-white" style={{ marginTop: '8px', fontSize: '28px', fontWeight: 700, letterSpacing: '2px' }}>personal pay</span>
           <p className="text-center mt-4" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '13px' }}>
             Digital wallet · Telecom Argentina ecosystem · 2021–2025
           </p>
@@ -757,7 +754,7 @@ const PresentationTab = () => {
 
   return (
     <div className="bg-white rounded-2xl shadow-sm min-h-[520px] flex flex-col">
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-auto" style={{ paddingBottom: '80px' }}>
         <div
           key={fadeKey}
           className="animate-fade-in flex flex-col justify-between h-full min-h-[520px]"
@@ -767,7 +764,19 @@ const PresentationTab = () => {
         </div>
       </div>
 
-      <div className="border-t border-gray-100 px-8 py-4 flex flex-col items-center gap-3">
+      <div
+        className="px-8 py-4 flex flex-col items-center gap-3"
+        style={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          background: 'rgba(255,255,255,0.95)',
+          borderTop: '1px solid #E5E7EB',
+          zIndex: 50,
+          padding: '16px 0',
+        }}
+      >
         <div className="flex gap-2">
           {Array.from({ length: TOTAL_SLIDES }).map((_, i) => (
             <button
