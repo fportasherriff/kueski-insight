@@ -686,11 +686,14 @@ const Slide10 = ({ t }: { t: (k: string) => string }) => {
           <hr className="border-gray-100" />
           <ul className="space-y-1.5 text-xs" style={{ color: '#384550' }}>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Debit cycle window — new pattern</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> PO could self-serve debit performance post-launch</li>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Push notification in treatment arm</li>
-            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Now standard in payment logic</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Timing pattern became standard — no analyst needed to re-derive it</li>
           </ul>
         </div>
       </div>
+
+      <p className="text-left" style={{ fontSize: '11px', color: '#66727D' }}>Tools: BigQuery · Looker Studio · SQL · A/B framework</p>
     </div>
   );
 };
