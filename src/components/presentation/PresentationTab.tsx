@@ -536,17 +536,17 @@ const Slide8 = ({ t }: { t: (k: string) => string }) => {
           </div>
 
           <p className="text-xs pt-4 border-t border-gray-100" style={{ color: '#9CA3AF' }}>
-            Telecom-backed fintech · Argentina · 2021–2024
+            Telecom-backed fintech · Argentina · 2021–2025
           </p>
         </div>
 
         {/* Right — Logo */}
         <div className="flex flex-col items-center justify-center">
-          <div className="bg-[#F5F6FB] rounded-xl p-8 flex items-center justify-center w-full max-w-[280px] aspect-[4/3]">
+          <div className="flex items-center justify-center w-full max-w-[280px] aspect-[4/3]" style={{ background: '#F5F6FB', padding: '32px', borderRadius: '12px' }}>
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/PersonalPay_logo.svg/320px-PersonalPay_logo.svg.png"
+              src="https://play-lh.googleusercontent.com/rN5Sj8ZRWNRcR2bLfitHiUiJxnhLDNxEBLHBEmvhLKJJ5vH7kCOvgPbXCWJyOX_jMjE"
               alt="PersonalPay"
-              className="max-h-24 object-contain"
+              style={{ maxHeight: '110px', maxWidth: '200px', objectFit: 'contain' }}
               onError={(e) => {
                 const target = e.currentTarget;
                 target.style.display = 'none';
@@ -554,12 +554,12 @@ const Slide8 = ({ t }: { t: (k: string) => string }) => {
                 if (fallback) fallback.style.display = 'flex';
               }}
             />
-            <div className="hidden items-center justify-center bg-[#F5F6FB] rounded-xl px-6 py-4">
-              <span className="text-xl font-bold" style={{ color: '#00164C' }}>PersonalPay</span>
+            <div className="hidden items-center justify-center" style={{ background: 'linear-gradient(135deg, #7B2FBE, #5B21B6)', padding: '32px', borderRadius: '12px' }}>
+              <span className="text-white" style={{ fontSize: '20px', fontWeight: 700 }}>Personal Pay</span>
             </div>
           </div>
           <p className="text-xs mt-3 text-center" style={{ color: '#9CA3AF' }}>
-            Digital wallet · Telecom Argentina ecosystem
+            Digital wallet · Telecom Argentina ecosystem · 2021–2025
           </p>
         </div>
       </div>
@@ -615,11 +615,14 @@ const Slide9 = ({ t }: { t: (k: string) => string }) => {
           <ul className="space-y-1.5 text-xs" style={{ color: '#384550' }}>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Validated with engineering</li>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Negotiated fix with COELSA</li>
-            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Documented pattern for reuse</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Engineering had real-time data to validate the fix</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Visibility framework reused in future latency investigations</li>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> At benchmark floor — no further hypothesis</li>
           </ul>
         </div>
       </div>
+
+      <p className="text-left" style={{ fontSize: '11px', color: '#66727D' }}>Tools: BigQuery · Looker Studio · SQL</p>
     </div>
   );
 };
@@ -683,11 +686,14 @@ const Slide10 = ({ t }: { t: (k: string) => string }) => {
           <hr className="border-gray-100" />
           <ul className="space-y-1.5 text-xs" style={{ color: '#384550' }}>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Debit cycle window — new pattern</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> PO could self-serve debit performance post-launch</li>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Push notification in treatment arm</li>
-            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Now standard in payment logic</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Timing pattern became standard — no analyst needed to re-derive it</li>
           </ul>
         </div>
       </div>
+
+      <p className="text-left" style={{ fontSize: '11px', color: '#66727D' }}>Tools: BigQuery · Looker Studio · SQL · A/B framework</p>
     </div>
   );
 };
