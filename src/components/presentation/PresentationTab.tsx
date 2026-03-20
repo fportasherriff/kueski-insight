@@ -643,7 +643,7 @@ const Slide10 = ({ t }: { t: (k: string) => string }) => {
           </span>
           <ul className="space-y-1.5 text-xs" style={{ color: '#384550' }}>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Target: 20% rejection</li>
-            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Strategic feature for Telecom billing</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Strategic billing alternative for 30M+ Telecom customers</li>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> 30M+ Telecom customers in scope</li>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> No prior behavioral data for this flow</li>
           </ul>
