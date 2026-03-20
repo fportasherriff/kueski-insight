@@ -511,9 +511,9 @@ const Slide6 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
 /* ─── Slide 8 — The Operating Context ─── */
 const Slide8 = ({ t }: { t: (k: string) => string }) => {
   const stats = [
-    { value: '11K → 5M+', label: 'users during tenure' },
-    { value: 'First analytics hire', label: 'built the function from zero' },
-    { value: 'Payments · BNPL · Services · B2B', label: 'core product scope' },
+    { value: '5M+ users · 3M MAU', label: 'Scale reached within Telecom\'s 30M+ customer ecosystem' },
+    { value: 'First analytics hire', label: 'No prior infrastructure, tooling or processes — built from scratch' },
+    { value: 'Top 3 FCI yield · Argentine fintech market', label: 'Competing with Mercado Pago and Ualá in a high-stakes market' },
   ];
 
   return (
@@ -530,12 +530,12 @@ const Slide8 = ({ t }: { t: (k: string) => string }) => {
             {stats.map((s, i) => (
               <div key={i}>
                 <p className="text-lg font-extrabold" style={{ color: '#0075FF' }}>{s.value}</p>
-                <p className="text-xs" style={{ color: '#66727D' }}>{s.label}</p>
+                <p style={{ color: '#66727D', fontSize: '14px' }}>{s.label}</p>
               </div>
             ))}
           </div>
 
-          <p className="text-xs pt-4 border-t border-gray-100" style={{ color: '#9CA3AF' }}>
+          <p className="pt-4 border-t border-gray-100" style={{ color: '#66727D', fontSize: '12px' }}>
             Telecom-backed fintech · Argentina · 2021–2025
           </p>
         </div>
@@ -544,9 +544,9 @@ const Slide8 = ({ t }: { t: (k: string) => string }) => {
         <div className="flex flex-col items-center justify-center">
           <div className="flex items-center justify-center w-full max-w-[280px] aspect-[4/3]" style={{ background: '#F5F6FB', padding: '32px', borderRadius: '12px' }}>
             <img
-              src="https://play-lh.googleusercontent.com/rN5Sj8ZRWNRcR2bLfitHiUiJxnhLDNxEBLHBEmvhLKJJ5vH7kCOvgPbXCWJyOX_jMjE"
+              src="https://www.personalpay.com.ar/images/Logo.png"
               alt="PersonalPay"
-              style={{ maxHeight: '110px', maxWidth: '200px', objectFit: 'contain' }}
+              style={{ maxHeight: '110px', maxWidth: '220px', objectFit: 'contain' }}
               onError={(e) => {
                 const target = e.currentTarget;
                 target.style.display = 'none';
@@ -614,9 +614,9 @@ const Slide9 = ({ t }: { t: (k: string) => string }) => {
           <hr className="border-gray-100" />
           <ul className="space-y-1.5 text-xs" style={{ color: '#384550' }}>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Validated with engineering</li>
-            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Negotiated fix with COELSA</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Surfaced findings to engineering — they led the COELSA fix</li>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Engineering had real-time data to validate the fix</li>
-            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Visibility framework reused in future latency investigations</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Analysis pattern documented and reused in future investigations</li>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> At benchmark floor — no further hypothesis</li>
           </ul>
         </div>
@@ -643,7 +643,7 @@ const Slide10 = ({ t }: { t: (k: string) => string }) => {
           </span>
           <ul className="space-y-1.5 text-xs" style={{ color: '#384550' }}>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Target: 20% rejection</li>
-            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Strategic feature for Telecom billing</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Strategic billing alternative for 30M+ Telecom customers</li>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> 30M+ Telecom customers in scope</li>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> No prior behavioral data for this flow</li>
           </ul>
@@ -685,10 +685,10 @@ const Slide10 = ({ t }: { t: (k: string) => string }) => {
           </div>
           <hr className="border-gray-100" />
           <ul className="space-y-1.5 text-xs" style={{ color: '#384550' }}>
-            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Debit cycle window — new pattern</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Day 8–13 cycle window — new product pattern</li>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> PO could self-serve debit performance post-launch</li>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Push notification in treatment arm</li>
-            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Timing pattern became standard — no analyst needed to re-derive it</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Cycle window became a product standard — insight scaled without analyst dependency</li>
           </ul>
         </div>
       </div>
