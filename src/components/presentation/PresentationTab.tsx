@@ -13,7 +13,7 @@ interface PresentationData {
   kpis: any;
 }
 
-const TOTAL_SLIDES = 11;
+const TOTAL_SLIDES = 10;
 
 /* ─── Slide 1 ─── */
 const Slide1 = ({ t }: { t: (k: string) => string }) => (
@@ -507,58 +507,6 @@ const Slide6 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
   );
 };
 
-/* ─── Slide 7 — Compact audiences + dashboard capabilities ─── */
-const Slide7 = ({ t }: { t: (k: string) => string }) => {
-  const audiences = [
-    { icon: '👔', title: t('pres_s7_exec'), metric: t('pres_s7_exec_metric'), action: t('pres_s7_exec_action'), border: '#00164C' },
-    { icon: '🎯', title: t('pres_s7_product'), metric: t('pres_s7_product_metric'), action: t('pres_s7_product_action'), border: '#0075FF' },
-    { icon: '🔧', title: t('pres_s7_engineering'), metric: t('pres_s7_eng_metric'), action: t('pres_s7_eng_action'), border: '#EF4444' },
-    { icon: '📈', title: t('pres_s7_growth'), metric: t('pres_s7_growth_metric'), action: t('pres_s7_growth_action'), border: '#008246' },
-  ];
-
-  const capabilities = [
-    t('pres_s7_cap1'),
-    t('pres_s7_cap2'),
-    t('pres_s7_cap3'),
-    t('pres_s7_cap4'),
-  ];
-
-  return (
-    <div className="max-w-3xl mx-auto px-8 py-10 space-y-6">
-      <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>{t('pres_s7_title')}</h2>
-      <p className="text-sm" style={{ color: '#384550' }}>{t('pres_s7_subtitle')}</p>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-        <div className="space-y-3">
-          {audiences.map((a, i) => (
-            <div key={i} className="bg-white border border-gray-100 rounded-xl p-3 shadow-sm border-l-4" style={{ borderLeftColor: a.border }}>
-              <div className="flex items-center gap-2">
-                <span className="text-lg">{a.icon}</span>
-                <span className="font-bold text-sm" style={{ color: '#00164C' }}>{a.title}</span>
-              </div>
-              <p className="text-xs font-semibold mt-1" style={{ color: a.border }}>{a.metric}</p>
-              <p className="text-xs mt-1" style={{ color: '#384550' }}>{a.action}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="bg-[#F5F6FB] rounded-xl p-6">
-          <p className="text-xs font-bold uppercase tracking-wide mb-4" style={{ color: '#00164C' }}>{t('pres_s7_enables_title')}</p>
-          <div className="space-y-3">
-            {capabilities.map((cap, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm" style={{ color: '#384550' }}>
-                <span style={{ color: '#0075FF' }}>●</span>
-                <span>{cap}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <p className="text-sm text-muted-foreground italic text-center mt-4">{t('pres_s7_footer_v2')}</p>
-    </div>
-  );
-};
 
 /* ─── Slide 8 — The Operating Context ─── */
 const Slide8 = ({ t }: { t: (k: string) => string }) => {
@@ -728,7 +676,7 @@ const PresentationTab = () => {
     <Slide4 key={4} t={t} />,
     <Slide5 key={5} data={data} t={t} />,
     <Slide6 key={6} data={data} t={t} />,
-    <Slide7 key={7} t={t} />,
+    <Slide8 key={7} t={t} />,
     <Slide8 key={8} t={t} />,
     <Slide9 key={9} t={t} />,
     <Slide10 key={10} t={t} />,
