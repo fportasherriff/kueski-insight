@@ -685,10 +685,10 @@ const Slide10 = ({ t }: { t: (k: string) => string }) => {
           </div>
           <hr className="border-gray-100" />
           <ul className="space-y-1.5 text-xs" style={{ color: '#384550' }}>
-            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Debit cycle window — new pattern</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Day 8–13 cycle window — new product pattern</li>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> PO could self-serve debit performance post-launch</li>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Push notification in treatment arm</li>
-            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Timing pattern became standard — no analyst needed to re-derive it</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Cycle window became a product standard — insight scaled without analyst dependency</li>
           </ul>
         </div>
       </div>
