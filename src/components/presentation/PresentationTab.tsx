@@ -723,10 +723,34 @@ const PresentationTab = () => {
     });
   }, []);
 
+  const totalSlides = 10;
+
   const goTo = (n: number) => {
     setSlide(n);
     setFadeKey(prev => prev + 1);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+        e.preventDefault();
+        setSlide(prev => {
+          const next = Math.min(prev + 1, totalSlides - 1);
+          if (next !== prev) setFadeKey(k => k + 1);
+          return next;
+        });
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        setSlide(prev => {
+          const next = Math.max(prev - 1, 0);
+          if (next !== prev) setFadeKey(k => k + 1);
+          return next;
+        });
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   if (!data) {
     return (
