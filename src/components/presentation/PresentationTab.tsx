@@ -530,7 +530,7 @@ const Slide8 = ({ t }: { t: (k: string) => string }) => {
             {stats.map((s, i) => (
               <div key={i}>
                 <p className="text-lg font-extrabold" style={{ color: '#0075FF' }}>{s.value}</p>
-                <p className="text-xs" style={{ color: '#66727D' }}>{s.label}</p>
+                <p style={{ color: '#66727D', fontSize: '14px' }}>{s.label}</p>
               </div>
             ))}
           </div>
