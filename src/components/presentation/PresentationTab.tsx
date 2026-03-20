@@ -511,9 +511,9 @@ const Slide6 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
 /* ─── Slide 8 — The Operating Context ─── */
 const Slide8 = ({ t }: { t: (k: string) => string }) => {
   const stats = [
-    { value: '11K → 5M+', label: 'users during tenure' },
-    { value: 'First analytics hire', label: 'built the function from zero' },
-    { value: 'Payments · BNPL · Services · B2B', label: 'core product scope' },
+    { value: '5M+ users · 3M MAU', label: 'Scale reached within Telecom\'s 30M+ customer ecosystem' },
+    { value: 'First analytics hire', label: 'No prior infrastructure, tooling or processes — built from scratch' },
+    { value: 'Top 3 FCI yield · Argentine fintech market', label: 'Competing with Mercado Pago and Ualá in a high-stakes market' },
   ];
 
   return (
