@@ -614,9 +614,9 @@ const Slide9 = ({ t }: { t: (k: string) => string }) => {
           <hr className="border-gray-100" />
           <ul className="space-y-1.5 text-xs" style={{ color: '#384550' }}>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Validated with engineering</li>
-            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Negotiated fix with COELSA</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Surfaced findings to engineering — they led the COELSA fix</li>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Engineering had real-time data to validate the fix</li>
-            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Visibility framework reused in future latency investigations</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Analysis pattern documented and reused in future investigations</li>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> At benchmark floor — no further hypothesis</li>
           </ul>
         </div>
