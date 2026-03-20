@@ -511,79 +511,186 @@ const Slide6 = ({ data, t }: { data: PresentationData; t: (k: string) => string 
 /* ─── Slide 8 — The Operating Context ─── */
 const Slide8 = ({ t }: { t: (k: string) => string }) => {
   const stats = [
-    { value: '11K → 5M+', label: t('pres_s8_stat1') },
-    { value: t('pres_s8_stat2_value'), label: t('pres_s8_stat2') },
-    { value: t('pres_s8_stat3_value'), label: t('pres_s8_stat3') },
-    { value: t('pres_s8_stat4_value'), label: t('pres_s8_stat4') },
+    { value: '11K → 5M+', label: 'users during tenure' },
+    { value: 'First analytics hire', label: 'built the function from zero' },
+    { value: 'Payments · BNPL · Services · B2B', label: 'core product scope' },
   ];
 
   return (
-    <div className="max-w-3xl mx-auto px-8 py-10 space-y-6">
-      <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>{t('pres_s8_title')}</h2>
-      <p className="text-sm" style={{ color: '#384550' }}>{t('pres_s8_subtitle')}</p>
-
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
-        {stats.map((s, i) => (
-          <div key={i} className="bg-[#F5F6FB] rounded-full px-4 py-2.5 text-center">
-            <p className="text-sm font-bold" style={{ color: '#0075FF' }}>{s.value}</p>
-            <p className="text-xs mt-0.5" style={{ color: '#66727D' }}>{s.label}</p>
+    <div className="max-w-3xl mx-auto px-8 py-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center min-h-[380px]">
+        {/* Left — Text */}
+        <div className="space-y-6">
+          <div>
+            <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>The Operating Context</h2>
+            <p className="text-sm mt-1" style={{ color: '#66727D' }}>Part 2 — Strategic &amp; Operational Cases</p>
           </div>
-        ))}
-      </div>
 
-      <p className="text-sm leading-relaxed mt-6" style={{ color: '#384550' }}>
-        {t('pres_s8_paragraph')}
-      </p>
+          <div className="space-y-5">
+            {stats.map((s, i) => (
+              <div key={i}>
+                <p className="text-lg font-extrabold" style={{ color: '#0075FF' }}>{s.value}</p>
+                <p className="text-xs" style={{ color: '#66727D' }}>{s.label}</p>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-xs pt-4 border-t border-gray-100" style={{ color: '#9CA3AF' }}>
+            Telecom-backed fintech · Argentina · 2021–2024
+          </p>
+        </div>
+
+        {/* Right — Logo */}
+        <div className="flex flex-col items-center justify-center">
+          <div className="bg-[#F5F6FB] rounded-xl p-8 flex items-center justify-center w-full max-w-[280px] aspect-[4/3]">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/PersonalPay_logo.svg/320px-PersonalPay_logo.svg.png"
+              alt="PersonalPay"
+              className="max-h-24 object-contain"
+              onError={(e) => {
+                const target = e.currentTarget;
+                target.style.display = 'none';
+                const fallback = target.nextElementSibling as HTMLElement;
+                if (fallback) fallback.style.display = 'flex';
+              }}
+            />
+            <div className="hidden items-center justify-center bg-[#F5F6FB] rounded-xl px-6 py-4">
+              <span className="text-xl font-bold" style={{ color: '#00164C' }}>PersonalPay</span>
+            </div>
+          </div>
+          <p className="text-xs mt-3 text-center" style={{ color: '#9CA3AF' }}>
+            Digital wallet · Telecom Argentina ecosystem
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
 
 /* ─── Slide 9 — Case 1: Diagnosing Slow Transfers ─── */
 const Slide9 = ({ t }: { t: (k: string) => string }) => {
-  const steps = [
-    { label: 'SITUATION', key: 'pres_s9_situation' },
-    { label: 'INSIGHT', key: 'pres_s9_insight' },
-    { label: 'ACTION', key: 'pres_s9_action' },
-    { label: 'ITERATION', key: 'pres_s9_iteration' },
-  ];
-
   return (
-    <div className="max-w-3xl mx-auto px-8 py-10 space-y-6">
-      <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>{t('pres_s9_title')}</h2>
-      <p className="text-sm" style={{ color: '#384550' }}>{t('pres_s9_subtitle')}</p>
+    <div className="max-w-3xl mx-auto px-8 py-10 space-y-5">
+      <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>Case 1: Diagnosing Slow Transfers</h2>
+      <p className="text-sm" style={{ color: '#66727D' }}>Task — Reduce transfer latency complaints at 2M daily transactions</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mt-4">
-        <div className="md:col-span-3 space-y-4">
-          {steps.map((s, i) => (
-            <div key={i}>
-              <p className="text-xs font-bold uppercase tracking-wide mb-1" style={{ color: '#0075FF' }}>{s.label}</p>
-              <p className="text-xs leading-relaxed" style={{ color: '#384550' }}>{t(s.key)}</p>
-            </div>
-          ))}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-0 mt-4 border border-gray-100 rounded-xl overflow-hidden">
+        {/* Col 1 — The Problem */}
+        <div className="p-5 space-y-3">
+          <p className="text-xs font-bold uppercase tracking-wide" style={{ color: '#00164C' }}>The Problem</p>
+          <span className="inline-block text-xs font-semibold px-2.5 py-0.5 rounded-full text-white" style={{ backgroundColor: '#EF4444' }}>
+            1% of 2M daily transfers
+          </span>
+          <ul className="space-y-1.5 text-xs" style={{ color: '#384550' }}>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Transfers &gt;10s = 20,000 affected/day</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Users perceive delay as fraud</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> High churn risk in competitive market</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> No clear root cause identified</li>
+          </ul>
         </div>
 
-        <div className="md:col-span-2 flex flex-col gap-4">
-          <div className="bg-[#F5F6FB] rounded-2xl py-6 px-5 text-center flex-1 flex flex-col items-center justify-center">
-            <p className="text-xs font-bold uppercase tracking-wide mb-2" style={{ color: '#00164C' }}>RESULT</p>
-            <p className="font-[800]" style={{ color: '#0075FF', fontSize: '40px', lineHeight: 1 }}>1.0% → 0.2%</p>
-            <p className="text-xs mt-2" style={{ color: '#384550' }}>{t('pres_s9_result_label')}</p>
-            <p className="text-xs italic mt-1" style={{ color: '#66727D' }}>{t('pres_s9_result_sub')}</p>
+        {/* Col 2 — The Insight */}
+        <div className="p-5 space-y-3 border-x border-gray-100">
+          <p className="text-xs font-bold uppercase tracking-wide" style={{ color: '#00164C' }}>The Insight</p>
+          <span className="inline-block text-xs font-semibold px-2.5 py-0.5 rounded-full text-white" style={{ backgroundColor: '#0075FF' }}>
+            Segmentation by latency band
+          </span>
+          <ul className="space-y-1.5 text-xs" style={{ color: '#384550' }}>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> 8 time bands: 0–1s → 24hr+</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Critical mass: 1–10 min band</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Samsung devices disproportionately affected</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Specific time window pattern identified</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Root cause: COELSA clearinghouse behavior</li>
+          </ul>
+        </div>
+
+        {/* Col 3 — The Impact */}
+        <div className="p-5 space-y-3">
+          <p className="text-xs font-bold uppercase tracking-wide" style={{ color: '#00164C' }}>The Impact</p>
+          <div className="bg-[#F5F6FB] rounded-xl py-4 px-3 text-center mt-1">
+            <p className="font-[800]" style={{ color: '#0075FF', fontSize: '32px', lineHeight: 1 }}>1.0% → 0.2%</p>
+            <p className="text-xs mt-2" style={{ color: '#66727D' }}>transfer failure rate</p>
           </div>
+          <hr className="border-gray-100" />
+          <ul className="space-y-1.5 text-xs" style={{ color: '#384550' }}>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Validated with engineering</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Negotiated fix with COELSA</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Documented pattern for reuse</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> At benchmark floor — no further hypothesis</li>
+          </ul>
         </div>
       </div>
     </div>
   );
 };
 
-/* ─── Slide 10 — Case 2: Fixing Direct Debit ─── */
+/* ─── Slide 10 — Case 2: Redesigning Direct Debit ─── */
 const Slide10 = ({ t }: { t: (k: string) => string }) => {
-  const steps = [
-    { label: 'SITUATION', key: 'pres_s10_situation' },
-    { label: 'INSIGHT', key: 'pres_s10_insight' },
-    { label: 'ACTION', key: 'pres_s10_action' },
-    { label: 'ITERATION', key: 'pres_s10_iteration' },
-  ];
+  return (
+    <div className="max-w-3xl mx-auto px-8 py-10 space-y-5">
+      <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>Case 2: Redesigning Direct Debit</h2>
+      <p className="text-sm" style={{ color: '#66727D' }}>Task — Reduce rejection rate on a newly launched autopay feature</p>
 
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-0 mt-4 border border-gray-100 rounded-xl overflow-hidden">
+        {/* Col 1 — The Problem */}
+        <div className="p-5 space-y-3">
+          <p className="text-xs font-bold uppercase tracking-wide" style={{ color: '#00164C' }}>The Problem</p>
+          <span className="inline-block text-xs font-semibold px-2.5 py-0.5 rounded-full text-white" style={{ backgroundColor: '#EF4444' }}>
+            40% rejection rate at launch
+          </span>
+          <ul className="space-y-1.5 text-xs" style={{ color: '#384550' }}>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Target: 20% rejection</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Strategic feature for Telecom billing</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> 30M+ Telecom customers in scope</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> No prior behavioral data for this flow</li>
+          </ul>
+        </div>
+
+        {/* Col 2 — The Insight */}
+        <div className="p-5 space-y-3 border-x border-gray-100">
+          <p className="text-xs font-bold uppercase tracking-wide" style={{ color: '#00164C' }}>The Insight</p>
+          <span className="inline-block text-xs font-semibold px-2.5 py-0.5 rounded-full text-white" style={{ backgroundColor: '#0075FF' }}>
+            Behavioral timing analysis
+          </span>
+          <ul className="space-y-1.5 text-xs" style={{ color: '#384550' }}>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Analyzed pre-debit deposit behavior</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> End-of-month enrollees had no funds</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Debit fired on anniversary — wrong timing</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Problem was timing, not product</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> A/B test: enrollment date vs. 8th–13th window</li>
+          </ul>
+        </div>
+
+        {/* Col 3 — The Impact */}
+        <div className="p-5 space-y-3">
+          <p className="text-xs font-bold uppercase tracking-wide" style={{ color: '#00164C' }}>The Impact</p>
+          <div className="bg-[#F5F6FB] rounded-xl py-4 px-3 text-center mt-1">
+            <div className="flex items-center justify-center gap-2">
+              <div>
+                <p className="font-[800]" style={{ color: '#EF4444', fontSize: '28px', lineHeight: 1 }}>40%</p>
+                <p className="text-[10px] mt-1" style={{ color: '#66727D' }}>at launch</p>
+              </div>
+              <span className="text-lg" style={{ color: '#9CA3AF' }}>→</span>
+              <div>
+                <p className="font-[800]" style={{ color: '#008246', fontSize: '28px', lineHeight: 1 }}>23%</p>
+                <p className="text-[10px] mt-1" style={{ color: '#66727D' }}>after redesign</p>
+              </div>
+            </div>
+            <span className="inline-block mt-2 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-gray-200" style={{ color: '#0075FF' }}>
+              A/B tested · shipped to production
+            </span>
+          </div>
+          <hr className="border-gray-100" />
+          <ul className="space-y-1.5 text-xs" style={{ color: '#384550' }}>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Debit cycle window — new pattern</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Push notification in treatment arm</li>
+            <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Now standard in payment logic</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+};
   return (
     <div className="max-w-3xl mx-auto px-8 py-10 space-y-6">
       <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>{t('pres_s10_title')}</h2>
