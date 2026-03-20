@@ -13,7 +13,7 @@ interface PresentationData {
   kpis: any;
 }
 
-const TOTAL_SLIDES = 7;
+const TOTAL_SLIDES = 10;
 
 /* ─── Slide 1 ─── */
 const Slide1 = ({ t }: { t: (k: string) => string }) => (
@@ -560,6 +560,121 @@ const Slide7 = ({ t }: { t: (k: string) => string }) => {
   );
 };
 
+/* ─── Slide 8 — The Operating Context ─── */
+const Slide8 = ({ t }: { t: (k: string) => string }) => {
+  const stats = [
+    { value: '11K → 5M+', label: t('pres_s8_stat1') },
+    { value: t('pres_s8_stat2_value'), label: t('pres_s8_stat2') },
+    { value: t('pres_s8_stat3_value'), label: t('pres_s8_stat3') },
+    { value: t('pres_s8_stat4_value'), label: t('pres_s8_stat4') },
+  ];
+
+  return (
+    <div className="max-w-3xl mx-auto px-8 py-10 space-y-6">
+      <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>{t('pres_s8_title')}</h2>
+      <p className="text-sm" style={{ color: '#384550' }}>{t('pres_s8_subtitle')}</p>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
+        {stats.map((s, i) => (
+          <div key={i} className="bg-[#F5F6FB] rounded-full px-4 py-2.5 text-center">
+            <p className="text-sm font-bold" style={{ color: '#0075FF' }}>{s.value}</p>
+            <p className="text-xs mt-0.5" style={{ color: '#66727D' }}>{s.label}</p>
+          </div>
+        ))}
+      </div>
+
+      <p className="text-sm leading-relaxed mt-6" style={{ color: '#384550' }}>
+        {t('pres_s8_paragraph')}
+      </p>
+    </div>
+  );
+};
+
+/* ─── Slide 9 — Case 1: Diagnosing Slow Transfers ─── */
+const Slide9 = ({ t }: { t: (k: string) => string }) => {
+  const steps = [
+    { label: 'SITUATION', key: 'pres_s9_situation' },
+    { label: 'INSIGHT', key: 'pres_s9_insight' },
+    { label: 'ACTION', key: 'pres_s9_action' },
+    { label: 'ITERATION', key: 'pres_s9_iteration' },
+  ];
+
+  return (
+    <div className="max-w-3xl mx-auto px-8 py-10 space-y-6">
+      <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>{t('pres_s9_title')}</h2>
+      <p className="text-sm" style={{ color: '#384550' }}>{t('pres_s9_subtitle')}</p>
+
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mt-4">
+        <div className="md:col-span-3 space-y-4">
+          {steps.map((s, i) => (
+            <div key={i}>
+              <p className="text-xs font-bold uppercase tracking-wide mb-1" style={{ color: '#0075FF' }}>{s.label}</p>
+              <p className="text-xs leading-relaxed" style={{ color: '#384550' }}>{t(s.key)}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="md:col-span-2 flex flex-col gap-4">
+          <div className="bg-[#F5F6FB] rounded-2xl py-6 px-5 text-center flex-1 flex flex-col items-center justify-center">
+            <p className="text-xs font-bold uppercase tracking-wide mb-2" style={{ color: '#00164C' }}>RESULT</p>
+            <p className="font-[800]" style={{ color: '#0075FF', fontSize: '40px', lineHeight: 1 }}>1.0% → 0.2%</p>
+            <p className="text-xs mt-2" style={{ color: '#384550' }}>{t('pres_s9_result_label')}</p>
+            <p className="text-xs italic mt-1" style={{ color: '#66727D' }}>{t('pres_s9_result_sub')}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ─── Slide 10 — Case 2: Fixing Direct Debit ─── */
+const Slide10 = ({ t }: { t: (k: string) => string }) => {
+  const steps = [
+    { label: 'SITUATION', key: 'pres_s10_situation' },
+    { label: 'INSIGHT', key: 'pres_s10_insight' },
+    { label: 'ACTION', key: 'pres_s10_action' },
+    { label: 'ITERATION', key: 'pres_s10_iteration' },
+  ];
+
+  return (
+    <div className="max-w-3xl mx-auto px-8 py-10 space-y-6">
+      <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>{t('pres_s10_title')}</h2>
+      <p className="text-sm" style={{ color: '#384550' }}>{t('pres_s10_subtitle')}</p>
+
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mt-4">
+        <div className="md:col-span-3 space-y-4">
+          {steps.map((s, i) => (
+            <div key={i}>
+              <p className="text-xs font-bold uppercase tracking-wide mb-1" style={{ color: '#0075FF' }}>{s.label}</p>
+              <p className="text-xs leading-relaxed" style={{ color: '#384550' }}>{t(s.key)}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="md:col-span-2 flex flex-col gap-4">
+          <div className="bg-[#F5F6FB] rounded-2xl py-6 px-5 text-center flex-1 flex flex-col items-center justify-center">
+            <p className="text-xs font-bold uppercase tracking-wide mb-3" style={{ color: '#00164C' }}>RESULT</p>
+            <div className="flex items-center gap-3">
+              <div>
+                <p className="font-[800]" style={{ color: '#EF4444', fontSize: '36px', lineHeight: 1 }}>40%</p>
+                <p className="text-xs mt-1" style={{ color: '#384550' }}>{t('pres_s10_before_label')}</p>
+              </div>
+              <span className="text-xl" style={{ color: '#384550' }}>→</span>
+              <div>
+                <p className="font-[800]" style={{ color: '#008246', fontSize: '36px', lineHeight: 1 }}>23%</p>
+                <p className="text-xs mt-1" style={{ color: '#384550' }}>{t('pres_s10_after_label')}</p>
+              </div>
+            </div>
+            <span className="inline-block mt-3 bg-white border border-gray-200 rounded-full px-3 py-1 text-xs font-semibold" style={{ color: '#0075FF' }}>
+              {t('pres_s10_chip')}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 /* ─── Main Component ─── */
 const PresentationTab = () => {
   const { t } = useLanguage();
@@ -613,6 +728,10 @@ const PresentationTab = () => {
     <Slide4 key={4} t={t} />,
     <Slide5 key={5} data={data} t={t} />,
     <Slide6 key={6} data={data} t={t} />,
+    <Slide7 key={7} t={t} />,
+    <Slide8 key={8} t={t} />,
+    <Slide9 key={9} t={t} />,
+    <Slide10 key={10} t={t} />,
   ];
 
   return (

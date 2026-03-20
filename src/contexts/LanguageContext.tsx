@@ -413,6 +413,72 @@ export const translations: Translations = {
   pres_s7_insight30: { EN: "Insight in <30s", ES: "Insight en <30s" },
   pres_s7_key_metric: { EN: "Key metric", ES: "Métrica clave" },
 
+  // Slide 8 — The Operating Context
+  pres_s8_title: { EN: "The Operating Context", ES: "El Contexto Operativo" },
+  pres_s8_subtitle: { EN: "Part 2 — Strategic & Operational Cases", ES: "Parte 2 — Casos Estratégicos y Operativos" },
+  pres_s8_stat1: { EN: "User growth during tenure", ES: "Crecimiento de usuarios durante gestión" },
+  pres_s8_stat2_value: { EN: "First data analyst hired", ES: "Primer analista de datos contratado" },
+  pres_s8_stat2: { EN: "Team composition at start", ES: "Composición del equipo al inicio" },
+  pres_s8_stat3_value: { EN: "Payments · Services · BNPL · B2B", ES: "Pagos · Servicios · BNPL · B2B" },
+  pres_s8_stat3: { EN: "Product scope", ES: "Alcance de producto" },
+  pres_s8_stat4_value: { EN: "Telecom-backed fintech · Argentina", ES: "Fintech respaldada por Telecom · Argentina" },
+  pres_s8_stat4: { EN: "Company context", ES: "Contexto de empresa" },
+  pres_s8_paragraph: {
+    EN: "PersonalPay launched as a digital wallet backed by Telecom Argentina. I joined as the first data analyst when the product had 11,000 users and no analytics infrastructure. Over 3 years the user base grew to 5M+ with 3M MAU, and the payments tribe — my core scope — became the revenue backbone of the business.",
+    ES: "PersonalPay se lanzó como una billetera digital respaldada por Telecom Argentina. Me sumé como el primer analista de datos cuando el producto tenía 11,000 usuarios y ninguna infraestructura de analytics. En 3 años la base creció a 5M+ con 3M MAU, y la tribu de pagos — mi scope principal — se convirtió en el pilar de ingresos del negocio.",
+  },
+
+  // Slide 9 — Case 1: Diagnosing Slow Transfers
+  pres_s9_title: { EN: "Case 1: Diagnosing Slow Transfers", ES: "Caso 1: Diagnóstico de Transferencias Lentas" },
+  pres_s9_subtitle: {
+    EN: "Task — Reduce transfer latency complaints at 2M daily transactions",
+    ES: "Tarea — Reducir quejas por latencia en transferencias con 2M de transacciones diarias",
+  },
+  pres_s9_situation: {
+    EN: "1% of 2M daily transfers took >10 seconds. At that scale: 20,000 affected transactions per day. For users, delayed money = distrust. In a competitive fintech market, one bad transfer experience drives churn.",
+    ES: "El 1% de 2M de transferencias diarias tomaba >10 segundos. A esa escala: 20,000 transacciones afectadas por día. Para los usuarios, dinero demorado = desconfianza. En un mercado fintech competitivo, una mala experiencia de transferencia genera churn.",
+  },
+  pres_s9_insight: {
+    EN: "Segmented all transfers by time range: 0–1s / 1–5s / 5–10s / 10s–1min / 1–10min / 1hr+ / 12hr+ / 24hr+. The critical mass concentrated in the 1–10 minute band — not the extreme outliers. A specific device pattern emerged: Samsung handsets (largest device share in the user base) in a specific time window showed disproportionate failure rates.",
+    ES: "Segmenté todas las transferencias por rango de tiempo: 0–1s / 1–5s / 5–10s / 10s–1min / 1–10min / 1hr+ / 12hr+ / 24hr+. La masa crítica se concentraba en la banda de 1–10 minutos — no en los outliers extremos. Surgió un patrón de dispositivo específico: teléfonos Samsung (mayor share de dispositivos en la base) en una ventana de tiempo específica mostraban tasas de fallo desproporcionadas.",
+  },
+  pres_s9_action: {
+    EN: "Brought findings to engineering and initiated negotiations with COELSA (Argentina's interbank transaction clearinghouse) with data evidence. Acted as the functional bridge between the payments tribe PO and the data engineering team to ensure the right data was available to validate the fix.",
+    ES: "Llevé los hallazgos a ingeniería e inicié negociaciones con COELSA (cámara de compensación interbancaria de Argentina) con evidencia de datos. Actué como puente funcional entre el PO de la tribu de pagos y el equipo de data engineering para asegurar que los datos correctos estuvieran disponibles para validar la corrección.",
+  },
+  pres_s9_result_label: { EN: "transfer failure rate · within benchmark", ES: "tasa de fallo en transferencias · dentro del benchmark" },
+  pres_s9_result_sub: { EN: "80% reduction in slow transfers", ES: "80% de reducción en transferencias lentas" },
+  pres_s9_iteration: {
+    EN: "Reached the floor of what the data could explain — no strong hypothesis for the remaining 0.2%. Documented the analysis pattern for future latency investigations.",
+    ES: "Llegué al piso de lo que los datos podían explicar — sin hipótesis fuerte para el 0.2% restante. Documenté el patrón de análisis para futuras investigaciones de latencia.",
+  },
+
+  // Slide 10 — Case 2: Fixing Direct Debit
+  pres_s10_title: { EN: "Case 2: Fixing Direct Debit with Behavioral Data", ES: "Caso 2: Corrigiendo Débito Automático con Datos de Comportamiento" },
+  pres_s10_subtitle: {
+    EN: "Task — Reduce rejection rate on a newly launched autopay feature",
+    ES: "Tarea — Reducir tasa de rechazo en una funcionalidad de débito automático recién lanzada",
+  },
+  pres_s10_situation: {
+    EN: "PersonalPay launched direct debit for Telecom bill payments — a strategic feature to reduce payment commission dependency across 30M+ Telecom customers. Launch rejection rate: 40%. Target was 20%. No prior behavioral data existed for this flow.",
+    ES: "PersonalPay lanzó débito automático para pagos de facturas de Telecom — una funcionalidad estratégica para reducir la dependencia de comisiones de pago en 30M+ clientes de Telecom. Tasa de rechazo al lanzamiento: 40%. La meta era 20%. No existían datos de comportamiento previos para este flujo.",
+  },
+  pres_s10_insight: {
+    EN: "Analyzed end-to-end user behavior: did users remember they had enrolled? Were they depositing funds in the days before the debit? Were they spending above their bill balance beforehand? Key finding: users who enrolled at end-of-month had no funds available on their enrollment anniversary date. The debit timing was the problem, not the product.",
+    ES: "Analicé el comportamiento de usuario de punta a punta: ¿recordaban que se habían inscrito? ¿Depositaban fondos en los días previos al débito? ¿Gastaban por encima de su saldo antes? Hallazgo clave: los usuarios que se inscribieron a fin de mes no tenían fondos disponibles en la fecha aniversario de su inscripción. El timing del débito era el problema, no el producto.",
+  },
+  pres_s10_action: {
+    EN: "Worked in triad with PO and BO to redesign the debit cycle. Ran an A/B test: control (debit on enrollment date) vs. treatment (debit only between the 8th–13th of each month). Added a push notification campaign in the treatment arm.",
+    ES: "Trabajé en tríada con PO y BO para rediseñar el ciclo de débito. Corrimos un test A/B: control (débito en fecha de inscripción) vs. tratamiento (débito solo entre el 8 y 13 de cada mes). Agregamos una campaña de push notifications en el brazo de tratamiento.",
+  },
+  pres_s10_before_label: { EN: "rejection rate at launch", ES: "tasa de rechazo al lanzamiento" },
+  pres_s10_after_label: { EN: "after cycle redesign", ES: "después de rediseño de ciclo" },
+  pres_s10_chip: { EN: "A/B tested · shipped to production", ES: "Testeado con A/B · enviado a producción" },
+  pres_s10_iteration: {
+    EN: "No prior product had used a debit cycle window — the insight wasn't obvious upfront because there was no reference. Behavioral segmentation + experiment design revealed a timing pattern that is now standard in the product's payment logic.",
+    ES: "Ningún producto previo había usado una ventana de ciclo de débito — el insight no era obvio de entrada porque no había referencia. Segmentación conductual + diseño de experimento revelaron un patrón de timing que ahora es estándar en la lógica de pagos del producto.",
+  },
+
   // Filters
   period: { EN: "Period", ES: "Período" },
   datasetCovers: { EN: "Dataset covers Jan–Apr 2025", ES: "El dataset cubre Ene–Abr 2025" },
