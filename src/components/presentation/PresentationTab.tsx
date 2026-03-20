@@ -616,6 +616,9 @@ const Slide9 = ({ t }: { t: (k: string) => string }) => {
             <p className="font-[800]" style={{ color: '#0075FF', fontSize: '32px', lineHeight: 1 }}>1.0% → 0.2%</p>
             <p className="text-xs mt-2" style={{ color: '#66727D' }}>transfer failure rate</p>
           </div>
+          <span className="inline-block text-center w-full rounded-full py-1 px-3" style={{ backgroundColor: '#E8F5E9', color: '#008246', fontSize: '13px', fontWeight: 500 }}>
+            80% reduction in transfer failure rate
+          </span>
           <hr className="border-gray-100" />
           <ul className="space-y-1.5 text-xs" style={{ color: '#384550' }}>
             <li className="flex items-start gap-1.5"><span style={{ color: '#9CA3AF' }}>·</span> Validated with engineering</li>
