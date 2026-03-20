@@ -544,9 +544,9 @@ const Slide8 = ({ t }: { t: (k: string) => string }) => {
         <div className="flex flex-col items-center justify-center">
           <div className="flex items-center justify-center w-full max-w-[280px] aspect-[4/3]" style={{ background: '#F5F6FB', padding: '32px', borderRadius: '12px' }}>
             <img
-              src="https://play-lh.googleusercontent.com/rN5Sj8ZRWNRcR2bLfitHiUiJxnhLDNxEBLHBEmvhLKJJ5vH7kCOvgPbXCWJyOX_jMjE"
+              src="https://www.personalpay.com.ar/images/Logo.png"
               alt="PersonalPay"
-              style={{ maxHeight: '110px', maxWidth: '200px', objectFit: 'contain' }}
+              style={{ maxHeight: '110px', maxWidth: '220px', objectFit: 'contain' }}
               onError={(e) => {
                 const target = e.currentTarget;
                 target.style.display = 'none';
