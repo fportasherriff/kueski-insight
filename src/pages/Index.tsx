@@ -69,7 +69,7 @@ const Sidebar = ({
   ];
 
   return (
-    <aside className="hidden md:flex flex-col fixed left-0 top-0 h-screen w-[240px] bg-[hsl(var(--sidebar-bg))] z-50">
+    <aside className="hidden md:flex flex-col fixed left-0 top-0 h-screen w-[240px] bg-[hsl(var(--sidebar-bg))] z-50 pb-20">
       <div className="p-6 mb-4">
         <img
           src="https://cdn.prod.website-files.com/642533e2943fc871d1dc670d/642d4d9f4b2a5abd56c16739_Logo.svg"
