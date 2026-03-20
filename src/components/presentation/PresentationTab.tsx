@@ -550,10 +550,7 @@ const Slide8 = ({ t }: { t: (k: string) => string }) => {
           }}
         >
           <CheckCircle size={48} color="white" />
-          <div className="flex flex-col items-center" style={{ marginTop: '8px' }}>
-            <span className="text-white" style={{ fontSize: '32px', fontWeight: 300, letterSpacing: '2px' }}>personal</span>
-            <span className="text-white" style={{ fontSize: '32px', fontWeight: 700, letterSpacing: '2px' }}>pay</span>
-          </div>
+          <span className="text-white" style={{ marginTop: '8px', fontSize: '28px', fontWeight: 700, letterSpacing: '2px' }}>personal pay</span>
           <p className="text-center mt-4" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '13px' }}>
             Digital wallet · Telecom Argentina ecosystem · 2021–2025
           </p>
