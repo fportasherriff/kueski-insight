@@ -517,10 +517,10 @@ const Slide8 = ({ t }: { t: (k: string) => string }) => {
   ];
 
   return (
-    <div className="max-w-3xl mx-auto px-8 py-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center min-h-[380px]">
+    <div className="max-w-3xl mx-auto py-10" style={{ paddingLeft: '2rem', paddingRight: 0 }}>
+      <div className="grid grid-cols-1 md:grid-cols-[60%_40%] min-h-[380px]">
         {/* Left — Text */}
-        <div className="space-y-6">
+        <div className="space-y-6 pr-8">
           <div>
             <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>The Operating Context</h2>
             <p className="text-sm mt-1" style={{ color: '#66727D' }}>Part 2 — Strategic &amp; Operational Cases</p>
@@ -540,25 +540,30 @@ const Slide8 = ({ t }: { t: (k: string) => string }) => {
           </p>
         </div>
 
-        {/* Right — Logo */}
-        <div className="flex flex-col items-center justify-center">
-          <div className="flex items-center justify-center w-full max-w-[280px] aspect-[4/3]" style={{ background: '#F5F6FB', padding: '32px', borderRadius: '12px' }}>
-            <img
-              src="https://www.personalpay.com.ar/images/Logo.png"
-              alt="PersonalPay"
-              style={{ maxHeight: '110px', maxWidth: '220px', objectFit: 'contain' }}
-              onError={(e) => {
-                const target = e.currentTarget;
-                target.style.display = 'none';
-                const fallback = target.nextElementSibling as HTMLElement;
-                if (fallback) fallback.style.display = 'flex';
-              }}
-            />
-            <div className="hidden items-center justify-center" style={{ background: 'linear-gradient(135deg, #7B2FBE, #5B21B6)', padding: '32px', borderRadius: '12px' }}>
-              <span className="text-white" style={{ fontSize: '20px', fontWeight: 700 }}>Personal Pay</span>
-            </div>
+        {/* Right — Purple panel */}
+        <div
+          className="flex flex-col items-center justify-center"
+          style={{
+            backgroundColor: '#7B2FBE',
+            borderRadius: '0 12px 12px 0',
+            padding: '32px',
+          }}
+        >
+          <img
+            src="https://www.personalpay.com.ar/images/Logo.png"
+            alt="PersonalPay"
+            style={{ maxHeight: '90px', maxWidth: '200px', objectFit: 'contain', filter: 'brightness(0) invert(1)' }}
+            onError={(e) => {
+              const target = e.currentTarget;
+              target.style.display = 'none';
+              const fallback = target.nextElementSibling as HTMLElement;
+              if (fallback) fallback.style.display = 'flex';
+            }}
+          />
+          <div className="hidden items-center justify-center">
+            <span className="text-white" style={{ fontSize: '20px', fontWeight: 700 }}>Personal Pay</span>
           </div>
-          <p className="text-xs mt-3 text-center" style={{ color: '#9CA3AF' }}>
+          <p className="text-center mt-4" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '13px' }}>
             Digital wallet · Telecom Argentina ecosystem · 2021–2025
           </p>
         </div>
