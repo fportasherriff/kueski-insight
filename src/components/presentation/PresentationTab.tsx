@@ -691,44 +691,6 @@ const Slide10 = ({ t }: { t: (k: string) => string }) => {
     </div>
   );
 };
-  return (
-    <div className="max-w-3xl mx-auto px-8 py-10 space-y-6">
-      <h2 className="text-2xl font-extrabold" style={{ color: '#00164C' }}>{t('pres_s10_title')}</h2>
-      <p className="text-sm" style={{ color: '#384550' }}>{t('pres_s10_subtitle')}</p>
-
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mt-4">
-        <div className="md:col-span-3 space-y-4">
-          {steps.map((s, i) => (
-            <div key={i}>
-              <p className="text-xs font-bold uppercase tracking-wide mb-1" style={{ color: '#0075FF' }}>{s.label}</p>
-              <p className="text-xs leading-relaxed" style={{ color: '#384550' }}>{t(s.key)}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="md:col-span-2 flex flex-col gap-4">
-          <div className="bg-[#F5F6FB] rounded-2xl py-6 px-5 text-center flex-1 flex flex-col items-center justify-center">
-            <p className="text-xs font-bold uppercase tracking-wide mb-3" style={{ color: '#00164C' }}>RESULT</p>
-            <div className="flex items-center gap-3">
-              <div>
-                <p className="font-[800]" style={{ color: '#EF4444', fontSize: '36px', lineHeight: 1 }}>40%</p>
-                <p className="text-xs mt-1" style={{ color: '#384550' }}>{t('pres_s10_before_label')}</p>
-              </div>
-              <span className="text-xl" style={{ color: '#384550' }}>→</span>
-              <div>
-                <p className="font-[800]" style={{ color: '#008246', fontSize: '36px', lineHeight: 1 }}>23%</p>
-                <p className="text-xs mt-1" style={{ color: '#384550' }}>{t('pres_s10_after_label')}</p>
-              </div>
-            </div>
-            <span className="inline-block mt-3 bg-white border border-gray-200 rounded-full px-3 py-1 text-xs font-semibold" style={{ color: '#0075FF' }}>
-              {t('pres_s10_chip')}
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 /* ─── Main Component ─── */
 const PresentationTab = () => {
