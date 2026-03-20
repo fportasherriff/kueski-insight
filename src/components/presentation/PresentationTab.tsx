@@ -13,7 +13,7 @@ interface PresentationData {
   kpis: any;
 }
 
-const TOTAL_SLIDES = 11;
+const TOTAL_SLIDES = 10;
 
 /* ─── Slide 1 ─── */
 const Slide1 = ({ t }: { t: (k: string) => string }) => (
