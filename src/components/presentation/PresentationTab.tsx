@@ -535,7 +535,7 @@ const Slide8 = ({ t }: { t: (k: string) => string }) => {
             ))}
           </div>
 
-          <p className="text-xs pt-4 border-t border-gray-100" style={{ color: '#9CA3AF' }}>
+          <p className="pt-4 border-t border-gray-100" style={{ color: '#66727D', fontSize: '12px' }}>
             Telecom-backed fintech · Argentina · 2021–2025
           </p>
         </div>
