@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, ArrowRight, ExternalLink } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowRight, ExternalLink, CheckCircle } from 'lucide-react';
 import { supabase } from '@/lib/supabaseClient';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -549,19 +549,10 @@ const Slide8 = ({ t }: { t: (k: string) => string }) => {
             padding: '32px',
           }}
         >
-          <img
-            src="https://www.personalpay.com.ar/images/Logo.png"
-            alt="PersonalPay"
-            style={{ maxHeight: '90px', maxWidth: '200px', objectFit: 'contain', filter: 'brightness(0) invert(1)' }}
-            onError={(e) => {
-              const target = e.currentTarget;
-              target.style.display = 'none';
-              const fallback = target.nextElementSibling as HTMLElement;
-              if (fallback) fallback.style.display = 'flex';
-            }}
-          />
-          <div className="hidden items-center justify-center">
-            <span className="text-white" style={{ fontSize: '20px', fontWeight: 700 }}>Personal Pay</span>
+          <CheckCircle size={48} color="white" />
+          <div className="flex flex-col items-center" style={{ marginTop: '8px' }}>
+            <span className="text-white" style={{ fontSize: '32px', fontWeight: 300, letterSpacing: '2px' }}>personal</span>
+            <span className="text-white" style={{ fontSize: '32px', fontWeight: 700, letterSpacing: '2px' }}>pay</span>
           </div>
           <p className="text-center mt-4" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '13px' }}>
             Digital wallet · Telecom Argentina ecosystem · 2021–2025
