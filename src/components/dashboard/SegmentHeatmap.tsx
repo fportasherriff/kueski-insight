@@ -5,10 +5,9 @@ import type { AgeDeviceRow } from '@/hooks/useDashboardData';
 
 const getCellColor = (conv: number) => {
   if (conv >= 15) return { bg: '#008246', text: 'white' };
-  if (conv >= 10) return { bg: '#34d399', text: 'white' };
-  if (conv >= 5) return { bg: '#fbbf24', text: '#141C22' };
-  if (conv >= 2) return { bg: '#f97316', text: 'white' };
-  return { bg: '#EF4444', text: 'white' };
+  if (conv >= 10) return { bg: '#0075FF', text: 'white' };
+  if (conv >= 2) return { bg: '#EF4444', text: 'white' };
+  return { bg: '#B91C1C', text: 'white' };
 };
 
 const ageOrder = ['<25', '26-50', '>50'];
