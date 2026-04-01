@@ -202,7 +202,10 @@ export const translations: Translations = {
 
   // Slide 3 v2 — KPI #1 & #3
   pres_s3_title_v2: { EN: "2 Critical Metrics to Watch", ES: "2 Métricas Críticas a Monitorear" },
-  pres_s3_subtitle_v2: { EN: "Task 1 — Leading indicators with the highest action potential", ES: "Tarea 1 — Indicadores líderes con el mayor potencial de acción" },
+  pres_s3_subtitle_v2: {
+    EN: "Task 1 — Leading indicators with the highest action potential",
+    ES: "Tarea 1 — Indicadores líderes con el mayor potencial de acción",
+  },
   pres_s3_kpi1_pill: { EN: "Onboarding", ES: "Onboarding" },
   pres_s3_kpi1_pill_v2: { EN: "Onboarding Gap", ES: "Brecha de Onboarding" },
   pres_s3_kpi3_pill_v2: { EN: "Checkout Gap", ES: "Brecha de Checkout" },
@@ -228,8 +231,14 @@ export const translations: Translations = {
   },
 
   // Slide 4 — Device breakdown
-  pres_s4d_title: { EN: "Device Performance — The Platform Gap", ES: "Rendimiento por Dispositivo — La Brecha de Plataforma" },
-  pres_s4d_subtitle: { EN: "Task 1 — Why this is the highest-impact structural problem", ES: "Tarea 1 — Por qué este es el problema estructural de mayor impacto" },
+  pres_s4d_title: {
+    EN: "Device Performance — The Platform Gap",
+    ES: "Rendimiento por Dispositivo — La Brecha de Plataforma",
+  },
+  pres_s4d_subtitle: {
+    EN: "Task 1 — Why this is the highest-impact structural problem",
+    ES: "Tarea 1 — Por qué este es el problema estructural de mayor impacto",
+  },
   pres_s4d_of_users: { EN: "of users", ES: "de usuarios" },
   pres_s4d_overall_conv: { EN: "Overall conversion", ES: "Conversión total" },
   pres_s4d_table_title: {
@@ -291,7 +300,7 @@ export const translations: Translations = {
     ES: "Otras regiones completan onboarding al 63.2% — igual a ciudades principales (62.7%). Pero Carrito→Compra cae a 31.2% vs 50.6% en ciudades. El producto funciona. Solo falla el checkout.",
   },
   pres_s4_h3_validate: {
-    EN: "Post-abandon survey for Other regions. Support ticket analysis by region. Available payment methods by location.",
+    EN: "Post-abandon survey for Other regions. Support ticket analysis by region.",
     ES: "Encuesta post-abandono para otras regiones. Análisis de tickets de soporte por región. Métodos de pago disponibles por ubicación.",
   },
 
@@ -446,7 +455,10 @@ export const translations: Translations = {
     EN: "Brought findings to engineering and initiated negotiations with COELSA (Argentina's interbank transaction clearinghouse) with data evidence. Acted as the functional bridge between the payments tribe PO and the data engineering team to ensure the right data was available to validate the fix.",
     ES: "Llevé los hallazgos a ingeniería e inicié negociaciones con COELSA (cámara de compensación interbancaria de Argentina) con evidencia de datos. Actué como puente funcional entre el PO de la tribu de pagos y el equipo de data engineering para asegurar que los datos correctos estuvieran disponibles para validar la corrección.",
   },
-  pres_s9_result_label: { EN: "transfer failure rate · within benchmark", ES: "tasa de fallo en transferencias · dentro del benchmark" },
+  pres_s9_result_label: {
+    EN: "transfer failure rate · within benchmark",
+    ES: "tasa de fallo en transferencias · dentro del benchmark",
+  },
   pres_s9_result_sub: { EN: "80% reduction in slow transfers", ES: "80% de reducción en transferencias lentas" },
   pres_s9_iteration: {
     EN: "Reached the floor of what the data could explain — no strong hypothesis for the remaining 0.2%. Documented the analysis pattern for future latency investigations.",
@@ -454,7 +466,10 @@ export const translations: Translations = {
   },
 
   // Slide 10 — Case 2: Fixing Direct Debit
-  pres_s10_title: { EN: "Case 2: Fixing Direct Debit with Behavioral Data", ES: "Caso 2: Corrigiendo Débito Automático con Datos de Comportamiento" },
+  pres_s10_title: {
+    EN: "Case 2: Fixing Direct Debit with Behavioral Data",
+    ES: "Caso 2: Corrigiendo Débito Automático con Datos de Comportamiento",
+  },
   pres_s10_subtitle: {
     EN: "Task — Reduce rejection rate on a newly launched autopay feature",
     ES: "Tarea — Reducir tasa de rechazo en una funcionalidad de débito automático recién lanzada",
